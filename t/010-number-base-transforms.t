@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-use Misc::Utils :ALL;
+use Number::More :ALL;
 
 plan 14;
 
