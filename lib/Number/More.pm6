@@ -35,7 +35,7 @@ sub hexchar2bin(Str:D $hexchar where &hexadecimalchar) is export(:hexchar2bin) {
 # Purpose : Convert a single hexadecimal character to a decimal number
 # Params  : Hexadecimal character
 # Returns : Decimal number
-sub hexchar2dec(Str:D $hexchar is copy where &hexadecimalchar) returns UInt is export(:hexchar2dec) {
+sub hexchar2dec(Str:D $hexchar is copy where &hexadecimalchar --> UInt) is export(:hexchar2dec) {
     my UInt $num;
 
     $hexchar .= lc;
@@ -74,7 +74,7 @@ sub hexchar2dec(Str:D $hexchar is copy where &hexadecimalchar) returns UInt is e
 # Purpose : Convert a positive hexadecimal number (string) to a decimal number
 # Params  : Hexadecimal number (string), desired length (optional)
 # Returns : Decimal number (or string)
-sub hex2dec(Str:D $hex where &hexadecimal, UInt $len = 0) returns Cool is export(:hex2dec) {
+sub hex2dec(Str:D $hex where &hexadecimal, UInt $len = 0 --> Cool) is export(:hex2dec) {
     my @chars = $hex.comb;
     @chars .= reverse;
     my UInt $decimal = 0;
@@ -94,7 +94,7 @@ sub hex2dec(Str:D $hex where &hexadecimal, UInt $len = 0) returns Cool is export
 # Purpose : Convert a positive hexadecimal number (string) to a binary string
 # Params  : Hexadecimal number (string), desired length (optional)
 # Returns : Binary number (string)
-sub hex2bin(Str:D $hex where &hexadecimal, UInt $len = 0) returns Str is export(:hex2bin) {
+sub hex2bin(Str:D $hex where &hexadecimal, UInt $len = 0 --> Str) is export(:hex2bin) {
     my @chars = $hex.comb;
     my $bin = '';
 
@@ -116,7 +116,7 @@ sub hex2bin(Str:D $hex where &hexadecimal, UInt $len = 0) returns Str is export(
 # Purpose : Convert a positive integer to a hexadecimal number (string)
 # Params  : Positive decimal number, desired length (optional)
 # Returns : Hexadecimal number (string)
-sub dec2hex(UInt $dec, UInt $len = 0) returns Str is export(:dec2hex) {
+sub dec2hex(UInt $dec, UInt $len = 0 --> Str) is export(:dec2hex) {
     my $hex = sprintf "%x", $dec;
     if $len && $len > $hex.chars {
 	my $s = '0' x ($len - $hex.chars);
@@ -130,7 +130,7 @@ sub dec2hex(UInt $dec, UInt $len = 0) returns Str is export(:dec2hex) {
 # Purpose : Convert a positive integer to a binary number (string)
 # Params  : Positive decimal number, desired length (optional)
 # Returns : Binary number (string)
-sub dec2bin(UInt $dec, UInt $len = 0) returns Str is export(:dec2bin) {
+sub dec2bin(UInt $dec, UInt $len = 0 --> Str) is export(:dec2bin) {
     my $bin = sprintf "%b", $dec;
     if $len && $len > $bin.chars {
 	my $s = '0' x ($len - $bin.chars);
@@ -144,7 +144,7 @@ sub dec2bin(UInt $dec, UInt $len = 0) returns Str is export(:dec2bin) {
 # Purpose : Convert a binary number (string) to a decimal number
 # Params  : Binary number (string), desired length (optional)
 # Returns : Decimal number (or string)
-sub bin2dec(Str:D $bin where &binary, UInt $len = 0) returns Cool is export(:bin2dec) {
+sub bin2dec(Str:D $bin where &binary, UInt $len = 0 --> Cool) is export(:bin2dec) {
     my @bits = $bin.comb;
     @bits .= reverse;
     my $decimal = 0;
@@ -165,7 +165,7 @@ sub bin2dec(Str:D $bin where &binary, UInt $len = 0) returns Cool is export(:bin
 # Purpose : Convert a binary number (string) to a hexadecimal number (string)
 # Params  : Binary number (string), desired length (optional)
 # Returns : Hexadecimal number (string)
-sub bin2hex(Str:D $bin where &binary, UInt $len = 0) returns Str is export(:bin2hex) {
+sub bin2hex(Str:D $bin where &binary, UInt $len = 0 --> Str) is export(:bin2hex) {
     # take the easy way out
     my $dec = bin2dec($bin);
     my $hex = dec2hex($dec, $len);
