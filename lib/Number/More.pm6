@@ -25,7 +25,7 @@ my token hexadecimalchar is export(:token-hexadecimalchar) { :i ^ <[a..f\d]> $ }
 # Purpose : Convert a single hexadecimal character to a binary string
 # Params  : Hexadecimal character
 # Returns : Binary string
-sub hexchar2bin(Str:D $hexchar where &hexadecimalchar) is export(:hexchar2bin) {
+sub hexchar2bin(Str:D $hexchar where &hexadecimalchar --> Str) is export(:hexchar2bin) {
     my $decimal = hexchar2dec($hexchar);
     return sprintf "%04b", $decimal;
 } # hexchar2bin
