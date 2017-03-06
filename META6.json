@@ -5,10 +5,10 @@
     "description" : "Provides number base transform functions",
     "authors"     : [ "github:tbrowder" ],
     "license"     : "Artistic 2.0",
-    "source-url"  : "https://github.com/tbrowder/Number-More-Perl6",
+    "source-url"  : "https://github.com/tbrowder/Number-More-Perl6/archive/v0.1.0.zip",
     "support"     : {
         "bugtracker" : "https://github.com/tbrowder/Number-More-Perl6/issues",
-        "source"     : "https://github.com/tbrowder/Number-More-Perl6"
+        "source"     : "https://github.com/tbrowder/Number-More-Perl6/tree/v0.1.0"
     },
     "provides"    : {
         "Number::More" : "lib/Number/More.pm6"
@@ -21,6 +21,6 @@
     "resources" : [
     ],
     "tags" : [
-	"number base transform"
+	"number base transform functions"
     ]
 }
