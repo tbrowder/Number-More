@@ -53,74 +53,13 @@ sub pad-num($num, UInt $base where &base, UInt :$len = 0, Bool :$prefix = False)
     }
     if $prefix {
         #given $base {
-            when $base eq '1'  { $num = '0b' ~ $num }
+            when $base eq '2'  { $num = '0b' ~ $num }
             when $base eq '8'  { $num = '0o' ~ $num }
             when $base eq '16' { $num = '0x' ~ $num }
         #}
     }
     return $num;
 }
-
-#------------------------------------------------------------------------------
-# Subroutine: hexchar2bin
-# Purpose : Convert a single hexadecimal character to a binary string
-# Params  : Hexadecimal character
-# Returns : Binary string
-sub hexchar2bin(Str:D $hexchar where &hexadecimalchar --> Str) is export(:hexchar2bin) {
-    my $d = parse-base $hexchar, 16;
-
-    my $decimal = hexchar2dec $hexchar;
-
-    die "FATAL: decimal chars different between routine and mine" if $d ne $decimal;
-
-    my $bin = sprintf "%04b", $decimal;
-    return $bin;
-
-} # hexchar2bin
-
-
-#------------------------------------------------------------------------------
-# Subroutine: hexchar2dec
-# Purpose : Convert a single hexadecimal character to a decimal number
-# Params  : Hexadecimal character
-# Returns : Decimal number
-sub hexchar2dec(Str:D $hexchar is copy where &hexadecimalchar --> UInt) is export(:hexchar2dec) {
-    my UInt $num;
-
-    my $d = parse-base $hexchar, 16;
-
-    $hexchar .= lc;
-    if $hexchar ~~ /^ \d $/ {
-	# 0..9
-	$num = +$hexchar;
-    }
-    elsif $hexchar eq 'a' {
-	$num = 10;
-    }
-    elsif $hexchar eq 'b' {
-	$num = 11;
-    }
-    elsif $hexchar eq 'c' {
-	$num = 12;
-    }
-    elsif $hexchar eq 'd' {
-	$num = 13;
-    }
-    elsif $hexchar eq 'e' {
-	$num = 14;
-    }
-    elsif $hexchar eq 'f' {
-	$num = 15;
-    }
-    else {
-	fail "FATAL: \$hexchar '$hexchar' is unknown";
-    }
-
-    die "FATAL: decimal chars different between routine and mine" if $d ne $num;
-
-    return $num;
-
-} # hexchar2dec
 
 #------------------------------------------------------------------------------
 # Subroutine: hex2dec
