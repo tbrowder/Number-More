@@ -14,6 +14,10 @@ BEGIN {
     }
 }
 
+# export a var for users to set length behavior
+our $LENGTH-HANDLING is export(:DEBUG) = 'ignore'; # other options: 'warn', 'fail'
+my token length-handling { ^ :i ignore|warn|fail $ }
+
 # define tokens for common regexes
 my token binary is export(:token-binary)                   { ^ <[01]>+ $ }
 my token decimal is export(:token-decimal)                 { ^ \d+ $ }              # actually an int
