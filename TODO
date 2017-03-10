@@ -1,6 +1,14 @@
-use Perl 6 built-in routines :base(str) and base(str) to simplify
-  number base conversions?
+Before first release
+====================
+
+use Perl 6 built-in routines base(str) and parse-base(str) to simplify
+  number base conversions
 
 make length args to base conversions named params
 
 add named param for upper case to base conversions
+
+add named param for leading code for non-decimal numbers ('0x', '0b')
+
+add in README.md that these subs are for uint numbers only
+
