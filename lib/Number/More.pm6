@@ -16,13 +16,50 @@ BEGIN {
 
 # export a var for users to set length behavior
 our $LENGTH-HANDLING is export(:DEBUG) = 'ignore'; # other options: 'warn', 'fail'
-my token length-handling { ^ :i ignore|warn|fail $ }
+my token length-action { ^ :i warn|fail $ }
 
 # define tokens for common regexes
 my token binary is export(:token-binary)                   { ^ <[01]>+ $ }
 my token decimal is export(:token-decimal)                 { ^ \d+ $ }              # actually an int
 my token hexadecimal is export(:token-hecadecimal)         { :i ^ <[a..f\d]>+ $ }   # multiple chars
 my token hexadecimalchar is export(:token-hexadecimalchar) { :i ^ <[a..f\d]> $ }    # single char
+
+my token base { ^ 2|8|16 $ }
+sub pad-num($num, UInt $base where &base, UInt :$len = 0, Bool :$prefix = False) {
+    # this also checks for length error and handling
+    my $nc  = $num.chars;
+    my $nct = $prefix ?? $nc + 2 !! $nc;
+    if $LENGTH-HANDLING ~~ &length-action && $nct > $len {
+        my $msg = "Desired length ($len) of number '$num' is less than required by it";
+        $msg ~= " and its prefix" if $prefix;
+        $msg ~= " ($nct)."; 
+
+        if $LENGTH-HANDLING ~~ /$ :i warn $/ {
+            warn "WARNING: $msg";
+        }
+        else {
+            die "FATAL: $msg";
+        }
+    }
+
+    if $len > $nct {
+        # padding required
+        # first pad with zeroes
+        # the following test should always be true!!
+        die "debug FATAL: unexpected \$len ($len) NOT greater than \$nc ($nc)" if $len <= $nc;
+        # create the zero padding
+        my $zpad = '0' xx ($len - $nct);
+        $num = $zpad ~ $num;
+    }
+    if $prefix {
+        #given $base {
+            when $base eq '1'  { $num = '0b' ~ $num }
+            when $base eq '8'  { $num = '0o' ~ $num }
+            when $base eq '16' { $num = '0x' ~ $num }
+        #}
+    }
+    return $num;
+}
 
 #------------------------------------------------------------------------------
 # Subroutine: hexchar2bin
