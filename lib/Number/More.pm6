@@ -26,9 +26,17 @@ my token hexadecimalchar is export(:token-hexadecimalchar) { :i ^ <[a..f\d]> $ }
 # Params  : Hexadecimal character
 # Returns : Binary string
 sub hexchar2bin(Str:D $hexchar where &hexadecimalchar --> Str) is export(:hexchar2bin) {
-    my $decimal = hexchar2dec($hexchar);
-    return sprintf "%04b", $decimal;
+    my $d = parse-base $hexchar, 16;
+
+    my $decimal = hexchar2dec $hexchar;
+
+    die "FATAL: decimal chars different between routine and mine" if $d ne $decimal;
+
+    my $bin = sprintf "%04b", $decimal;
+    return $bin;
+
 } # hexchar2bin
+
 
 #------------------------------------------------------------------------------
 # Subroutine: hexchar2dec
@@ -38,8 +46,10 @@ sub hexchar2bin(Str:D $hexchar where &hexadecimalchar --> Str) is export(:hexcha
 sub hexchar2dec(Str:D $hexchar is copy where &hexadecimalchar --> UInt) is export(:hexchar2dec) {
     my UInt $num;
 
+    my $d = parse-base $hexchar, 16;
+
     $hexchar .= lc;
-    if $hexchar ~~ /^ \d+ $/ {
+    if $hexchar ~~ /^ \d $/ {
 	# 0..9
 	$num = +$hexchar;
     }
@@ -65,6 +75,8 @@ sub hexchar2dec(Str:D $hexchar is copy where &hexadecimalchar --> UInt) is expor
 	fail "FATAL: \$hexchar '$hexchar' is unknown";
     }
 
+    die "FATAL: decimal chars different between routine and mine" if $d ne $num;
+
     return $num;
 
 } # hexchar2dec
@@ -75,18 +87,32 @@ sub hexchar2dec(Str:D $hexchar is copy where &hexadecimalchar --> UInt) is expor
 # Params  : Hexadecimal number (string), desired length (optional)
 # Returns : Decimal number (or string)
 sub hex2dec(Str:D $hex where &hexadecimal, UInt $len = 0 --> Cool) is export(:hex2dec) {
+
+    my $d = parse-base $hex, 16;
+
     my @chars = $hex.comb;
     @chars .= reverse;
-    my UInt $decimal = 0;
+    #my UInt $decimal = 0;
+    my $decimal = 0;
     my $power = 0;
     for @chars -> $c {
         $decimal += hexchar2dec($c) * 16 ** $power;
 	++$power;
     }
+
+    # get rid of leading zeroes
+    $decimal ~~ s:g/^ 0//;
+    $decimal = 0 if !$decimal;
+    
     if $len && $len > $decimal.chars {
-	return sprintf "%0*d", $len, $decimal;
+	$decimal = sprintf "%0*d", $len, $decimal;
+	$d = sprintf "%0*d", $len, $d;
     }
+
+    die "FATAL: decimal chars different between routine and mine" if $d ne $decimal;
+
     return $decimal;
+
 } # hex2dec
 
 #------------------------------------------------------------------------------
@@ -95,6 +121,15 @@ sub hex2dec(Str:D $hex where &hexadecimal, UInt $len = 0 --> Cool) is export(:he
 # Params  : Hexadecimal number (string), desired length (optional)
 # Returns : Binary number (string)
 sub hex2bin(Str:D $hex where &hexadecimal, UInt $len = 0 --> Str) is export(:hex2bin) {
+
+    my $d = parse-base $hex, 16; 
+    my $b = $d.base: 2; 
+    if $len && $len > $b.chars {
+	my $s = '0' x ($len - $b.chars);
+	$b = $s ~ $b;
+     }
+
+=begin pod
     my @chars = $hex.comb;
     my $bin = '';
 
@@ -105,9 +140,11 @@ sub hex2bin(Str:D $hex where &hexadecimal, UInt $len = 0 --> Str) is export(:hex
     if $len && $len > $bin.chars {
 	my $s = '0' x ($len - $bin.chars);
 	$bin = $s ~ $bin;
-    }
+     }
+=end pod
 
-    return $bin;
+    #return $bin;
+    return $b;
 
 } # hex2bin
 
@@ -117,7 +154,10 @@ sub hex2bin(Str:D $hex where &hexadecimal, UInt $len = 0 --> Str) is export(:hex
 # Params  : Positive decimal number, desired length (optional)
 # Returns : Hexadecimal number (string)
 sub dec2hex(UInt $dec, UInt $len = 0 --> Str) is export(:dec2hex) {
-    my $hex = sprintf "%x", $dec;
+
+
+    #my $hex = sprintf "%x", $dec;
+    my $hex = lc $dec.base: 16;
     if $len && $len > $hex.chars {
 	my $s = '0' x ($len - $hex.chars);
 	$hex = $s ~ $hex;
@@ -131,7 +171,9 @@ sub dec2hex(UInt $dec, UInt $len = 0 --> Str) is export(:dec2hex) {
 # Params  : Positive decimal number, desired length (optional)
 # Returns : Binary number (string)
 sub dec2bin(UInt $dec, UInt $len = 0 --> Str) is export(:dec2bin) {
-    my $bin = sprintf "%b", $dec;
+
+    #my  $bin = sprintf "%b", $dec;
+    my  $bin = lc $dec.base: 2;
     if $len && $len > $bin.chars {
 	my $s = '0' x ($len - $bin.chars);
 	$bin = $s ~ $bin;
@@ -145,6 +187,9 @@ sub dec2bin(UInt $dec, UInt $len = 0 --> Str) is export(:dec2bin) {
 # Params  : Binary number (string), desired length (optional)
 # Returns : Decimal number (or string)
 sub bin2dec(Str:D $bin where &binary, UInt $len = 0 --> Cool) is export(:bin2dec) {
+
+    my $decimal = parse-base $bin, 2;
+=begin pod
     my @bits = $bin.comb;
     @bits .= reverse;
     my $decimal = 0;
@@ -153,6 +198,8 @@ sub bin2dec(Str:D $bin where &binary, UInt $len = 0 --> Cool) is export(:bin2dec
         $decimal += $bit * 2 ** $power;
 	++$power;
     }
+=end pod
+
     if $len && $len > $decimal.chars {
 	my $s = '0' x ($len - $decimal.chars);
 	$decimal = $s ~ $decimal;
@@ -166,8 +213,18 @@ sub bin2dec(Str:D $bin where &binary, UInt $len = 0 --> Cool) is export(:bin2dec
 # Params  : Binary number (string), desired length (optional)
 # Returns : Hexadecimal number (string)
 sub bin2hex(Str:D $bin where &binary, UInt $len = 0 --> Str) is export(:bin2hex) {
+
+    my $dec = parse-base $bin, 2;
+    my $hex = lc $dec.base: 16;
+    if $len && $len > $hex.chars {
+	my $s = '0' x ($len - $hex.chars);
+	$hex = $s ~ $hex;
+    }
+=begin pod
     # take the easy way out
     my $dec = bin2dec($bin);
     my $hex = dec2hex($dec, $len);
+=end pod
+
     return $hex;
 } # bin2hex
