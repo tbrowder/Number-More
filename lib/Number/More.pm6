@@ -63,8 +63,7 @@ sub pad-number($num is rw,
         # the following test should always be true!!
         die "debug FATAL: unexpected \$len ($len) NOT greater than \$nc ($nc)" if $len <= $nc;
         # create the zero padding
-        my @zpad = '0' xx ($len - $nct);
-        my $zpad = join '', @zpad;
+        my $zpad = 0 x ($len - $nct);
         $num = $zpad ~ $num;
     }
     if $prefix {
