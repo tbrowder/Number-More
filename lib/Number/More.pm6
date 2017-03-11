@@ -24,21 +24,25 @@ my token octal is export(:token-octal)              { ^ <[0..7]>+ $ }
 my token decimal is export(:token-decimal)          { ^ \d+ $ }              # actually an int
 my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   # multiple chars
 
-# for some future base functions
+# for general base functions
+my token all-bases is export(:token-all-bases)      { ^ <[2..9]> | <[1..5]><[0..9]> | 6 <[0..4]> $ }
 my token base3 is export(:token-base3)              { ^ <[012]>+ $ }
 my token base4 is export(:token-base4)              { ^ <[0..3]>+ $ }
 my token base5 is export(:token-base5)              { ^ <[0..4]>+ $ }
 my token base6 is export(:token-base6)              { ^ <[0..5]>+ $ }
 my token base7 is export(:token-base7)              { ^ <[0..6]>+ $ }
 # base 8 is octal
+my token base8 is export(:token-base8)              { ^ <[0..7]>+ $ }
 my token base9 is export(:token-base9)              { ^ <[0..8]>+ $ }
 # base 10 is decimal
+my token base10 is export(:token-base10)            { ^ \d+ $ }              # actually an int
 my token base11 is export(:token-base11)            { :i ^ <[a\d]>+ $ }      # multiple chars
 my token base12 is export(:token-base12)            { :i ^ <[ab\d]>+ $ }     # multiple chars
 my token base13 is export(:token-base13)            { :i ^ <[abc\d]>+ $ }    # multiple chars
 my token base14 is export(:token-base14)            { :i ^ <[a..d\d]>+ $ }   # multiple chars
 my token base15 is export(:token-base15)            { :i ^ <[a..e\d]>+ $ }   # multiple chars
 # base 16 is hexadecimal
+my token base16 is export(:token-base16)            { :i ^ <[a..f\d]>+ $ }   # multiple chars
 my token base17 is export(:token-base17)            { :i ^ <[a..g\d]>+ $ }   # multiple chars
 my token base18 is export(:token-base18)            { :i ^ <[a..h\d]>+ $ }   # multiple chars
 my token base19 is export(:token-base19)            { :i ^ <[a..i\d]>+ $ }   # multiple chars
@@ -66,9 +70,9 @@ my token base36 is export(:token-base35)            { :i ^ <[a..z\d]>+ $ }   # m
 
 my token base { ^ 2|8|10|16 $ }
 
-sub pad-number($num is rw, 
-               UInt $base where &base, 
-               UInt $len = 0, 
+sub pad-number($num is rw,
+               UInt $base where &base,
+               UInt $len = 0,
                Bool :$prefix = False,
                Bool :$UC = False) {
 
@@ -87,7 +91,7 @@ sub pad-number($num is rw,
     if $LENGTH-HANDLING ~~ &length-action && $nct > $len {
         my $msg = "Desired length ($len) of number '$num' is less than required by it";
         $msg ~= " and its prefix" if $prefix;
-        $msg ~= " ($nct)."; 
+        $msg ~= " ($nct).";
 
         if $LENGTH-HANDLING ~~ /$ :i warn $/ {
             note "WARNING: $msg";
@@ -118,7 +122,7 @@ sub pad-number($num is rw,
 # Purpose : Convert a positive hexadecimal number (string) to a decimal number
 # Params  : Hexadecimal number (string), desired length (optional)
 # Returns : Decimal number (or string)
-sub hex2dec(Str:D $hex where &hexadecimal, 
+sub hex2dec(Str:D $hex where &hexadecimal,
             UInt $len = 0
             --> Cool) is export(:hex2dec) {
     # need bases of incoming and outgoing number
@@ -135,7 +139,7 @@ sub hex2dec(Str:D $hex where &hexadecimal,
 # Purpose : Convert a positive hexadecimal number (string) to a binary string
 # Params  : Hexadecimal number (string), desired length (optional)
 # Returns : Binary number (string)
-sub hex2bin(Str:D $hex where &hexadecimal, 
+sub hex2bin(Str:D $hex where &hexadecimal,
             UInt $len = 0,
             Bool :$prefix = False
             --> Str) is export(:hex2bin) {
@@ -155,7 +159,7 @@ sub hex2bin(Str:D $hex where &hexadecimal,
 # Purpose : Convert a positive integer to a hexadecimal number (string)
 # Params  : Positive decimal number, desired length (optional)
 # Returns : Hexadecimal number (string)
-sub dec2hex($dec where &decimal, 
+sub dec2hex($dec where &decimal,
             UInt $len = 0,
             Bool :$prefix = False,
             Bool :$UC = False --> Str) is export(:dec2hex) {
@@ -172,7 +176,7 @@ sub dec2hex($dec where &decimal,
 # Purpose : Convert a positive integer to a binary number (string)
 # Params  : Positive decimal number, desired length (optional)
 # Returns : Binary number (string)
-sub dec2bin($dec where &decimal, 
+sub dec2bin($dec where &decimal,
             UInt $len = 0,
             :$prefix = False
             --> Str) is export(:dec2bin) {
@@ -189,7 +193,7 @@ sub dec2bin($dec where &decimal,
 # Purpose : Convert a binary number (string) to a decimal number
 # Params  : Binary number (string), desired length (optional)
 # Returns : Decimal number (or string)
-sub bin2dec(Str:D $bin where &binary, 
+sub bin2dec(Str:D $bin where &binary,
             UInt $len = 0
             --> Cool) is export(:bin2dec) {
     # need bases of incoming and outgoing numbers
@@ -206,7 +210,7 @@ sub bin2dec(Str:D $bin where &binary,
 # Purpose : Convert a binary number (string) to a hexadecimal number (string)
 # Params  : Binary number (string), desired length (optional)
 # Returns : Hexadecimal number (string)
-sub bin2hex(Str:D $bin where &binary, 
+sub bin2hex(Str:D $bin where &binary,
             UInt $len = 0,
             Bool :$prefix = False,
             Bool :$UC = False --> Str) is export(:bin2hex) {
@@ -221,7 +225,7 @@ sub bin2hex(Str:D $bin where &binary,
     return $hex;
 } # bin2hex
 
-sub oct2bin($oct where &octal, UInt $len = 0, 
+sub oct2bin($oct where &octal, UInt $len = 0,
             Bool :$prefix = False
             --> Str) is export(:oct2bin) {
     # need bases of incoming and outgoing number
@@ -235,7 +239,7 @@ sub oct2bin($oct where &octal, UInt $len = 0,
     return $bin;
 } # oct2bin
 
-sub oct2hex($oct where &octal, UInt $len = 0, 
+sub oct2hex($oct where &octal, UInt $len = 0,
             Bool :$prefix = False,
             Bool :$UC = False
             --> Str) is export(:oct2hex) {
@@ -250,7 +254,7 @@ sub oct2hex($oct where &octal, UInt $len = 0,
     return $hex;
 } # oct2hex
 
-sub oct2dec($oct where &octal, UInt $len = 0 
+sub oct2dec($oct where &octal, UInt $len = 0
             --> Cool) is export(:oct2dec) {
     # need bases of incoming and outgoing number
     constant $base-i =  8;
@@ -261,8 +265,8 @@ sub oct2dec($oct where &octal, UInt $len = 0
     return $dec;
 } # oct2dec
 
-sub bin2oct($bin where &binary, 
-            UInt $len = 0, 
+sub bin2oct($bin where &binary,
+            UInt $len = 0,
             Bool :$prefix = False
             --> Str) is export(:bin2oct) {
     # need bases of incoming and outgoing number
@@ -276,7 +280,19 @@ sub bin2oct($bin where &binary,
     return $oct;
 } # bin2oct
 
-sub hex2oct($hex where &hexadecimal, UInt $len = 0, 
+sub dec2oct($dec where &decimal,
+            UInt $len = 0,
+            Bool :$prefix = False
+            --> Cool) is export(:dec2oct) {
+    # need base of outgoing number
+    constant $base-o =  8;
+
+    my $oct = $dec.base: $base-o;
+    pad-number $oct, $base-o, $len, :$prefix;
+    return $oct;
+} # dec2oct
+
+sub hex2oct($hex where &hexadecimal, UInt $len = 0,
             Bool :$prefix = False
             --> Str) is export(:hex2oct) {
     # need bases of incoming and outgoing number
@@ -290,15 +306,47 @@ sub hex2oct($hex where &hexadecimal, UInt $len = 0,
     return $oct;
 } # hex2oct
 
-sub dec2oct($dec where &decimal, 
-            UInt $len = 0,
-            Bool :$prefix = False 
-            --> Cool) is export(:dec2oct) {
-    # need base of outgoing number
-    constant $base-o =  8;
+sub baseM2baseN($num-i,
+                $base-i where &all-bases,
+                $base-o where &all-bases,
+                UInt $len = 0,
+                Bool :$prefix = False,
+                Bool :$UC = False
+                --> Cool) is export(:baseM2baseN) {
+    # check for same bases
+    if $base-i eq $base-o {
+        die "FATAL: Both bases are the same ($base-i), no conversion necessary."
+    }
 
+    # check for known bases
+    my ($bi, $bo);
+    {
+        when $base-i eq '2'  { $bi = 'bin' }
+        when $base-i eq '8'  { $bi = 'oct' }
+        when $base-i eq '16' { $bi = 'hex' }
+    }
+    {
+        when $base-o eq '2'  { $bo = 'bin' }
+        when $base-o eq '8'  { $bo = 'oct' }
+        when $base-o eq '16' { $bo = 'hex' }
+    }
+    if $bi && $bo {
+        note "NOTE: Use function '{$bi}2{$bo}' instead for an easier interface."
+    }
+
+    # treatment varies if in or out base is decimal
+    if $base-i eq '10' {
+
+    }
+    elsif $base-o eq '10' {
+    }
+    else {
+        # need decimal as intermediary
+    }
+
+=begin pod
     my $oct = $dec.base: $base-o;
     pad-number $oct, $base-o, $len, :$prefix;
     return $oct;
-} # dec2oct
-
+=end pod
+} # baseM2baseN
