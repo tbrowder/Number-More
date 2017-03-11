@@ -68,14 +68,9 @@ sub pad-number($num is rw,
         $num = $zpad ~ $num;
     }
     if $prefix {
-        given $base {
-            #when $base eq '2'  { $num = '0b' ~ $num }
-            #when $base eq '8'  { $num = '0o' ~ $num }
-            #when $base eq '16' { $num = '0x' ~ $num }
-            when /2/  { $num = '0b' ~ $num }
-            when /8/  { $num = '0o' ~ $num }
-            when /16/ { $num = '0x' ~ $num }
-        }
+        when $base eq '2'  { $num = '0b' ~ $num }
+        when $base eq '8'  { $num = '0o' ~ $num }
+        when $base eq '16' { $num = '0x' ~ $num }
     }
 }
 
