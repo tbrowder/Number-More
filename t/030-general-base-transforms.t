@@ -3,43 +3,40 @@ use Test;
 
 use Number::More :ALL;
 
-plan 180;
+plan 1190;
 
-my $UC = True;
+my $prefix = True;
+my $UC     = True;
 
 # a random set of decimal inputs
-my $nrands = 10; # num loops
-my $ntests = 18; # per loop
+my $nrands =  1; # num loops
+my $ntests =  1; # per loop
 my $total-tests = $nrands * $ntests;
 my @uints = ((rand * 10000).Int) xx $nrands;
 for @uints -> $dec {
-    my $bin  = $dec.base: 2;
-    my $oct  = $dec.base: 8;
-    my $hex  = $dec.base: 16; # alpha chars are upper case
-    my $hex2 = lc $hex;       # a lower-case version
+    for 2..36 -> $bi {
+        for 2..36 -> $bo {
+            # skip some here
+            next if $bi eq $bo; 
 
-    # the tests 18
-    is bin2oct($bin), $oct;
-    is bin2dec($bin), $dec;
-    is bin2hex($bin), $hex2;
-    is bin2hex($bin, :$UC), $hex;
+            # use Perl 6 routines directly
+            my ($tnum-in, $tnum-out);
+            if $bi eq '10' {
+                $tnum-in  = $dec; 
+                $tnum-out = $dec.base: $bo; 
+            }
+            elsif $bo eq '10' {
+                $tnum-in  = $dec.base: $bi; 
+                $tnum-out = $dec; 
+            }
+            else {
+                $tnum-in  = $dec.base: $bi; 
+                $tnum-out = $dec.base: $bo; 
+            }
+            $tnum-out .= lc if $bo > 15; # default for our code, default for Perl 6 routine is upper case
 
-    is oct2bin($oct), $bin;
-    is oct2dec($oct), $dec;
-    is oct2hex($oct), $hex2;
-    is oct2hex($oct, :$UC), $hex;
-
-    is dec2bin($dec), $bin;
-    is dec2oct($dec), $oct;
-    is dec2hex($dec), $hex2;
-    is dec2hex($dec, :$UC), $hex;
-
-    is hex2bin($hex), $bin;
-    is hex2oct($hex), $oct;
-    is hex2dec($hex), $dec;
-
-    is hex2bin($hex2), $bin;
-    is hex2oct($hex2), $oct;
-    is hex2dec($hex2), $dec;
+            is baseM2baseN($tnum-in, $bi, $bo), $tnum-out;
+        }
+    }
 }
 

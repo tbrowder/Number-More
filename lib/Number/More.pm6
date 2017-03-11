@@ -71,13 +71,13 @@ my token base36 is export(:token-base35)            { :i ^ <[a..z\d]>+ $ }   # m
 my token base { ^ 2|8|10|16 $ }
 
 sub pad-number($num is rw,
-               UInt $base where &base,
+               UInt $base where &all-bases,
                UInt $len = 0,
                Bool :$prefix = False,
                Bool :$UC = False) {
 
     # this also checks for length error, upper-lower casing, and handling
-    if $base == 16 {
+    if $base > 15 {
         if $UC {
             $num .= uc
         }
