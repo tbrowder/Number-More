@@ -10,3 +10,11 @@ add named param for leading code for non-decimal numbers ('0x', '0b') [DONE]
 
 add in README.md that these subs are for uint numbers only [DONE]
 
+Possible future features
+========================
+
+simpler interface to general transformation up to 36
+
+bases higher than 36
+
+
