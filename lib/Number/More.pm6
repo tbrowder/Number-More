@@ -19,10 +19,50 @@ our $LENGTH-HANDLING is export(:DEBUG) = 'ignore'; # other options: 'warn', 'fai
 my token length-action { ^ :i warn|fail $ }
 
 # define tokens for common regexes
-my token binary is export(:token-binary)                   { ^ <[01]>+ $ }
-my token octal is export(:token-octal)                     { ^ <[0..7]>+ $ }
-my token decimal is export(:token-decimal)                 { ^ \d+ $ }              # actually an int
-my token hexadecimal is export(:token-hecadecimal)         { :i ^ <[a..f\d]>+ $ }   # multiple chars
+my token binary is export(:token-binary)            { ^ <[01]>+ $ }
+my token octal is export(:token-octal)              { ^ <[0..7]>+ $ }
+my token decimal is export(:token-decimal)          { ^ \d+ $ }              # actually an int
+my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   # multiple chars
+
+# for some future base functions
+my token base3 is export(:token-base3)              { ^ <[012]>+ $ }
+my token base4 is export(:token-base4)              { ^ <[0..3]>+ $ }
+my token base5 is export(:token-base5)              { ^ <[0..4]>+ $ }
+my token base6 is export(:token-base6)              { ^ <[0..5]>+ $ }
+my token base7 is export(:token-base7)              { ^ <[0..6]>+ $ }
+# base 8 is octal
+my token base9 is export(:token-base9)              { ^ <[0..8]>+ $ }
+# base 10 is decimal
+my token base11 is export(:token-base11)            { :i ^ <[a\d]>+ $ }      # multiple chars
+my token base12 is export(:token-base12)            { :i ^ <[ab\d]>+ $ }     # multiple chars
+my token base13 is export(:token-base13)            { :i ^ <[abc\d]>+ $ }    # multiple chars
+my token base14 is export(:token-base14)            { :i ^ <[a..d\d]>+ $ }   # multiple chars
+my token base15 is export(:token-base15)            { :i ^ <[a..e\d]>+ $ }   # multiple chars
+# base 16 is hexadecimal
+my token base17 is export(:token-base17)            { :i ^ <[a..g\d]>+ $ }   # multiple chars
+my token base18 is export(:token-base18)            { :i ^ <[a..h\d]>+ $ }   # multiple chars
+my token base19 is export(:token-base19)            { :i ^ <[a..i\d]>+ $ }   # multiple chars
+
+my token base20 is export(:token-base20)            { :i ^ <[a..j\d]>+ $ }   # multiple chars
+my token base21 is export(:token-base21)            { :i ^ <[a..k\d]>+ $ }   # multiple chars
+my token base22 is export(:token-base22)            { :i ^ <[a..l\d]>+ $ }   # multiple chars
+my token base23 is export(:token-base23)            { :i ^ <[a..m\d]>+ $ }   # multiple chars
+my token base24 is export(:token-base24)            { :i ^ <[a..n\d]>+ $ }   # multiple chars
+my token base25 is export(:token-base25)            { :i ^ <[a..o\d]>+ $ }   # multiple chars
+my token base26 is export(:token-base26)            { :i ^ <[a..p\d]>+ $ }   # multiple chars
+my token base27 is export(:token-base27)            { :i ^ <[a..q\d]>+ $ }   # multiple chars
+my token base28 is export(:token-base28)            { :i ^ <[a..r\d]>+ $ }   # multiple chars
+my token base29 is export(:token-base29)            { :i ^ <[a..s\d]>+ $ }   # multiple chars
+
+my token base30 is export(:token-base30)            { :i ^ <[a..t\d]>+ $ }   # multiple chars
+my token base31 is export(:token-base31)            { :i ^ <[a..u\d]>+ $ }   # multiple chars
+my token base32 is export(:token-base32)            { :i ^ <[a..v\d]>+ $ }   # multiple chars
+my token base33 is export(:token-base33)            { :i ^ <[a..w\d]>+ $ }   # multiple chars
+my token base34 is export(:token-base34)            { :i ^ <[a..x\d]>+ $ }   # multiple chars
+my token base35 is export(:token-base35)            { :i ^ <[a..y\d]>+ $ }   # multiple chars
+my token base36 is export(:token-base35)            { :i ^ <[a..z\d]>+ $ }   # multiple chars
+
+
 
 my token base { ^ 2|8|10|16 $ }
 
@@ -261,6 +301,4 @@ sub dec2oct($dec where &decimal,
     pad-number $oct, $base-o, $len, :$prefix;
     return $oct;
 } # dec2oct
-
-
 
