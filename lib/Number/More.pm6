@@ -335,18 +335,31 @@ sub baseM2baseN($num-i,
     }
 
     # treatment varies if in or out base is decimal
+    my $num-o;
     if $base-i eq '10' {
-
+        $num-o = $num-i.base: $base-o;
     }
     elsif $base-o eq '10' {
+        $num-o = parse-base $num-i, $base-i;
     }
     else {
         # need decimal as intermediary
+        my $dec = parse-base $num-i, $base-i;
+        $num-o = $dec.base: $base-o;
     }
 
-=begin pod
-    my $oct = $dec.base: $base-o;
-    pad-number $oct, $base-o, $len, :$prefix;
-    return $oct;
-=end pod
+    if $base-o > 16 {
+        pad-number $num-o, $base-o, $len, :$UC;
+    }    
+    elsif $base-o eq '2' || $base-o eq '8' {
+        pad-number $num-o, $base-o, $len, :$UC;
+    }
+    elsif $base-o eq '16' {
+        pad-number $num-o, $base-o, $len, :$UC;
+    }
+    else {
+        pad-number $num-o, $base-o, $len;
+    }        
+
+    return $num-o;
 } # baseM2baseN
