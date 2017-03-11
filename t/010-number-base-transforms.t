@@ -5,7 +5,7 @@ use Number::More :ALL;
 
 $Number::More::LENGHT-HANDLING = 'waRn';
 
-plan 26;
+plan 38;
 
 my $prefix = True;
 my $UC     = True;
@@ -53,16 +53,21 @@ is dec2bin(10, 5, :$prefix), '0b1010';
 is dec2bin(10, :$prefix), '0b1010';
 
 # new tests, organize better later
-=begin pod
-is bin2oct();
-is hex2oct();
-is dec2oct();
+is bin2oct('111111'), '77';
+is bin2oct('111111', :$prefix), '0o77';
 
-is oct2bin();
-is oct2hex();
-is oct2dec();
+is hex2oct('3f'), '77';
+is hex2oct('3f', :$prefix), '0o77';
 
-=end pod
+is dec2oct(63), '77';
+is dec2oct(63, :$prefix), '0o77';
 
-done-testing;
+is oct2bin('77'), '111111';
+is oct2bin('77', :$prefix), '0b111111';
+
+is oct2hex('77'), '3f';
+is oct2hex('77', :$prefix), '0x3f';
+is oct2hex('77', :$prefix, :$UC), '0x3F';
+
+is oct2dec('77'), '63';
 

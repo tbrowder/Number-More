@@ -197,7 +197,7 @@ sub oct2bin($oct where &octal, UInt $len = 0,
     # need decimal intermediary
     my $dec = parse-base $oct, $base-i;
     my $bin = $dec.base: $base-o;
-    pad-number $bin, $base-o, $len;
+    pad-number $bin, $base-o, $len, :$prefix;
     return $bin;
 } # oct2bin
 
@@ -227,8 +227,8 @@ sub oct2dec($oct where &octal, UInt $len = 0
     return $dec;
 } # oct2dec
 
-# X2oct
-sub bin2oct($bin where &binary, UInt $len = 0, 
+sub bin2oct($bin where &binary, 
+            UInt $len = 0, 
             Bool :$prefix = False
             --> Str) is export(:bin2oct) {
     # need bases of incoming and outgoing number
@@ -238,7 +238,7 @@ sub bin2oct($bin where &binary, UInt $len = 0,
     # need decimal intermediary
     my $dec = parse-base $bin, $base-i;
     my $oct = $dec.base: $base-o;
-    pad-number $oct, $base-o, $len;
+    pad-number $oct, $base-o, $len, :$prefix;
     return $oct;
 } # bin2oct
 
