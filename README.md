@@ -18,6 +18,13 @@ As an example of the detail involved, any transformation from a non-decimal base
 an intermediate step to convert the first non-decimal number to decimal and then convert the decimal number to the final
 desired base.
 
+The following illustrates the process using Perl 6 routines:
+
+    my $bin = '11001011';
+    my $dec = parse-base $bin, 2;
+    my $hex = $dec.base : 16; 
+    say $hex; # OUTPUT ???
+
 The default for each function is to take a string representing
 a valid number in one base and transform it into the desired base with no leading zeroes or descriptive prefix (such
 as '0x', '0o', and '0b') to indicate

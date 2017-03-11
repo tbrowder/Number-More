@@ -5,7 +5,7 @@ use Number::More :ALL;
 
 $Number::More::LENGHT-HANDLING = 'waRn';
 
-plan 38;
+plan 128;
 
 my $prefix = True;
 my $UC     = True;
@@ -70,4 +70,38 @@ is oct2hex('77', :$prefix), '0x3f';
 is oct2hex('77', :$prefix, :$UC), '0x3F';
 
 is oct2dec('77'), '63';
+
+# a random set of decimal inputs
+my $nrand = 5;
+my @uints = ((rand * 10000).Int) xx $nrand;
+for @uints -> $dec {
+    my $bin  = $dec.base: 2;
+    my $oct  = $dec.base: 8;
+    my $hex  = $dec.base: 16; # alpha chars are upper case
+    my $hex2 = lc $hex;       # a lower-case version
+
+    # the tests
+    is bin2oct($bin), $oct;
+    is bin2dec($bin), $dec;
+    is bin2hex($bin), $hex2;
+    is bin2hex($bin, :$UC), $hex;
+
+    is oct2bin($oct), $bin;
+    is oct2dec($oct), $dec;
+    is oct2hex($oct), $hex2;
+    is oct2hex($oct, :$UC), $hex;
+
+    is dec2bin($dec), $bin;
+    is dec2oct($dec), $oct;
+    is dec2hex($dec), $hex2;
+    is dec2hex($dec, :$UC), $hex;
+
+    is hex2bin($hex), $bin;
+    is hex2oct($hex), $oct;
+    is hex2dec($hex), $dec;
+
+    is hex2bin($hex2), $bin;
+    is hex2oct($hex2), $oct;
+    is hex2dec($hex2), $dec;
+}
 
