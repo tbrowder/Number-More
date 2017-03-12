@@ -1,11 +1,22 @@
 Before first release
 ====================
 
-add named param for lower case to base conversions
+all DONE
 
-add info about general number base transforms
+DONE
+====
 
-add info for all subs in the module code
+check CHANGELOG.md [DONE]
+
+check .travis.yml [DONE]
+
+check META6.json [DONE]
+
+add info about general number base transforms [DONE]
+
+add named param for lower case to base conversions [DONE]
+
+add info for all subs in the module code [DONE]
 
 use Perl 6 built-in routines base(str) and parse-base(str) to simplify
   number base conversions [DONE]
