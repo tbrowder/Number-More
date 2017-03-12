@@ -111,6 +111,7 @@ my @toks = [
 
 my token base { ^ 2|8|10|16 $ }
 
+# this is an internal sub
 sub pad-number($num is rw,
                UInt $base where &all-bases,
                UInt $len = 0,
@@ -160,9 +161,9 @@ sub pad-number($num is rw,
 
 #------------------------------------------------------------------------------
 # Subroutine: hex2dec
-# Purpose : Convert a positive hexadecimal number (string) to a decimal number
-# Params  : Hexadecimal number (string), desired length (optional)
-# Returns : Decimal number (or string)
+# Purpose : Convert a positive hexadecimal number (string) to a decimal number.
+# Params  : Hexadecimal number (string), desired length (optional).
+# Returns : Decimal number (or string).
 sub hex2dec(Str:D $hex where &hexadecimal,
             UInt $len = 0
             --> Cool) is export(:hex2dec) {
@@ -177,9 +178,9 @@ sub hex2dec(Str:D $hex where &hexadecimal,
 
 #------------------------------------------------------------------------------
 # Subroutine: hex2bin
-# Purpose : Convert a positive hexadecimal number (string) to a binary string
-# Params  : Hexadecimal number (string), desired length (optional)
-# Returns : Binary number (string)
+# Purpose : Convert a positive hexadecimal number (string) to a binary string.
+# Params  : Hexadecimal number (string), desired length (optional), prefix (optional).
+# Returns : Binary number (string).
 sub hex2bin(Str:D $hex where &hexadecimal,
             UInt $len = 0,
             Bool :$prefix = False
@@ -197,9 +198,9 @@ sub hex2bin(Str:D $hex where &hexadecimal,
 
 #------------------------------------------------------------------------------
 # Subroutine: dec2hex
-# Purpose : Convert a positive integer to a hexadecimal number (string)
-# Params  : Positive decimal number, desired length (optional)
-# Returns : Hexadecimal number (string)
+# Purpose : Convert a positive integer to a hexadecimal number (string).
+# Params  : Positive decimal number, desired length (optional), prefix (optional), lower-case (optional).
+# Returns : Hexadecimal number (string).
 sub dec2hex($dec where &decimal,
             UInt $len = 0,
             Bool :$prefix = False,
@@ -214,9 +215,9 @@ sub dec2hex($dec where &decimal,
 
 #------------------------------------------------------------------------------
 # Subroutine: dec2bin
-# Purpose : Convert a positive integer to a binary number (string)
-# Params  : Positive decimal number, desired length (optional)
-# Returns : Binary number (string)
+# Purpose : Convert a positive integer to a binary number (string).
+# Params  : Positive decimal number, desired length (optional), prefix (optional).
+# Returns : Binary number (string).
 sub dec2bin($dec where &decimal,
             UInt $len = 0,
             :$prefix = False
@@ -231,9 +232,9 @@ sub dec2bin($dec where &decimal,
 
 #------------------------------------------------------------------------------
 # Subroutine: bin2dec
-# Purpose : Convert a binary number (string) to a decimal number
-# Params  : Binary number (string), desired length (optional)
-# Returns : Decimal number (or string)
+# Purpose : Convert a binary number (string) to a decimal number.
+# Params  : Binary number (string), desired length (optional).
+# Returns : Decimal number (or string).
 sub bin2dec(Str:D $bin where &binary,
             UInt $len = 0
             --> Cool) is export(:bin2dec) {
@@ -248,9 +249,9 @@ sub bin2dec(Str:D $bin where &binary,
 
 #------------------------------------------------------------------------------
 # Subroutine: bin2hex
-# Purpose : Convert a binary number (string) to a hexadecimal number (string)
-# Params  : Binary number (string), desired length (optional)
-# Returns : Hexadecimal number (string)
+# Purpose : Convert a binary number (string) to a hexadecimal number (string).
+# Params  : Binary number (string), desired length (optional), prefix (optional), lower-case (optional).
+# Returns : Hexadecimal number (string).
 sub bin2hex(Str:D $bin where &binary,
             UInt $len = 0,
             Bool :$prefix = False,
@@ -266,6 +267,11 @@ sub bin2hex(Str:D $bin where &binary,
     return $hex;
 } # bin2hex
 
+#------------------------------------------------------------------------------
+# Subroutine: oct2bin
+# Purpose : Convert an octal number (string) to a binary number (string).
+# Params  : Octal number (string), desired length (optional), prefix (optional).
+# Returns : Binary number (string).
 sub oct2bin($oct where &octal, UInt $len = 0,
             Bool :$prefix = False
             --> Str) is export(:oct2bin) {
@@ -280,6 +286,11 @@ sub oct2bin($oct where &octal, UInt $len = 0,
     return $bin;
 } # oct2bin
 
+#------------------------------------------------------------------------------
+# Subroutine: oct2hex
+# Purpose : Convert an octal number (string) to a hexadecimal number (string).
+# Params  : Octal number (string), desired length (optional), prefix (optional), lower-case (optional).
+# Returns : Hexadecimal number (string).
 sub oct2hex($oct where &octal, UInt $len = 0,
             Bool :$prefix = False,
             Bool :$LC = False
@@ -295,6 +306,11 @@ sub oct2hex($oct where &octal, UInt $len = 0,
     return $hex;
 } # oct2hex
 
+#------------------------------------------------------------------------------
+# Subroutine: oct2dec
+# Purpose : Convert an octal number (string) to a decimal number.
+# Params  : Octal number (string), desired length (optional).
+# Returns : Decimal number.
 sub oct2dec($oct where &octal, UInt $len = 0
             --> Cool) is export(:oct2dec) {
     # need bases of incoming and outgoing number
@@ -306,6 +322,11 @@ sub oct2dec($oct where &octal, UInt $len = 0
     return $dec;
 } # oct2dec
 
+#------------------------------------------------------------------------------
+# Subroutine: bin2oct
+# Purpose : Convert a binary number (string) to an octal number.
+# Params  : Binary number (string), desired length (optional), prefix (optional).
+# Returns : Octal number (string).
 sub bin2oct($bin where &binary,
             UInt $len = 0,
             Bool :$prefix = False
@@ -321,6 +342,11 @@ sub bin2oct($bin where &binary,
     return $oct;
 } # bin2oct
 
+#------------------------------------------------------------------------------
+# Subroutine: dec2oct
+# Purpose : Convert a decimal number to an octal number.
+# Params  : Decimal number, desired length (optional), prefix (optional).
+# Returns : Octal number (string).
 sub dec2oct($dec where &decimal,
             UInt $len = 0,
             Bool :$prefix = False
@@ -333,6 +359,11 @@ sub dec2oct($dec where &decimal,
     return $oct;
 } # dec2oct
 
+#------------------------------------------------------------------------------
+# Subroutine: hex2oct
+# Purpose : Convert a hexadecimal number (string) to an octal number.
+# Params  : Hexadecimal number (string), desired length (optional), prefix (optional).
+# Returns : Octal number (string).
 sub hex2oct($hex where &hexadecimal, UInt $len = 0,
             Bool :$prefix = False
             --> Str) is export(:hex2oct) {
@@ -347,6 +378,11 @@ sub hex2oct($hex where &hexadecimal, UInt $len = 0,
     return $oct;
 } # hex2oct
 
+#------------------------------------------------------------------------------
+# Subroutine: rebase
+# Purpose : Convert any number (string) and base (2..36) to a number in another base (2..36).
+# Params  : Number (string), desired length (optional), prefix (optional), lower-case (optional).
+# Returns : Desired number (string) in the desired base.
 sub rebase($num-i,
                 $base-i where &all-bases,
                 $base-o where &all-bases,
