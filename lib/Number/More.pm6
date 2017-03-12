@@ -352,10 +352,10 @@ sub baseM2baseN($num-i,
         pad-number $num-o, $base-o, $len, :$UC;
     }    
     elsif $base-o eq '2' || $base-o eq '8' {
-        pad-number $num-o, $base-o, $len, :$UC;
+        pad-number $num-o, $base-o, $len, :$prefix;
     }
     elsif $base-o eq '16' {
-        pad-number $num-o, $base-o, $len, :$UC;
+        pad-number $num-o, $base-o, $len, :$prefix, :$UC;
     }
     else {
         pad-number $num-o, $base-o, $len;
