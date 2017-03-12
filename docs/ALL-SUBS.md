@@ -10,7 +10,7 @@
 | [oct2bin](#oct2bin) | [oct2dec](#oct2dec) | [oct2hex](#oct2hex) |
 | [rebase](#rebase) |  |  |
 
-```
+
 ### sub bin2dec
 - Purpose: Convert a binary number (string) to a decimal number.
 - Params : Binary number (string), desired length (optional).
