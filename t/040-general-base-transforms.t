@@ -3,7 +3,7 @@ use Test;
 
 use Number::More :ALL;
 
-plan 49;
+plan 54;
 
 my $prefix = True;
 my $LC     = True;
@@ -46,7 +46,7 @@ for 10..35 -> $dec {
         $out = lc $tnum-out;
         is rebase($tnum-in, $bi, $bo, :$LC), $out, $out;
     }
-    elsif $bo > 16 {
+    elsif $bo > 10 {
         my $out = lc $tnum-out;
         is rebase($tnum-in, $bi, $bo, :$LC), $out, $out;
     }

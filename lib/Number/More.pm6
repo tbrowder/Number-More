@@ -118,7 +118,7 @@ sub pad-number($num is rw,
                Bool :$LC = False) {
 
     # this also checks for length error, upper-lower casing, and handling
-    if $base > 15 {
+    if $base > 10 {
         if $LC {
             $num .= lc;
         }
@@ -353,7 +353,8 @@ sub rebase($num-i,
                 UInt $len = 0,
                 Bool :$prefix = False,
                 Bool :$LC = False
-                --> Cool) is export(:baseM2baseN) {
+                     --> Cool) is export(:baseM2baseN) {
+
     # make sure incoming number is in the right base
     if $num-i !~~ @toks[$base-i] {
         die "FATAL: Incoming number in sub 'rebase' is not a member of base '$base-i'.";
@@ -394,14 +395,14 @@ sub rebase($num-i,
         $num-o = $dec.base: $base-o;
     }
 
-    if $base-o > 16 {
-        pad-number $num-o, $base-o, $len, :$LC;
-    }
-    elsif $base-o eq '2' || $base-o eq '8' {
+    if $base-o eq '2' || $base-o eq '8' {
         pad-number $num-o, $base-o, $len, :$prefix;
     }
     elsif $base-o eq '16' {
         pad-number $num-o, $base-o, $len, :$prefix, :$LC;
+    }
+    elsif $base-o > 10 {
+        pad-number $num-o, $base-o, $len, :$LC;
     }
     else {
         pad-number $num-o, $base-o, $len;
