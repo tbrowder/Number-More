@@ -1,24 +1,25 @@
 Before first release
 ====================
 
-use Perl 6 built-in routines base(str) and parse-base(str) to simplify
-  number base conversions [DONE]
-
-add named param for upper case to base conversions [DONE]
-
-add named param for leading code for non-decimal numbers ('0x', '0b') [DONE]
-
-add in README.md that these subs are for uint numbers only [DONE]
-
-simpler interface to general transformation up to 36 [DONE]
+add named param for lower case to base conversions
 
 add info about general number base transforms
 
 add info for all subs in the module code
+
+use Perl 6 built-in routines base(str) and parse-base(str) to simplify
+  number base conversions [DONE]
+
+add named param for leading code for non-decimal numbers ('0x', '0b',
+'0x') [DONE]
+
+add in README.md that these subs are for uint numbers only [DONE]
+
+simpler interface to general transformation up to 36 [DONE]
 
 Possible future features
 ========================
 
 bases 37 through 62 (and variants, see Wikipedia)
 
-
+add named param to add 'base-X' to a transformed number (position?)

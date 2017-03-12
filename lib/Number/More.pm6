@@ -26,7 +26,7 @@ my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   # m
 
 # for general base functions
 my token all-bases is export(:token-all-bases)      { ^ <[2..9]> | <[1..5]><[0..9]> | 6 <[0..4]> $ }
-# base 2 is binary 
+# base 2 is binary
 my token base2 is export(:token-base2)              { ^ <[01]>+ $ }
 my token base3 is export(:token-base3)              { ^ <[012]>+ $ }
 my token base4 is export(:token-base4)              { ^ <[0..3]>+ $ }
@@ -115,15 +115,15 @@ sub pad-number($num is rw,
                UInt $base where &all-bases,
                UInt $len = 0,
                Bool :$prefix = False,
-               Bool :$UC = False) {
+               Bool :$LC = False) {
 
     # this also checks for length error, upper-lower casing, and handling
     if $base > 15 {
-        if $UC {
-            $num .= uc
+        if $LC {
+            $num .= lc;
         }
         else {
-            $num .= lc
+            $num .= uc; # Perl 6 default
         }
     }
 
@@ -203,12 +203,12 @@ sub hex2bin(Str:D $hex where &hexadecimal,
 sub dec2hex($dec where &decimal,
             UInt $len = 0,
             Bool :$prefix = False,
-            Bool :$UC = False --> Str) is export(:dec2hex) {
+            Bool :$LC = False --> Str) is export(:dec2hex) {
     # need base of outgoing number
     constant $base-o = 16;
 
     my $hex = $dec.base: $base-o;
-    pad-number $hex, $base-o, $len, :$prefix, :$UC;
+    pad-number $hex, $base-o, $len, :$prefix, :$LC;
     return $hex;
 } # dec2hex
 
@@ -254,7 +254,7 @@ sub bin2dec(Str:D $bin where &binary,
 sub bin2hex(Str:D $bin where &binary,
             UInt $len = 0,
             Bool :$prefix = False,
-            Bool :$UC = False --> Str) is export(:bin2hex) {
+            Bool :$LC = False --> Str) is export(:bin2hex) {
     # need bases of incoming and outgoing number
     constant $base-i =  2;
     constant $base-o = 16;
@@ -262,7 +262,7 @@ sub bin2hex(Str:D $bin where &binary,
     # need decimal intermediary
     my $dec = parse-base $bin, $base-i;
     my $hex = $dec.base: $base-o;
-    pad-number $hex, $base-o, $len, :$prefix, :$UC;
+    pad-number $hex, $base-o, $len, :$prefix, :$LC;
     return $hex;
 } # bin2hex
 
@@ -282,7 +282,7 @@ sub oct2bin($oct where &octal, UInt $len = 0,
 
 sub oct2hex($oct where &octal, UInt $len = 0,
             Bool :$prefix = False,
-            Bool :$UC = False
+            Bool :$LC = False
             --> Str) is export(:oct2hex) {
     # need bases of incoming and outgoing number
     constant $base-i =  8;
@@ -291,7 +291,7 @@ sub oct2hex($oct where &octal, UInt $len = 0,
     # need decimal intermediary
     my $dec = parse-base $oct, $base-i;
     my $hex = $dec.base: $base-o;
-    pad-number $hex, $base-o, $len, :$prefix, :$UC;
+    pad-number $hex, $base-o, $len, :$prefix, :$LC;
     return $hex;
 } # oct2hex
 
@@ -352,7 +352,7 @@ sub rebase($num-i,
                 $base-o where &all-bases,
                 UInt $len = 0,
                 Bool :$prefix = False,
-                Bool :$UC = False
+                Bool :$LC = False
                 --> Cool) is export(:baseM2baseN) {
     # make sure incoming number is in the right base
     if $num-i !~~ @toks[$base-i] {
@@ -395,17 +395,17 @@ sub rebase($num-i,
     }
 
     if $base-o > 16 {
-        pad-number $num-o, $base-o, $len, :$UC;
-    }    
+        pad-number $num-o, $base-o, $len, :$LC;
+    }
     elsif $base-o eq '2' || $base-o eq '8' {
         pad-number $num-o, $base-o, $len, :$prefix;
     }
     elsif $base-o eq '16' {
-        pad-number $num-o, $base-o, $len, :$prefix, :$UC;
+        pad-number $num-o, $base-o, $len, :$prefix, :$LC;
     }
     else {
         pad-number $num-o, $base-o, $len;
-    }        
+    }
 
     return $num-o;
 } # rebase
