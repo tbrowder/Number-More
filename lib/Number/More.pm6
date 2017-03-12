@@ -26,6 +26,8 @@ my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   # m
 
 # for general base functions
 my token all-bases is export(:token-all-bases)      { ^ <[2..9]> | <[1..5]><[0..9]> | 6 <[0..4]> $ }
+# base 2 is binary 
+my token base2 is export(:token-base2)              { ^ <[01]>+ $ }
 my token base3 is export(:token-base3)              { ^ <[012]>+ $ }
 my token base4 is export(:token-base4)              { ^ <[0..3]>+ $ }
 my token base5 is export(:token-base5)              { ^ <[0..4]>+ $ }
@@ -66,6 +68,45 @@ my token base34 is export(:token-base34)            { :i ^ <[a..x\d]>+ $ }   # m
 my token base35 is export(:token-base35)            { :i ^ <[a..y\d]>+ $ }   # multiple chars
 my token base36 is export(:token-base35)            { :i ^ <[a..z\d]>+ $ }   # multiple chars
 
+my @toks = [
+'0',
+'1',
+&base2,
+&base3,
+&base4,
+&base5,
+&base6,
+&base7,
+&base8,
+&base9,
+&base10,
+&base11,
+&base12,
+&base13,
+&base14,
+&base15,
+&base16,
+&base17,
+&base18,
+&base19,
+&base20,
+&base21,
+&base22,
+&base23,
+&base24,
+&base25,
+&base26,
+&base27,
+&base28,
+&base29,
+&base30,
+&base31,
+&base32,
+&base33,
+&base34,
+&base35,
+&base36,
+];
 
 
 my token base { ^ 2|8|10|16 $ }
@@ -306,13 +347,18 @@ sub hex2oct($hex where &hexadecimal, UInt $len = 0,
     return $oct;
 } # hex2oct
 
-sub baseM2baseN($num-i,
+sub rebase($num-i,
                 $base-i where &all-bases,
                 $base-o where &all-bases,
                 UInt $len = 0,
                 Bool :$prefix = False,
                 Bool :$UC = False
                 --> Cool) is export(:baseM2baseN) {
+    # make sure incoming number is in the right base
+    if $num-i !~~ @toks[$base-i] {
+        die "FATAL: Incoming number in sub 'rebase' is not a member of base '$base-i'.";
+    }
+
     # check for same bases
     if $base-i eq $base-o {
         die "FATAL: Both bases are the same ($base-i), no conversion necessary."
@@ -362,4 +408,4 @@ sub baseM2baseN($num-i,
     }        
 
     return $num-o;
-} # baseM2baseN
+} # rebase

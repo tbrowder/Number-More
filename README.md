@@ -36,7 +36,12 @@ set the reponse to situations where the transformed length is greater than the r
 the required length (the default), (2) warn of the increased length but provide it, and (3) throw an exception
 and report the offending data.
 
-LICENSE and COPYRIGHT
+## Credits
+
+Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name 'rebase' for the general base transformation
+subroutine.
+
+## LICENSE and COPYRIGHT
 
 
 

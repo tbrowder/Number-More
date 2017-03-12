@@ -35,22 +35,22 @@ for @uints -> $dec {
             }
             $tnum-out .= lc if $bo > 15; # default for our code, default for Perl 6 routine is upper case
 
-            is baseM2baseN($tnum-in, $bi, $bo), $tnum-out;
+            is rebase($tnum-in, $bi, $bo), $tnum-out;
             if $bo eq '2' {
                 my $out = '0b' ~ $tnum-out;
-                is baseM2baseN($tnum-in, $bi, $bo, :$prefix), $out;
+                is rebase($tnum-in, $bi, $bo, :$prefix), $out;
             }
             elsif $bo eq '8' {
                 my $out = '0o' ~ $tnum-out;
-                is baseM2baseN($tnum-in, $bi, $bo, :$prefix), $out;
+                is rebase($tnum-in, $bi, $bo, :$prefix), $out;
             }
             elsif $bo eq '16' {
                 my $out = '0x' ~ $tnum-out;
-                is baseM2baseN($tnum-in, $bi, $bo, :$prefix), $out;
+                is rebase($tnum-in, $bi, $bo, :$prefix), $out;
                 $out = '0x' ~ uc $tnum-out;
-                is baseM2baseN($tnum-in, $bi, $bo, :$prefix, :$UC), $out;
+                is rebase($tnum-in, $bi, $bo, :$prefix, :$UC), $out;
                 $out = uc $tnum-out;
-                is baseM2baseN($tnum-in, $bi, $bo, :$UC), $out;
+                is rebase($tnum-in, $bi, $bo, :$UC), $out;
             }
         }
     }

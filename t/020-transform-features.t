@@ -5,7 +5,7 @@ use Number::More :ALL;
 
 $Number::More::LENGHT-HANDLING = 'waRn';
 
-plan 26;
+plan 27;
 
 my $prefix = True;
 my $UC     = True;
@@ -16,7 +16,8 @@ my $msg2 = ":\$UC arg not allowed for conversion to anything but hexadecimal";
 # error conditions
 dies-ok { hex2dec('ff', :$prefix), 255; }, $msg1;
 dies-ok { hex2dec('ff', 2, :$prefix), '255'; }, $msg1;
-dies-ok { bin2dec('11', :$prefix), 3;}, $msg1;
+dies-ok { bin2dec('11', :$prefix), 3; }, $msg1;
+dies-ok { rebase('Z', 2, 3), 2; }, "incorrect base number for input";
 
 # various features
 is hex2dec('ff', 5), '00255';
@@ -43,7 +44,6 @@ is dec2bin(10, 5), '01010';
 is dec2bin(10, 5, :$prefix), '0b1010';
 is dec2bin(10, :$prefix), '0b1010';
 
-# new tests, organize better later
 is bin2oct('111111', :$prefix), '0o77';
 
 is hex2oct('3f', :$prefix), '0o77';
