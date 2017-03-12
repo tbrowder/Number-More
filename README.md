@@ -69,7 +69,7 @@ For debugging, use one of the following methods:
 - set the module's $DEBUG variable:
 
 ```Perl6
-:$Number::More::DEBUG = True;
+$Number::More::DEBUG = True;
 ```
 
 - set the environment variable:
