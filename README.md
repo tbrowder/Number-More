@@ -5,6 +5,11 @@
 
 ## Synopsis
 
+    use Number::More :ALL;
+    my $bin = '11001011';
+    my $hex = bin2hex($bin);
+    say $hex; # OUTPUT ???
+
 
 ## The Number::More module
 
@@ -22,7 +27,8 @@ non-decimal base to another non-decimal base requires an intermediate
 step to convert the first non-decimal number to decimal and then
 convert the decimal number to the final desired base.
 
-The following illustrates the process using Perl 6 routines:
+The following illustrates the process using Perl 6 routines for the
+example above:
 
     my $bin = '11001011';
     my $dec = parse-base $bin, 2;
@@ -45,9 +51,17 @@ than the requested length: (1) ignore and provide the required length
 (the default), (2) warn of the increased length but provide it, and
 (3) throw an exception and report the offending data.
 
+
+# The Number::More module
+
+The routines are described in detail in
+[ALL-SUBS](https://github.com/tbrowder/Number-More-Perl6/blob/master/docs/ALL-SUBS.md)
+which shows a short description of each exported routine along along
+with its complete signature.
+
 ## Credits
 
-Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name 'rebase' for the general base transformation
-subroutine.
+Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name
+'rebase' for the general base transformation subroutine.
 
 ## LICENSE and COPYRIGHT
