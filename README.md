@@ -1,4 +1,4 @@
-# Number::More
+::More
 
 [![Build Status](https://travis-ci.org/tbrowder/Number-More-Perl6.svg?branch=master)]
   (https://travis-ci.org/tbrowder/Number-More-Perl6)
@@ -88,6 +88,11 @@ suggestions are always welcome.
 
 Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name
 'rebase' for the general base transformation subroutine.
+
+## References
+
+[Number Systems](https://en.wikipedia.org/wiki/List_of_numeral_systems).
+[Radix](https://en.wikipedia.org/wiki/Radix).
 
 ## LICENSE and COPYRIGHT
 
