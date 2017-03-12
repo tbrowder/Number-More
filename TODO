@@ -16,10 +16,9 @@ add info about general number base transforms
 
 add info for all subs in the module code
 
-
 Possible future features
 ========================
 
-bases higher than 36
+bases 37 through 62 (and variants, see Wikipedia)
 
 
