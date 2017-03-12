@@ -204,7 +204,8 @@ sub hex2bin(Str:D $hex where &hexadecimal,
 sub dec2hex($dec where &decimal,
             UInt $len = 0,
             Bool :$prefix = False,
-            Bool :$LC = False --> Str) is export(:dec2hex) {
+            Bool :$LC = False
+	    --> Str) is export(:dec2hex) {
     # need base of outgoing number
     constant $base-o = 16;
 
@@ -255,7 +256,8 @@ sub bin2dec(Str:D $bin where &binary,
 sub bin2hex(Str:D $bin where &binary,
             UInt $len = 0,
             Bool :$prefix = False,
-            Bool :$LC = False --> Str) is export(:bin2hex) {
+            Bool :$LC = False
+	    --> Str) is export(:bin2hex) {
     # need bases of incoming and outgoing number
     constant $base-i =  2;
     constant $base-o = 16;
@@ -310,7 +312,7 @@ sub oct2hex($oct where &octal, UInt $len = 0,
 # Subroutine: oct2dec
 # Purpose : Convert an octal number (string) to a decimal number.
 # Params  : Octal number (string), desired length (optional).
-# Returns : Decimal number.
+# Returns : Decimal number (or string).
 sub oct2dec($oct where &octal, UInt $len = 0
             --> Cool) is export(:oct2dec) {
     # need bases of incoming and outgoing number
@@ -324,7 +326,7 @@ sub oct2dec($oct where &octal, UInt $len = 0
 
 #------------------------------------------------------------------------------
 # Subroutine: bin2oct
-# Purpose : Convert a binary number (string) to an octal number.
+# Purpose : Convert a binary number (string) to an octal number (string).
 # Params  : Binary number (string), desired length (optional), prefix (optional).
 # Returns : Octal number (string).
 sub bin2oct($bin where &binary,
@@ -344,7 +346,7 @@ sub bin2oct($bin where &binary,
 
 #------------------------------------------------------------------------------
 # Subroutine: dec2oct
-# Purpose : Convert a decimal number to an octal number.
+# Purpose : Convert a positive integer to an octal number (string).
 # Params  : Decimal number, desired length (optional), prefix (optional).
 # Returns : Octal number (string).
 sub dec2oct($dec where &decimal,
@@ -361,7 +363,7 @@ sub dec2oct($dec where &decimal,
 
 #------------------------------------------------------------------------------
 # Subroutine: hex2oct
-# Purpose : Convert a hexadecimal number (string) to an octal number.
+# Purpose : Convert a hexadecimal number (string) to an octal number (string).
 # Params  : Hexadecimal number (string), desired length (optional), prefix (optional).
 # Returns : Octal number (string).
 sub hex2oct($hex where &hexadecimal, UInt $len = 0,
@@ -380,16 +382,16 @@ sub hex2oct($hex where &hexadecimal, UInt $len = 0,
 
 #------------------------------------------------------------------------------
 # Subroutine: rebase
-# Purpose : Convert any number (string) and base (2..36) to a number in another base (2..36).
+# Purpose : Convert any number (integer pr string) and base (2..36) to a number in another base (2..36).
 # Params  : Number (string), desired length (optional), prefix (optional), lower-case (optional).
-# Returns : Desired number (string) in the desired base.
+# Returns : Desired number (decimal or string) in the desired base.
 sub rebase($num-i,
-                $base-i where &all-bases,
-                $base-o where &all-bases,
-                UInt $len = 0,
-                Bool :$prefix = False,
-                Bool :$LC = False
-                     --> Cool) is export(:baseM2baseN) {
+           $base-i where &all-bases,
+           $base-o where &all-bases,
+           UInt $len = 0,
+           Bool :$prefix = False,
+           Bool :$LC = False
+           --> Cool) is export(:baseM2baseN) {
 
     # make sure incoming number is in the right base
     if $num-i !~~ @toks[$base-i] {
