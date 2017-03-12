@@ -91,8 +91,9 @@ Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name
 
 ## References
 
-[Number Systems](https://en.wikipedia.org/wiki/List_of_numeral_systems).
-[Radix](https://en.wikipedia.org/wiki/Radix).
+- [Number Systems](https://en.wikipedia.org/wiki/List_of_numeral_systems).
+
+- [Radix](https://en.wikipedia.org/wiki/Radix).
 
 ## LICENSE and COPYRIGHT
 
