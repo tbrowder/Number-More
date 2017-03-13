@@ -92,7 +92,8 @@ suggestions are always welcome.
 Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name
 'rebase' for the general base transformation subroutine.
 
-### Names for some common base numbers [Ref 6.]
+
+#### Names for some common base numbers [Ref 6.]
 
 | Base | Number System | Base | Number System |
 | :---  | :--- | :--- | :--- |
