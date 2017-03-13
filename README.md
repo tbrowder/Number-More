@@ -92,10 +92,10 @@ suggestions are always welcome.
 Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name
 'rebase' for the general base transformation subroutine.
 
-## Names for some common base numbers [Ref 6.]
+### Names for some common base numbers [Ref 6.]
 
 | Base | Number System | Base | Number System |
-| ---  | --- | --- | --- |
+| :---  | :--- | :--- | :--- |
 | 2 | Binary | 23 | Trivigesimal |
 | 3 | Ternary | 24 | Tetravigesimal |
 | 4 | Quaternary | 26 | Hexavigesimal |
@@ -123,9 +123,9 @@ Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name
 
 4. [Table of bases 2..36](https://en.wikipedia.org/wiki/Table_of_bases)
 
-5. [Radix](https://en.wikipedia.org/wiki/Radix).
+5. [Radix](https://en.wikipedia.org/wiki/Radix)
 
-6. [Number Systems](https://en.wikipedia.org/wiki/List_of_numeral_systems).
+6. [Number systems](https://en.wikipedia.org/wiki/List_of_numeral_systems)
 
 ## LICENSE and COPYRIGHT
 
