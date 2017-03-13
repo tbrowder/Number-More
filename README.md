@@ -92,32 +92,57 @@ suggestions are always welcome.
 Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name
 'rebase' for the general base transformation subroutine.
 
-## Names for some common base numbers
+## Names for some common base numbers [Ref 6.]
 
-| Base | Number System |
+| Base | Number System || Base | Number System |
 | ---  | --- |
-| 2 | binary |
-| 3 | ternary |
-| 4 | quaternary |
-| 5 | quinary |
-| 6 | senary |
-| 7 | septenary |
-| 8 | octal |
-| 9 | nonary |
-| 10 | decimal |
-| 11 | undenary |
-| 12 | duadecimal |
-| 16 | hexadecimal |
-| 20 | vigesimal |
-| 60 | sexagesmal |
+| 2 | Binary |
+| 3 | Ternary |
+| 4 | Quaternary |
+| 5 | Quinary |
+| 6 | Senary |
+| 7 | Heptary |
+| 8 | Octal |
+| 9 | Nonary [Ref 3.] |
+| 10 | Decimal |
+| 11 | Undecimal |
+| 12 | Duodecimal |
+| 13 | Tridecimal |
+| 14 | Tetradecimal |
+| 15 | Pentadecimal |
+| 16 | Hexadecimal |
+| 20 | Vigesimal |
+
+
+| 23 | Trivigesimal |
+| 24 | Tetravigesimal |
+| 26 | Hexavigesimal |
+| 27 | Heptavigesimal |
+| 30 | Trigesimal |
+| 32 | Duotrigesimal |
+| 33 | Trtritrigesimal |
+| 36 | Hexatrigesimal |
+| 52 | Duoquinquagesimal |
+| 56 | Hexaquinquagesimal |
+| 57 | Heptaquinquagesimal |
+| 58 | Octoquinquagesimal |
+| 60 | Sexagesimal |
+| 61 | Unsexagesimal |
+| 62 | Duosexagesimal |
 
 ## References
 
-- [Base](http://mathworld.wolfram.com/Base.html)
+1. [Positional number systems](https://en.wikipedia.org/wiki/Numeral_system#Positional_systems_in_detail)
 
-- [Radix](https://en.wikipedia.org/wiki/Radix).
+2. [Positional notation](https://en.wikipedia.org/wiki/Positional_notation#Base_conversion)
 
-- [Number Systems](https://en.wikipedia.org/wiki/List_of_numeral_systems).
+3. [Base](http://mathworld.wolfram.com/Base.html)
+
+4. [Table of bases 2..36](https://en.wikipedia.org/wiki/Table_of_bases)
+
+5. [Radix](https://en.wikipedia.org/wiki/Radix).
+
+6. [Number Systems](https://en.wikipedia.org/wiki/List_of_numeral_systems).
 
 ## LICENSE and COPYRIGHT
 
