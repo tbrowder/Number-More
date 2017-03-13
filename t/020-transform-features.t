@@ -5,7 +5,7 @@ use Number::More :ALL;
 
 $Number::More::LENGHT-HANDLING = 'waRn';
 
-plan 27;
+plan 30;
 
 my $prefix = True;
 my $LC     = True;
@@ -17,7 +17,10 @@ my $msg2 = ":\$LC arg not allowed for conversion to anything but hexadecimal";
 dies-ok { hex2dec('ff', :$prefix), 255; }, $msg1;
 dies-ok { hex2dec('ff', 2, :$prefix), '255'; }, $msg1;
 dies-ok { bin2dec('11', :$prefix), 3; }, $msg1;
-dies-ok { rebase('Z', 2, 3), 2; }, "incorrect base number for input";
+dies-ok { rebase('Z', 2, 3), 2; }, "invalid base number for input";
+lives-ok { rebase('Z', 36, 3), 2; }, "valid base number for input";
+dies-ok { rebase('Z', 37, 3), 2; }, "input base exceeds current capability";
+dies-ok { rebase('Z', 16, 37), 2; }, "output base exceeds current capability";
 
 # various features
 is hex2dec('ff', 5), '00255';

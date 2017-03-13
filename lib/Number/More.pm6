@@ -24,8 +24,12 @@ my token octal is export(:token-octal)              { ^ <[0..7]>+ $ }
 my token decimal is export(:token-decimal)          { ^ \d+ $ }              # actually an int
 my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   # multiple chars
 
-# for general base functions
-my token all-bases is export(:token-all-bases)      { ^ <[2..9]> | <[1..5]><[0..9]> | 6 <[0..4]> $ }
+# for general base functions 2..62
+my token all-bases is export(:token-all-bases)      { ^ <[2..9]> | <[1..5]><[0..9]> | 6 <[0..2]> $ }
+
+# for limited, current base functions 2..36
+my token limited-bases is export(:token-limited-bases) { ^ <[2..9]> | <[1..2]><[0..9]> | 3 <[0..6]> $ }
+
 # base 2 is binary
 my token base2 is export(:token-base2)              { ^ <[01]>+ $ }
 my token base3 is export(:token-base3)              { ^ <[012]>+ $ }
@@ -170,7 +174,7 @@ my @base = [
 
 ];
 
-# standard char set for bases through 62 (char 0 through 61)
+# standard char set for bases 2 through 62 (char 0 through 61)
 our @stdchar is export(:stdchar) = <
 0 1 2 3 4 5 6 7 8 9
 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
@@ -451,12 +455,12 @@ sub hex2oct($hex where &hexadecimal, UInt $len = 0,
 
 #------------------------------------------------------------------------------
 # Subroutine: rebase
-# Purpose : Convert any number (integer pr string) and base (2..36) to a number in another base (2..36).
+# Purpose : Convert any number (integer or string) and base (2..36) to a number in another base (2..36).
 # Params  : Number (string), desired length (optional), prefix (optional), lower-case (optional).
 # Returns : Desired number (decimal or string) in the desired base.
 sub rebase($num-i,
-           $base-i where &all-bases,
-           $base-o where &all-bases,
+           $base-i where &limited-bases,
+           $base-o where &limited-bases,
            UInt $len = 0,
            Bool :$prefix = False,
            Bool :$LC = False

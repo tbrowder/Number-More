@@ -128,7 +128,7 @@ sub oct2hex($oct where &octal, UInt $len = 0,
             --> Str) is export(:oct2hex) {#...}
 ```
 ### sub rebase
-- Purpose: Convert any number (integer pr string) and base (2..36) to a number in another base (2..36).
+- Purpose: Convert any number (integer or string) and base (2..36) to a number in another base (2..36).
 - Params : Number (string), desired length (optional), prefix (optional), lower-case (optional).
 - Returns: Desired number (decimal or string) in the desired base.
 ```perl6
