@@ -138,6 +138,8 @@ Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name
 
 6. [Number systems](https://en.wikipedia.org/wiki/List_of_numeral_systems)
 
+7. [A simple algorithm](http://mathforum.org/library/drmath/57074.html)
+
 ## LICENSE and COPYRIGHT
 
 Artistic 2.0. See [LICENSE](https://github.com/tbrowder/Number-More-Perl6/blob/master/LICENSE).

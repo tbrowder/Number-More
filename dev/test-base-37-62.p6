@@ -28,6 +28,15 @@ for 1..$nums -> $i {
 }
 
 sub rebase2($x, $bi, $bo) {
+    my $log_b-x = ln $x / ln $b;
+    
+    my $n = floor $log_b-x;
+
+    my $r_n = $x;
+
+    for $n..0 -> $i {
+    }
+
 }
 
 
