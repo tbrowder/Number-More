@@ -1,36 +1,14 @@
-Before first release
-====================
-
-all DONE
-
-DONE
-====
-
-check CHANGELOG.md [DONE]
-
-check .travis.yml [DONE]
-
-check META6.json [DONE]
-
-add info about general number base transforms [DONE]
-
-add named param for lower case to base conversions [DONE]
-
-add info for all subs in the module code [DONE]
-
-use Perl 6 built-in routines base(str) and parse-base(str) to simplify
-  number base conversions [DONE]
-
-add named param for leading code for non-decimal numbers ('0x', '0b',
-'0x') [DONE]
-
-add in README.md that these subs are for uint numbers only [DONE]
-
-simpler interface to general transformation up to 36 [DONE]
-
 Possible future features
 ========================
 
-bases 37 through 62 (and variants, see Wikipedia)
+allow addition and subtraction between two numbers with different bases (as
+  long as no negative number will result)
+  (note tha Perl 6 already allows that between decimal, octal, binary,
+  and hexadecimal numbers)
+
+bases 37 through 62 (and possibly variants, see Wikipedia)
 
 add named param to add 'base-X' to a transformed number (position?)
+
+add bases higher than 62 with named character sets
+
