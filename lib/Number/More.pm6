@@ -68,7 +68,7 @@ my token base34 is export(:token-base34)            { :i ^ <[a..x\d]>+ $ }   # m
 my token base35 is export(:token-base35)            { :i ^ <[a..y\d]>+ $ }   # multiple chars
 my token base36 is export(:token-base35)            { :i ^ <[a..z\d]>+ $ }   # multiple chars
 
-my @toks = [
+my @base = [
 '0',
 '1',
 &base2,
@@ -394,7 +394,7 @@ sub rebase($num-i,
            --> Cool) is export(:baseM2baseN) {
 
     # make sure incoming number is in the right base
-    if $num-i !~~ @toks[$base-i] {
+    if $num-i !~~ @base[$base-i] {
         die "FATAL: Incoming number in sub 'rebase' is not a member of base '$base-i'.";
     }
 
