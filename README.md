@@ -94,41 +94,24 @@ Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name
 
 ## Names for some common base numbers [Ref 6.]
 
-| Base | Number System || Base | Number System |
-| ---  | --- |
-| 2 | Binary |
-| 3 | Ternary |
-| 4 | Quaternary |
-| 5 | Quinary |
-| 6 | Senary |
-| 7 | Heptary |
-| 8 | Octal |
-| 9 | Nonary [Ref 3.] |
-| 10 | Decimal |
-| 11 | Undecimal |
-| 12 | Duodecimal |
-| 13 | Tridecimal |
-| 14 | Tetradecimal |
-| 15 | Pentadecimal |
-| 16 | Hexadecimal |
-| 20 | Vigesimal |
-
-
-| 23 | Trivigesimal |
-| 24 | Tetravigesimal |
-| 26 | Hexavigesimal |
-| 27 | Heptavigesimal |
-| 30 | Trigesimal |
-| 32 | Duotrigesimal |
-| 33 | Trtritrigesimal |
-| 36 | Hexatrigesimal |
-| 52 | Duoquinquagesimal |
-| 56 | Hexaquinquagesimal |
-| 57 | Heptaquinquagesimal |
-| 58 | Octoquinquagesimal |
-| 60 | Sexagesimal |
-| 61 | Unsexagesimal |
-| 62 | Duosexagesimal |
+| Base | Number System | Base | Number System |
+| ---  | --- | --- | --- |
+| 2 | Binary | 23 | Trivigesimal |
+| 3 | Ternary | 24 | Tetravigesimal |
+| 4 | Quaternary | 26 | Hexavigesimal |
+| 5 | Quinary | 27 | Heptavigesimal |
+| 6 | Senary | 30 | Trigesimal |
+| 7 | Heptary | 32 | Duotrigesimal |
+| 8 | Octal | 33 | Trtritrigesimal |
+| 9 | Nonary [Ref 3.] | 36 | Hexatrigesimal |
+| 10 | Decimal | 52 | Duoquinquagesimal |
+| 11 | Undecimal | 56 | Hexaquinquagesimal |
+| 12 | Duodecimal | 57 | Heptaquinquagesimal |
+| 13 | Tridecimal | 58 | Octoquinquagesimal |
+| 14 | Tetradecimal | 60 | Sexagesimal |
+| 15 | Pentadecimal | 61 | Unsexagesimal |
+| 16 | Hexadecimal | 62 | Duosexagesimal |
+| 20 | Vigesimal | | |
 
 ## References
 
