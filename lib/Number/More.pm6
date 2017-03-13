@@ -103,7 +103,7 @@ my token base60 is export(:token-base60)            { ^ <[A..Za..x\d]>+ $ }  # c
 my token base61 is export(:token-base61)            { ^ <[A..Za..y\d]>+ $ }  # case-sensitive, multiple chars
 my token base62 is export(:token-base62)            { ^ <[A..Za..x\d]>+ $ }  # case-sensitive, multiple chars
 
-my @base = [
+our @base is export(:base) = [
 '0',
 '1',
 &base2,

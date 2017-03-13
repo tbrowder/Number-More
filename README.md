@@ -18,7 +18,17 @@ integers between different, commonly used number bases: decimal,
 hexadecimal, octal, and binary. There is also a function to
 convert between bases 2 through 36 (and eventually 62).
 
-The routines are described in detail in
+Note that bases greater than 36 will use a single-character alphabet consisting
+of a case-sensitive set of ASCII characters in
+an array indexed from 0..base-1 as shown here:
+
+    @Number::More::stdchar = <
+       0 1 2 3 4 5 6 7 8 9
+       A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+       a b c d e f g h i j k l m n o p q r s t u v w x y z
+    >;
+
+The current subroutines are described in detail in
 [ALL-SUBS](https://github.com/tbrowder/Number-More-Perl6/blob/master/docs/ALL-SUBS.md)
 which shows a short description of each exported routine along along
 with its complete signature.
