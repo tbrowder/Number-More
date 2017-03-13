@@ -16,7 +16,7 @@
 This module provides some convenience functions to convert unsigned
 integers between different, commonly used number bases: decimal,
 hexadecimal, octal, and binary. There is also a function to
-convert between bases 2 through 36.
+convert between bases 2 through 36 (and eventually 62).
 
 The routines are described in detail in
 [ALL-SUBS](https://github.com/tbrowder/Number-More-Perl6/blob/master/docs/ALL-SUBS.md)
@@ -32,7 +32,7 @@ As an example of the detail involved, any transformation from a
 non-decimal base to another non-decimal base requires an intermediate
 step to convert the first non-decimal number to decimal and then
 convert the decimal number to the final desired base.  In addition,
-adding prefixes, changing to lower-case where appropriatel, and 
+adding prefixes, changing to lower-case where appropriate, and
 increasing lengths will involve more processing.
 
 The following illustrates the process using Perl 6 routines for the
@@ -92,11 +92,32 @@ suggestions are always welcome.
 Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name
 'rebase' for the general base transformation subroutine.
 
+## Names for some common base numbers
+
+| Base | Number System |
+| ---  | --- |
+| 2 | binary |
+| 3 | ternary |
+| 4 | quaternary |
+| 5 | quinary |
+| 6 | senary |
+| 7 | septenary |
+| 8 | octal |
+| 9 | nonary |
+| 10 | decimal |
+| 11 | undenary |
+| 12 | duadecimal |
+| 16 | hexadecimal |
+| 20 | vigesimal |
+| 60 | sexagesmal |
+
 ## References
 
-- [Number Systems](https://en.wikipedia.org/wiki/List_of_numeral_systems).
+- [Base](http://mathworld.wolfram.com/Base.html)
 
 - [Radix](https://en.wikipedia.org/wiki/Radix).
+
+- [Number Systems](https://en.wikipedia.org/wiki/List_of_numeral_systems).
 
 ## LICENSE and COPYRIGHT
 

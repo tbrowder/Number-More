@@ -451,6 +451,34 @@ sub hex2oct($hex where &hexadecimal, UInt $len = 0,
     return $oct;
 } # hex2oct
 
+#`{
+# begin multi-line comment
+
+General method of converting a whole number (decimal) to an base b
+(from Wolfram, see [Base] in README.md references):
+
+the index of the leading digit needed to represent the number x in
+base b is:
+
+  n = floor (log_b x) [see computing log_b below]
+
+then recursively compute the successive digits:
+
+  a_i = floor r_i / b_i )
+
+where r_n = x and
+
+  r_(i-1) = r_i - a_i * b^i
+
+for i = n, n -1, ..., 1, 0
+
+to convert between logarithms in different bases, the formula:
+
+  log_b x = ln x / ln b
+
+# end of multi-line comment
+}
+
 #------------------------------------------------------------------------------
 # Subroutine: rebase
 # Purpose : Convert any number (integer or string) and base (2..36) to a number in another base (2..36).
