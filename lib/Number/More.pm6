@@ -498,10 +498,13 @@ sub rebase($num-i,
     elsif $base-o eq '10' {
         $num-o = parse-base $num-i, $base-i;
     }
-    else {
+    elsif 1 < $base-o < 37 {
         # need decimal as intermediary
         my $dec = parse-base $num-i, $base-i;
         $num-o = $dec.base: $base-o;
+    }
+    else {
+	die "FATAL: Unable to handle base conditions: \$base-i = $base-i, \$base-o = $base-o";
     }
 
     if $base-o eq '2' || $base-o eq '8' {
@@ -510,10 +513,17 @@ sub rebase($num-i,
     elsif $base-o eq '16' {
         pad-number $num-o, $base-o, $len, :$prefix, :$LC;
     }
-    elsif $base-o > 10 {
+    elsif 10 < $base-o < 37 {
+	# case insensitive bases
         pad-number $num-o, $base-o, $len, :$LC;
     }
+    elsif 1 < $base-o < 11 {
+	# case N/A bases
+        pad-number $num-o, $base-o, $len;
+    }
     else {
+	die "FATAL: Unable to handle base conditions: \$base-i = $base-i, \$base-o = $base-o";
+	# case SENSITIVE bases
         pad-number $num-o, $base-o, $len;
     }
 
