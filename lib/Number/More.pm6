@@ -72,7 +72,32 @@ my token base36 is export(:token-base36)            { :i ^ <[a..z\d]>+ $ }   # m
 my token base37 is export(:token-base37)            { ^ <[A..Za\d]>+ $ }     # case-sensitive, multiple chars
 my token base38 is export(:token-base38)            { ^ <[A..Zab\d]>+ $ }    # case-sensitive, multiple chars
 my token base39 is export(:token-base39)            { ^ <[A..Zabc\d]>+ $ }   # case-sensitive, multiple chars
+
 my token base40 is export(:token-base40)            { ^ <[A..Za..d\d]>+ $ }  # case-sensitive, multiple chars
+my token base41 is export(:token-base41)            { ^ <[A..Za..e\d]>+ $ }  # case-sensitive, multiple chars
+my token base42 is export(:token-base42)            { ^ <[A..Za..f\d]>+ $ }  # case-sensitive, multiple chars
+my token base43 is export(:token-base43)            { ^ <[A..Za..g\d]>+ $ }  # case-sensitive, multiple chars
+my token base44 is export(:token-base44)            { ^ <[A..Za..h\d]>+ $ }  # case-sensitive, multiple chars
+my token base45 is export(:token-base45)            { ^ <[A..Za..i\d]>+ $ }  # case-sensitive, multiple chars
+my token base46 is export(:token-base46)            { ^ <[A..Za..j\d]>+ $ }  # case-sensitive, multiple chars
+my token base47 is export(:token-base47)            { ^ <[A..Za..k\d]>+ $ }  # case-sensitive, multiple chars
+my token base48 is export(:token-base48)            { ^ <[A..Za..l\d]>+ $ }  # case-sensitive, multiple chars
+my token base49 is export(:token-base49)            { ^ <[A..Za..m\d]>+ $ }  # case-sensitive, multiple chars
+
+my token base50 is export(:token-base50)            { ^ <[A..Za..n\d]>+ $ }  # case-sensitive, multiple chars
+my token base51 is export(:token-base51)            { ^ <[A..Za..o\d]>+ $ }  # case-sensitive, multiple chars
+my token base52 is export(:token-base52)            { ^ <[A..Za..p\d]>+ $ }  # case-sensitive, multiple chars
+my token base53 is export(:token-base53)            { ^ <[A..Za..q\d]>+ $ }  # case-sensitive, multiple chars
+my token base54 is export(:token-base54)            { ^ <[A..Za..r\d]>+ $ }  # case-sensitive, multiple chars
+my token base55 is export(:token-base55)            { ^ <[A..Za..s\d]>+ $ }  # case-sensitive, multiple chars
+my token base56 is export(:token-base56)            { ^ <[A..Za..t\d]>+ $ }  # case-sensitive, multiple chars
+my token base57 is export(:token-base57)            { ^ <[A..Za..u\d]>+ $ }  # case-sensitive, multiple chars
+my token base58 is export(:token-base58)            { ^ <[A..Za..v\d]>+ $ }  # case-sensitive, multiple chars
+my token base59 is export(:token-base59)            { ^ <[A..Za..w\d]>+ $ }  # case-sensitive, multiple chars
+
+my token base60 is export(:token-base60)            { ^ <[A..Za..x\d]>+ $ }  # case-sensitive, multiple chars
+my token base61 is export(:token-base61)            { ^ <[A..Za..y\d]>+ $ }  # case-sensitive, multiple chars
+my token base62 is export(:token-base62)            { ^ <[A..Za..x\d]>+ $ }  # case-sensitive, multiple chars
 
 my @base = [
 '0',
@@ -113,6 +138,35 @@ my @base = [
 &base35,
 &base36,
 
+&base37,
+&base38,
+&base39,
+
+&base40,
+&base41,
+&base42,
+&base43,
+&base44,
+&base45,
+&base46,
+&base47,
+&base48,
+&base49,
+
+&base50,
+&base51,
+&base52,
+&base53,
+&base54,
+&base55,
+&base56,
+&base57,
+&base58,
+&base59,
+
+&base60,
+&base61,
+&base62,
 
 ];
 

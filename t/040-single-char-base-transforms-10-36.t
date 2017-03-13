@@ -9,10 +9,12 @@ plan 54;
 my $prefix = True;
 my $LC     = True;
 
-my $base = 10;
+my $base;
 my $last-base = 36;
+
+# special cases
+$base = 10;
 for 10..36 -> $dec {
-    my $char-idx = $base - 1;
     ++$base;
     last if $base > $last-base;
 
@@ -27,9 +29,6 @@ for 10..36 -> $dec {
     my $tnum-out = @stdchar[$char-idx];
 
     die "FATAL: Output number is NOT a single char." if $tnum-out.chars != 1;
-
-    # default case
-    is rebase($tnum-in, $bi, $bo), $tnum-out, $tnum-out;
 
     # special cases
     if $bo eq '2' {
@@ -53,4 +52,26 @@ for 10..36 -> $dec {
         my $out = lc $tnum-out;
         is rebase($tnum-in, $bi, $bo, :$LC), $out, $out;
     }
+}
+
+# default
+$base = 10;
+for 10..36 -> $dec {
+    ++$base;
+    last if $base > $last-base;
+
+    my $char-idx = $base - 1; # index into @stdchar
+
+    my $bo = $base;
+    my $bi = 10;
+
+    # use exact definitions of the decimal number in the desired output base
+    # use @stdchar
+    my $tnum-in  = $dec;
+    my $tnum-out = @stdchar[$char-idx];
+
+    die "FATAL: Output number is NOT a single char." if $tnum-out.chars != 1;
+
+    # default case
+    is rebase($tnum-in, $bi, $bo), $tnum-out, $tnum-out;
 }
