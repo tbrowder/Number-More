@@ -5,32 +5,28 @@ use Number::More :ALL;
 
 plan 54;
 
+# testing single chars only
 my $prefix = True;
 my $LC     = True;
 
 my $base = 10;
 my $last-base = 36;
 for 10..36 -> $dec {
+    my $char-idx = $base - 1;
     ++$base;
     last if $base > $last-base;
+
+    my $char-idx = $base - 1; # index into @stdchar
 
     my $bo = $base;
     my $bi = 10;
 
-    # use Perl 6 routines directly
-    my ($tnum-in, $tnum-out);
-    if $bi eq '10' {
-        $tnum-in  = $dec;
-        $tnum-out = $dec.base: $bo;
-    }
-    elsif $bo eq '10' {
-        $tnum-in  = $dec.base: $bi;
-        $tnum-out = $dec;
-    }
-    else {
-        $tnum-in  = $dec.base: $bi;
-        $tnum-out = $dec.base: $bo;
-    }
+    # use exact definitions of the decimal number in the desired output base
+    # use @stdchar
+    my $tnum-in  = $dec;
+    my $tnum-out = @stdchar[$char-idx];
+
+    die "FATAL: Output number is NOT a single char." if $tnum-out.chars != 1;
 
     # default case
     is rebase($tnum-in, $bi, $bo), $tnum-out, $tnum-out;
