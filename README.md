@@ -15,7 +15,8 @@
 
 This module provides some convenience functions to convert unsigned
 integers between different, commonly used number bases: decimal,
-hexadecimal, octal, and binary.
+hexadecimal, octal, and binary. There is also a function to
+convert between bases 2 through 36.
 
 The routines are described in detail in
 [ALL-SUBS](https://github.com/tbrowder/Number-More-Perl6/blob/master/docs/ALL-SUBS.md)
@@ -31,8 +32,8 @@ As an example of the detail involved, any transformation from a
 non-decimal base to another non-decimal base requires an intermediate
 step to convert the first non-decimal number to decimal and then
 convert the decimal number to the final desired base.  In addition,
-adding prefixes, changing to lower-case, and increasing lengths will
-involve more processing.
+adding prefixes, changing to lower-case where appropriatel, and 
+increasing lengths will involve more processing.
 
 The following illustrates the process using Perl 6 routines for the
 example above:
@@ -42,12 +43,14 @@ example above:
     my $hex = $dec.base : 16;
     say $hex; # OUTPUT 'CB'
 
-The default for each provoded function is to take a string (valid
+The default for each provided function is to take a string (valid
 decimals may be entered as numbers) representing a valid number in one
 base and transform it into the desired base with no leading zeroes or
 descriptive prefix (such as '0x', '0o', and '0b') to indicate the type
 of number.  The default is also to use upper-case characters for the
-hexadecimal results.
+hexadecimal results (and all bases greater than 10). (Note that a future
+feature will allow handling of bases from 37 to 62 where letter case is
+significant and no lower-case option will be available.)
 
 There is an optional parameter to define desired lengths of results
 (which will result in adding leading zeroes if needed).  There are
