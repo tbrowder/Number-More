@@ -186,18 +186,16 @@ my token base { ^ 2|8|10|16 $ }
 
 # this is an internal sub
 sub pad-number($num is rw,
-               UInt $base where &all-bases,
+               UInt $base where &limited-bases, # change to "&all-bases" when ready
                UInt $len = 0,
                Bool :$prefix = False,
                Bool :$LC = False) {
 
     # this also checks for length error, upper-lower casing, and handling
-    if $base > 10 {
+    if $base > 10 && $base < 37 {
         if $LC {
+	    # special feature for case-insensitive bases
             $num .= lc;
-        }
-        else {
-            $num .= uc; # Perl 6 default
         }
     }
 
@@ -459,8 +457,8 @@ sub hex2oct($hex where &hexadecimal, UInt $len = 0,
 # Params  : Number (string), desired length (optional), prefix (optional), lower-case (optional).
 # Returns : Desired number (decimal or string) in the desired base.
 sub rebase($num-i,
-           $base-i where &limited-bases,
-           $base-o where &limited-bases,
+           $base-i where &limited-bases, # change to "&all-bases" when ready
+           $base-o where &limited-bases, # change to "&all-bases" when ready
            UInt $len = 0,
            Bool :$prefix = False,
            Bool :$LC = False
