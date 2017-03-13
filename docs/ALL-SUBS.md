@@ -42,8 +42,8 @@ sub bin2oct($bin where &binary,
             --> Str) is export(:bin2oct) {#...}
 ```
 ### sub dec2bin
-- Purpose: Convert a positive integer to a binary number (string).
-- Params : Positive decimal number, desired length (optional), prefix (optional).
+- Purpose: Convert a non-negative integer to a binary number (string).
+- Params : Non-negative decimal number, desired length (optional), prefix (optional).
 - Returns: Binary number (string).
 ```perl6
 sub dec2bin($dec where &decimal,
@@ -52,8 +52,8 @@ sub dec2bin($dec where &decimal,
             --> Str) is export(:dec2bin) {#...}
 ```
 ### sub dec2hex
-- Purpose: Convert a positive integer to a hexadecimal number (string).
-- Params : Positive decimal number, desired length (optional), prefix (optional), lower-case (optional).
+- Purpose: Convert a non-negative integer to a hexadecimal number (string).
+- Params : Non-negative decimal number, desired length (optional), prefix (optional), lower-case (optional).
 - Returns: Hexadecimal number (string).
 ```perl6
 sub dec2hex($dec where &decimal,
@@ -63,7 +63,7 @@ sub dec2hex($dec where &decimal,
 	    --> Str) is export(:dec2hex) {#...}
 ```
 ### sub dec2oct
-- Purpose: Convert a positive integer to an octal number (string).
+- Purpose: Convert a non-negative integer to an octal number (string).
 - Params : Decimal number, desired length (optional), prefix (optional).
 - Returns: Octal number (string).
 ```perl6
@@ -73,7 +73,7 @@ sub dec2oct($dec where &decimal,
             --> Cool) is export(:dec2oct) {#...}
 ```
 ### sub hex2bin
-- Purpose: Convert a positive hexadecimal number (string) to a binary string.
+- Purpose: Convert a non-negative hexadecimal number (string) to a binary string.
 - Params : Hexadecimal number (string), desired length (optional), prefix (optional).
 - Returns: Binary number (string).
 ```perl6
@@ -83,7 +83,7 @@ sub hex2bin(Str:D $hex where &hexadecimal,
             --> Str) is export(:hex2bin) {#...}
 ```
 ### sub hex2dec
-- Purpose: Convert a positive hexadecimal number (string) to a decimal number.
+- Purpose: Convert a non-negative hexadecimal number (string) to a decimal number.
 - Params : Hexadecimal number (string), desired length (optional).
 - Returns: Decimal number (or string).
 ```perl6

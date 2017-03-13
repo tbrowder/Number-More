@@ -112,7 +112,16 @@ my @base = [
 &base34,
 &base35,
 &base36,
+
+
 ];
+
+# standard char set for bases through 62 (char 0 through 61)
+our @stdchar is export(:stdchar) = <
+0 1 2 3 4 5 6 7 8 9
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+a b c d e f g h i j k l m n o p q r s t u v w x y z
+>;
 
 
 my token base { ^ 2|8|10|16 $ }
@@ -167,7 +176,7 @@ sub pad-number($num is rw,
 
 #------------------------------------------------------------------------------
 # Subroutine: hex2dec
-# Purpose : Convert a positive hexadecimal number (string) to a decimal number.
+# Purpose : Convert a non-negative hexadecimal number (string) to a decimal number.
 # Params  : Hexadecimal number (string), desired length (optional).
 # Returns : Decimal number (or string).
 sub hex2dec(Str:D $hex where &hexadecimal,
@@ -184,7 +193,7 @@ sub hex2dec(Str:D $hex where &hexadecimal,
 
 #------------------------------------------------------------------------------
 # Subroutine: hex2bin
-# Purpose : Convert a positive hexadecimal number (string) to a binary string.
+# Purpose : Convert a non-negative hexadecimal number (string) to a binary string.
 # Params  : Hexadecimal number (string), desired length (optional), prefix (optional).
 # Returns : Binary number (string).
 sub hex2bin(Str:D $hex where &hexadecimal,
@@ -204,8 +213,8 @@ sub hex2bin(Str:D $hex where &hexadecimal,
 
 #------------------------------------------------------------------------------
 # Subroutine: dec2hex
-# Purpose : Convert a positive integer to a hexadecimal number (string).
-# Params  : Positive decimal number, desired length (optional), prefix (optional), lower-case (optional).
+# Purpose : Convert a non-negative integer to a hexadecimal number (string).
+# Params  : Non-negative decimal number, desired length (optional), prefix (optional), lower-case (optional).
 # Returns : Hexadecimal number (string).
 sub dec2hex($dec where &decimal,
             UInt $len = 0,
@@ -222,8 +231,8 @@ sub dec2hex($dec where &decimal,
 
 #------------------------------------------------------------------------------
 # Subroutine: dec2bin
-# Purpose : Convert a positive integer to a binary number (string).
-# Params  : Positive decimal number, desired length (optional), prefix (optional).
+# Purpose : Convert a non-negative integer to a binary number (string).
+# Params  : Non-negative decimal number, desired length (optional), prefix (optional).
 # Returns : Binary number (string).
 sub dec2bin($dec where &decimal,
             UInt $len = 0,
@@ -352,7 +361,7 @@ sub bin2oct($bin where &binary,
 
 #------------------------------------------------------------------------------
 # Subroutine: dec2oct
-# Purpose : Convert a positive integer to an octal number (string).
+# Purpose : Convert a non-negative integer to an octal number (string).
 # Params  : Decimal number, desired length (optional), prefix (optional).
 # Returns : Octal number (string).
 sub dec2oct($dec where &decimal,
