@@ -9,8 +9,11 @@ my $prefix = True;
 my $LC     = True;
 
 my $base = 10;
-for 10..35 -> $dec {
+my $last-base = 36;
+for 10..36 -> $dec {
     ++$base;
+    last if $base > $last-base;
+
     my $bo = $base;
     my $bi = 10;
 
@@ -29,7 +32,10 @@ for 10..35 -> $dec {
         $tnum-out = $dec.base: $bo;
     }
 
+    # default case
     is rebase($tnum-in, $bi, $bo), $tnum-out, $tnum-out;
+
+    # special cases
     if $bo eq '2' {
         my $out = '0b' ~ $tnum-out;
         is rebase($tnum-in, $bi, $bo, :$prefix), $out, $out;

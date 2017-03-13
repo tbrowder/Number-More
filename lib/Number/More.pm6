@@ -66,7 +66,13 @@ my token base32 is export(:token-base32)            { :i ^ <[a..v\d]>+ $ }   # m
 my token base33 is export(:token-base33)            { :i ^ <[a..w\d]>+ $ }   # multiple chars
 my token base34 is export(:token-base34)            { :i ^ <[a..x\d]>+ $ }   # multiple chars
 my token base35 is export(:token-base35)            { :i ^ <[a..y\d]>+ $ }   # multiple chars
-my token base36 is export(:token-base35)            { :i ^ <[a..z\d]>+ $ }   # multiple chars
+my token base36 is export(:token-base36)            { :i ^ <[a..z\d]>+ $ }   # multiple chars
+
+# char sets for higher bases are case sensitive
+my token base37 is export(:token-base37)            { ^ <[A..Za\d]>+ $ }     # case-sensitive, multiple chars
+my token base38 is export(:token-base38)            { ^ <[A..Zab\d]>+ $ }    # case-sensitive, multiple chars
+my token base39 is export(:token-base39)            { ^ <[A..Zabc\d]>+ $ }   # case-sensitive, multiple chars
+my token base40 is export(:token-base40)            { ^ <[A..Za..d\d]>+ $ }  # case-sensitive, multiple chars
 
 my @base = [
 '0',
