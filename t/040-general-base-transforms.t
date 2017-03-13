@@ -52,7 +52,8 @@ for 10..36 -> $dec {
         $out = lc $tnum-out;
         is rebase($tnum-in, $bi, $bo, :$LC), $out, $out;
     }
-    elsif $bo > 10 {
+    elsif $bo > 10 && $bo < 37 {
+        # bases 11 through 36 are NOT case sensitive
         my $out = lc $tnum-out;
         is rebase($tnum-in, $bi, $bo, :$LC), $out, $out;
     }
