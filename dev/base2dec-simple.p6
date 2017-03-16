@@ -8,50 +8,27 @@ use Number::More :ALL;
 my $nums    = 100; # nums to choose
 my $ndigits = 5;   # num digits per number
 
-my @b = 2..62; # set of allowable bases
+my @b = 11..62; # set of allowable bases
 my @p = @b; # need an array to pick from since @b is used in a loop 
+
+my @dd = <0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 7 8 9>;
 for 1..$nums -> $i {
     # pick digits at random
-    my @d = pick $ndigits, @dec2digit;
+    #my @d = pick $ndigits, @dec2digit;
+    my @d = @dd.pick: $ndigits;
     my $num-i = join '', @d;
     say "== number $i: $num-i";
 
-    # pick each valid base
-    for @b -> UInt $base-i {
-       next if $num-i !~~ @base[$base-i];
-       # pick an output base
-       my $base-o = @p.pick.UInt;
-       while $base-o == $base-i {
-           $base-o = @p.pick.UInt;
-       }
+    my $base-i = 10;
 
-       # now we should have two separate bases of set @b
-       if ($base-i < 37) && ($base-o < 37) {
-           # skip for now
-           next;
-       }
-
+    # pick each valid output base
+    for @b -> $base-o {
        say "  base-i: $base-i; base-o: $base-o";
 
        my $res;
-       if ($base-i < 37) && ($base-o < 37) {
-           # skip for now
-           next;
-	   $res = rebase($num-i, $base-i, $base-o);
-       }
-       elsif $base-i == 10 {
-	   $res = _from-dec-to-b37-b62($num-i, $base-o);
-       }
-       elsif $base-o == 10 {
-	   $res = _to-dec-from-b37-b62($num-i, $base-i);
-       }
-       else {
-	   # need decimal intermediary
-	   my $dec = _to-dec-from-b37-b62($num-i, $base-i);
-           say "dec = $dec";
-	   $res = _from-dec-to-b37-b62($dec, $base-o);
-       }
-       say "  output: $res" if $res;
+       $res = _from-dec-to-b37-b62($num-i, $base-o);
+
+       say "  output: $res";
     }
 }
 
@@ -112,14 +89,16 @@ bunch more examples and they should get easier.
     return $dec;
 }
 
-sub _from-dec-to-b37-b62(UInt $x'dec ,
+#sub _from-dec-to-b37-b62(UInt $x'dec ,
+sub _from-dec-to-b37-b62($x'dec ,
 			 #UInt $base-o where { 36 < $base-o < 63 }
 			 UInt $base-o
 		         --> Str) is export(:_from-dec-to-b37-b62) {
     # see Wolfram's solution (article Base)
 
     # need ln_b x = ln x / ln b
-    my $log_b'x = log $x'dec / log $base-o; # note p6 routine 'log' is math function 'ln' if no optional base arg
+    my $log_b'x = log $x'dec / log $base-o; # note p6 routine 'log' is math function 
+                                            # 'ln' if no optional base arg
 
     # get place index of first digit
     my $n = floor $log_b'x;
@@ -133,30 +112,29 @@ sub _from-dec-to-b37-b62(UInt $x'dec ,
 
     # work through the $x'dec.chars places (????)
     # for now just handle integers (later, real, i.e., digits after a fraction point)
-    for $n...0 -> $i { # <= Wolfram text is misleading here
+    #for $n..0 -> $i {
+    for $n..0 -> $i { # <= Wolfram text is misleading here
 	my $b'i  = $base-o ** $i;
 	@a[$i]   = floor (@r[$i] / $b'i);
 
         say "  i = $i; a = '@a[$i]'; r = '@r[$i]'"; 
 
         # calc r for next iteration
-	@r[$i-1] = @r[$i] - @a[$i] * $b'i if $i > 0;
+	@r[$i-1] = @r[$i] - @a[$i] * $b'i;
     }
 
-    #=begin pod
+    =begin pod
     # @a contains the index of the digits of the number in the new base
     my $x'b = '';
-    # digits are in the reversed order
-    for @a.reverse -> $di {
+    for @a -> $di {
         my $digit = @dec2digit[$di];
         $x'b ~= $digit;
     }
-    # trim leading zeroes
-    $x'b ~~ s/^ 0+ /0/;
-    $x'b ~~ s:i/^ 0 (<[0..9a..z]>) /$0/;
 
     return $x'b;
-    #=end pod
+    =end pod
+
+    return "dummy return";
 }
 
 sub rebase-b37-b62($x, $bi, $bo) {
