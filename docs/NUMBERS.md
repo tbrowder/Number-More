@@ -12,9 +12,9 @@ are often called something else, e.g., Base62ner(???).
        a b c d e f g h i j k l m n o p q r s t u v w x y z
        >;
 
-#### Hash of reversed mappingg of the array above
+#### Hash of reversed mapping of the array above
 
-    %Number::More::digit2dec = {
+    %Number::More::digit2dec = [
        0 =>  0, 1 =>  1, 2 =>  2, 3 =>  3, 4 =>  4, 5 =>  5, 6 =>  6, 7 =>  7, 8 =>  8, 9 =>  9,
        A => 10, B => 11, C => 12, D => 13, E => 14, F => 15, G => 16, H => 17, I => 18, J => 19,
        K => 20, L => 21, M => 22, N => 23, O => 24, P => 25, Q => 26, R => 27, S => 28, T => 29,
@@ -22,7 +22,7 @@ are often called something else, e.g., Base62ner(???).
        e => 40, f => 41, g => 42, h => 43, i => 44, j => 45, k => 46, l => 47, m => 48, n => 49,
        o => 50, p => 51, q => 52, r => 53, s => 54, t => 55, u => 56, v => 57, w => 58, x => 59,
        y => 60, z => 61
-    };
+    ];
 
 #### Names for some common base numbers [Ref 6.]
 
@@ -42,16 +42,18 @@ are often called something else, e.g., Base62ner(???).
 
 ## References
 
+0. [Standard positional number systems](https://en.wikipedia.org/wiki/List_of_numeral_systems#Standard_positional_numeral_systems)
+
 1. [Positional number systems](https://en.wikipedia.org/wiki/Numeral_system#Positional_systems_in_detail)
 
-2. [Positional notation](https://en.wikipedia.org/wiki/Positional_notation#Base_conversion)
+2. [Positional base conversion](https://en.wikipedia.org/wiki/Positional_notation#Base_conversion)
 
 3. [Base](http://mathworld.wolfram.com/Base.html)
 
-4. [Table of bases 2..36](https://en.wikipedia.org/wiki/Table_of_bases)
+4. [Table of bases 2..36 for decimal values 0..256](https://en.wikipedia.org/wiki/Table_of_bases)
 
 5. [Radix](https://en.wikipedia.org/wiki/Radix)
 
-6. [Number systems](https://en.wikipedia.org/wiki/List_of_numeral_systems)
+6. [List of numeral systems](https://en.wikipedia.org/wiki/List_of_numeral_systems)
 
-7. [A simple algorithm](http://mathforum.org/library/drmath/view/57074.html)
+7. [Simple conversion algorithms](http://mathforum.org/library/drmath/view/57074.html)

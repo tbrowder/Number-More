@@ -1,6 +1,8 @@
 Possible future features
 ========================
 
+handle real numbers (i.e., signed and fractional)
+
 allow addition and subtraction between two numbers with different bases (as
   long as no negative number will result)
   (note tha Perl 6 already allows that between decimal, octal, binary,
@@ -10,5 +12,6 @@ bases 37 through 62 (and possibly variants, see Wikipedia)
 
 add named param to add 'base-X' to a transformed number (position?)
 
-add bases higher than 62 with named character sets
+add bases higher than 62 with named digit sets
 
+user-defined digit sets

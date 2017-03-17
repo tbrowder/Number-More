@@ -18,15 +18,15 @@ for 10..36 -> $dec {
     ++$base;
     last if $base > $last-base;
 
-    my $char-idx = $base - 1; # index into @stdchar
+    my $digit-idx = $base - 1; # index into @dec2digit
 
     my $bo = $base;
     my $bi = 10;
 
     # use exact definitions of the decimal number in the desired output base
-    # use @stdchar
+    # use @dec2digit
     my $tnum-in  = $dec;
-    my $tnum-out = @stdchar[$char-idx];
+    my $tnum-out = @dec2digit[$digit-idx];
 
     die "FATAL: Output number is NOT a single char." if $tnum-out.chars != 1;
 
@@ -60,15 +60,15 @@ for 10..36 -> $dec {
     ++$base;
     last if $base > $last-base;
 
-    my $char-idx = $base - 1; # index into @stdchar
+    my $digit-idx = $base - 1; # index into @dec2digit
 
     my $bo = $base;
     my $bi = 10;
 
     # use exact definitions of the decimal number in the desired output base
-    # use @stdchar
+    # use @dec2digit
     my $tnum-in  = $dec;
-    my $tnum-out = @stdchar[$char-idx];
+    my $tnum-out = @dec2digit[$digit-idx];
 
     die "FATAL: Output number is NOT a single char." if $tnum-out.chars != 1;
 

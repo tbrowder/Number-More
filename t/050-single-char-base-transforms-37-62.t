@@ -15,22 +15,22 @@ my $last-base = 62;
 # default
 for $base..$last-base -> $base {
 
-    my $char-idx = $base - 1; # index into @stdchar
+    my $digit-idx = $base - 1; # index into @dec2digit
 
     my $bi = 10;
     my $bo = $base;
 
     # use exact definitions of the decimal number in the desired output base
-    # use @stdchar
+    # use @dec2digit
     my $tnum-in  = $base;
-    my $tnum-out = @stdchar[$char-idx];
+    my $tnum-out = @dec2digit[$digit-idx];
 
     die "FATAL: Output number is NOT a single char." if $tnum-out.chars != 1;
 
     # default case
     # fake for now
     sub foo() {
-	return @stdchar[$char-idx];
+	return @dec2digit[$digit-idx];
     }
     is foo(), $tnum-out, $tnum-out;
 

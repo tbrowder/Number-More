@@ -28,7 +28,7 @@ my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   # m
 my token all-bases is export(:token-all-bases)      { ^ <[2..9]> | <[1..5]><[0..9]> | 6 <[0..2]> $ }
 
 # for limited, current base functions 2..36
-my token limited-bases is export(:token-limited-bases) { ^ <[2..9]> | <[1..2]><[0..9]> | 3 <[0..6]> $ }
+my token limited-bases is export(:token-limited-bases) { ^ <[2..9]> || <[12]><[0..9]> || 3 <[0..6]> $ }
 
 # base 2 is binary
 my token base2 is export(:token-base2)              { ^ <[01]>+ $ }
@@ -106,81 +106,37 @@ my token base62 is export(:token-base62)            { ^ <[A..Za..x\d]>+ $ }  # c
 our @base is export(:base) = [
 '0',
 '1',
-&base2,
-&base3,
-&base4,
-&base5,
-&base6,
-&base7,
-&base8,
-&base9,
-&base10,
-&base11,
-&base12,
-&base13,
-&base14,
-&base15,
-&base16,
-&base17,
-&base18,
-&base19,
-&base20,
-&base21,
-&base22,
-&base23,
-&base24,
-&base25,
-&base26,
-&base27,
-&base28,
-&base29,
-&base30,
-&base31,
-&base32,
-&base33,
-&base34,
-&base35,
-&base36,
+&base2, &base3, &base4, &base5, &base6, &base7, &base8, &base9,
+&base10, &base11, &base12, &base13, &base14, &base15, &base16, &base17, &base18, &base19,
+&base20, &base21, &base22, &base23, &base24, &base25, &base26, &base27, &base28, &base29,
+&base30, &base31, &base32, &base33, &base34, &base35, &base36,
 
-&base37,
-&base38,
-&base39,
-
-&base40,
-&base41,
-&base42,
-&base43,
-&base44,
-&base45,
-&base46,
-&base47,
-&base48,
-&base49,
-
-&base50,
-&base51,
-&base52,
-&base53,
-&base54,
-&base55,
-&base56,
-&base57,
-&base58,
-&base59,
-
-&base60,
-&base61,
-&base62,
-
+&base37, &base38, &base39,
+&base40, &base41, &base42, &base43, &base44, &base45, &base46,
+&base47, &base48, &base49, &base50, &base51, &base52, &base53,
+&base54, &base55, &base56, &base57, &base58, &base59, &base60,
+&base61, &base62
 ];
 
-# standard char set for bases 2 through 62 (char 0 through 61)
-our @stdchar is export(:stdchar) = <
-0 1 2 3 4 5 6 7 8 9
-A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
-a b c d e f g h i j k l m n o p q r s t u v w x y z
->;
+# standard digit set for bases 2 through 62 (char 0 through 61)
+# the array of digits is indexed by their decimal value
+our @dec2digit is export(:dec2digit) = <
+    0 1 2 3 4 5 6 7 8 9
+    A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+    a b c d e f g h i j k l m n o p q r s t u v w x y z
+    >;
 
+# standard digit set for bases 2 through 62 (char 0 through 61)
+# the hash is comprised of digit keys and their decimal value
+our %digit2dec is export(:digit2dec) = [
+    0 =>  0, 1 =>  1, 2 =>  2, 3 =>  3, 4 =>  4, 5 =>  5, 6 =>  6, 7 =>  7, 8 =>  8, 9 =>  9,
+    A => 10, B => 11, C => 12, D => 13, E => 14, F => 15, G => 16, H => 17, I => 18, J => 19,
+    K => 20, L => 21, M => 22, N => 23, O => 24, P => 25, Q => 26, R => 27, S => 28, T => 29,
+    U => 30, V => 31, W => 32, X => 33, Y => 34, Z => 35, a => 36, b => 37, c => 38, d => 39,
+    e => 40, f => 41, g => 42, h => 43, i => 44, j => 45, k => 46, l => 47, m => 48, n => 49,
+    o => 50, p => 51, q => 52, r => 53, s => 54, t => 55, u => 56, v => 57, w => 58, x => 59,
+    y => 60, z => 61
+];
 
 my token base { ^ 2|8|10|16 $ }
 
@@ -514,19 +470,20 @@ sub rebase($num-i,
         when $base-o eq '8'  { $bo = 'oct' }
         when $base-o eq '16' { $bo = 'hex' }
     }
+
     if $bi && $bo {
-        note "NOTE: Use function '{$bi}2{$bo}' instead for an easier interface."
+        note "\nNOTE: Use function '{$bi}2{$bo}' instead for an easier interface.";
     }
 
     # treatment varies if in or out base is decimal
     my $num-o;
-    if $base-i eq '10' {
+    if $base-i == 10 {
         $num-o = $num-i.base: $base-o;
     }
-    elsif $base-o eq '10' {
+    elsif $base-o == 10 {
         $num-o = parse-base $num-i, $base-i;
     }
-    elsif 1 < $base-o < 37 {
+    elsif ($base-i < 37) && ($base-o < 37) {
         # need decimal as intermediary
         my $dec = parse-base $num-i, $base-i;
         $num-o = $dec.base: $base-o;
@@ -535,17 +492,17 @@ sub rebase($num-i,
 	die "FATAL: Unable to handle base conditions: \$base-i = $base-i, \$base-o = $base-o";
     }
 
-    if $base-o eq '2' || $base-o eq '8' {
+    if $base-o == 2 || $base-o == 8 {
         pad-number $num-o, $base-o, $len, :$prefix;
     }
-    elsif $base-o eq '16' {
+    elsif $base-o == 16 {
         pad-number $num-o, $base-o, $len, :$prefix, :$LC;
     }
-    elsif 10 < $base-o < 37 {
+    elsif (10 < $base-o < 37) {
 	# case insensitive bases
         pad-number $num-o, $base-o, $len, :$LC;
     }
-    elsif 1 < $base-o < 11 {
+    elsif (1 < $base-o < 11) {
 	# case N/A bases
         pad-number $num-o, $base-o, $len;
     }
