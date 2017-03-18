@@ -1,11 +1,12 @@
+
 # explicit results from website "numbertobase.com"
 
-Note that website uses the alphabet "0..9 a..z A..Z" as opposed to Perl 6's (and this
-module's) "0..9 A..Z a..z" so the results below will have to be translated.
+# Note that the website uses the alphabet "0..9 a..z A..Z" as opposed to Perl 6's (and this
+# module's) "0..9 A..Z a..z" so the results below will have to be translated.
+#
+#   $a.trans( 'a'..'z' => 'A'..'Z', 'A'..'Z' => 'a'..'z' )
 
-decimal | binary | hexadecimal | octal | base | number
-19812 | 1001_1010_1100_100 | 0x4d64 | 46544 | 61 | 5jM
-8480244 | 1_000000_101_10010_11111_0100 | 0x8165f5 | 40262764 | 62 | zA68
+# decimal | binary | hexadecimal | octal | base | number
 642 | 1010000010 | 0x282 | 1202 | 3 | 212210
 3612 | 111000011100 | 0xe1c | 7034 | 4 | 320130
 2832 | 101100010000 | 0xb10 | 5420 | 5 | 42312
@@ -16,6 +17,9 @@ decimal | binary | hexadecimal | octal | base | number
 17375 | 100001111011111 | 0x43df | 41737 | 12| a07b
 1949 | 11110011101 | 0x79d | 3635 | 13 | b8c
 34290 | 1000010111110010 | 0x85f2 | 102762 | 14 | c6d4
+
 11542 | 11100001011110010 | 0x1c2f2 | 341362 | 60 | w42
+19812 | 1001_1010_1100_100 | 0x4d64 | 46544 | 61 | 5jM
+8480244 | 1_000000_101_10010_11111_0100 | 0x8165f5 | 40262764 | 62 | zA68
 
 
