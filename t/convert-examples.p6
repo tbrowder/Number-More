@@ -46,7 +46,6 @@ for @fbases -> $bi {
 my $ifil = 'base-conversions.dat';
 my $ofil = '060-auto-transform-checks.t';
 
-my $fh = open $ofil, :w;
 
 my @egs;
 
@@ -66,6 +65,20 @@ for $ifil.IO.lines -> $line is copy {
 my @regs = @egs.reverse;
 #say $_.dec for @regs;
 
+# we have the source data, now write the test file...
+my $fh = open $ofil, :w;
+
+# header info
+$fh.print: qq:to/HERE/;
+use Test;
+
+use Number::More :ALL;
+
+plan 3600;
+
+HERE
+
+# step through the data set
 for @egs -> $e {
     my $bi = $e.base;
     for @regs -> $re {
@@ -76,3 +89,4 @@ for @egs -> $e {
 }
 
 say "Normal end.";
+say "See output file '$ofil'.";
