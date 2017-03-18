@@ -58,8 +58,21 @@ for $ifil.IO.lines -> $line is copy {
    #print "$_; " for @w;
    #say '';
    my $e = eg.new(:words(@w));
-   say $e.dec;
-   
+   #say $e.dec;
+   @egs.append: $e;
 }
 
+#say $_.dec for @egs;
+my @regs = @egs.reverse;
+#say $_.dec for @regs;
 
+for @egs -> $e {
+    my $bi = $e.base;
+    for @regs -> $re {
+        my $bo = $re.base;
+        next if $bi == $bo;
+        # calc and check base conversions
+    }
+}
+
+say "Normal end.";
