@@ -1,3 +1,26 @@
+#!/usr/bin/env perl6
+
+use Text::More :strip-comment;
+
+class eg {
+    has @!w;   # used for construction
+    has $.dec;
+    has $.bin;
+    has $.hex;
+    has $.oct;
+    has $.base;
+    has $.num; # number in $base format
+
+    submethod BUILD(:words(:@!w)) {
+        $!dec  = @!w[0];
+        $!bin  = @!w[1];
+        $!hex  = @!w[2];
+        $!oct  = @!w[3];
+        $!base = @!w[4];
+        $!num  = @!w[5];
+    }
+}
+
 =begin pod
 
 read a formatted file of pipe-separated lines consisting of:
@@ -18,6 +41,25 @@ for @fbases -> $bi {
     }
 }
 
+=end pod
 
+my $ifil = 'base-conversions.dat';
+my $ofil = '060-auto-transform-checks.t';
+
+my $fh = open $ofil, :w;
+
+my @egs;
+
+for $ifil.IO.lines -> $line is copy {
+   $line = strip-comment $line; 
+   next if $line !~~ /\S/;
+   $line ~~ s:g/'|'//;
+   my @w = $line.words;
+   #print "$_; " for @w;
+   #say '';
+   my $e = eg.new(:words(@w));
+   say $e.dec;
+   
+}
 
 
