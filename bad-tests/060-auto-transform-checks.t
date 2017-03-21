@@ -166,13 +166,13 @@ is rebase("1100000001101010", 2, 37), "ZaB", "base 37; test 126";
 is rebase("140152", 8, 37), "ZaB", "base 37; test 127";
 is rebase("C06A", 16, 37), "ZaB", "base 37; test 128";
 
-is rebase(40393, 10, 38), "Fab", "base 38; test 129";
-is rebase("1001110111001001", 2, 38), "Fab", "base 38; test 130";
-is rebase("11671", 8, 38), "Fab", "base 38; test 131";
-is rebase("9DC9", 16, 38), "Fab", "base 38; test 132";
+is rebase(23065, 10, 38), "Fab", "base 38; test 129";
+is rebase("101101000011001", 2, 38), "Fab", "base 38; test 130";
+is rebase("55031", 8, 38), "Fab", "base 38; test 131";
+is rebase("5A19", 16, 38), "Fab", "base 38; test 132";
 
 is rebase(58217, 10, 39), "cAT", "base 39; test 133";
-is rebase("111000110101001", 2, 39), "cAT", "base 39; test 134";
+is rebase("1110001101101001", 2, 39), "cAT", "base 39; test 134";
 is rebase("161551", 8, 39), "cAT", "base 39; test 135";
 is rebase("E369", 16, 39), "cAT", "base 39; test 136";
 
@@ -194,7 +194,7 @@ is rebase("BC81", 16, 42), "REf", "base 42; test 148";
 is rebase(27708, 10, 43), "EgG", "base 43; test 149";
 is rebase("110110000111100", 2, 43), "EgG", "base 43; test 150";
 is rebase("66074", 8, 43), "EgG", "base 43; test 151";
-is rebase("BC3C", 16, 43), "EgG", "base 43; test 152";
+is rebase("6C3C", 16, 43), "EgG", "base 43; test 152";
 
 is rebase(71616, 10, 44), "ahS", "base 44; test 153";
 is rebase("10001011111000000", 2, 44), "ahS", "base 44; test 154";
@@ -234,15 +234,15 @@ is rebase("A59", 16, 50), "12n", "base 50; test 180";
 is rebase(130589, 10, 51), "oAT", "base 51; test 181";
 is rebase("11111111000011101", 2, 51), "oAT", "base 51; test 182";
 is rebase("377035", 8, 51), "oAT", "base 51; test 183";
-is rebase("1FELD", 16, 51), "oAT", "base 51; test 184";
+is rebase("1FE1D", 16, 51), "oAT", "base 51; test 184";
 
-is rebase(29976, 10, 52), "ApE", "base 52; test 185";
+is rebase(29706, 10, 52), "ApE", "base 52; test 185";
 is rebase("111010000001010", 2, 52), "ApE", "base 52; test 186";
 is rebase("72012", 8, 52), "ApE", "base 52; test 187";
 is rebase("740A", 16, 52), "ApE", "base 52; test 188";
 
 is rebase(6041, 10, 53), "27q", "base 53; test 189";
-is rebase("101110011001", 2, 53), "27q", "base 53; test 190";
+is rebase("1011110011001", 2, 53), "27q", "base 53; test 190";
 is rebase("13631", 8, 53), "27q", "base 53; test 191";
 is rebase("1799", 16, 53), "27q", "base 53; test 192";
 
@@ -259,7 +259,7 @@ is rebase("ABA8", 16, 55), "ESs", "base 55; test 200";
 is rebase(9911, 10, 56), "38t", "base 56; test 201";
 is rebase("10011010110111", 2, 56), "38t", "base 56; test 202";
 is rebase("23267", 8, 56), "38t", "base 56; test 203";
-is rebase("2667", 16, 56), "38t", "base 56; test 204";
+is rebase("26B7", 16, 56), "38t", "base 56; test 204";
 
 is rebase(13337, 10, 57), "45u", "base 57; test 205";
 is rebase("11010000011001", 2, 57), "45u", "base 57; test 206";
@@ -267,16 +267,16 @@ is rebase("32031", 8, 57), "45u", "base 57; test 207";
 is rebase("3419", 16, 57), "45u", "base 57; test 208";
 
 is rebase(3769, 10, 58), "16v", "base 58; test 209";
-is rebase("1110101111001", 2, 58), "16v", "base 58; test 210";
+is rebase("111010111001", 2, 58), "16v", "base 58; test 210";
 is rebase("7271", 8, 58), "16v", "base 58; test 211";
 is rebase("EB9", 16, 58), "16v", "base 58; test 212";
 
 is rebase(52170, 10, 59), "EwE", "base 59; test 213";
 is rebase("1100101111001010", 2, 59), "EwE", "base 59; test 214";
-is rebase("145722", 8, 59), "EwE", "base 59; test 215";
+is rebase("145712", 8, 59), "EwE", "base 59; test 215";
 is rebase("CBCA", 16, 59), "EwE", "base 59; test 216";
 
-is rebase(11542, 10, 60), "W42", "base 60; test 217";
+is rebase(115442, 10, 60), "W42", "base 60; test 217";
 is rebase("11100001011110010", 2, 60), "W42", "base 60; test 218";
 is rebase("341362", 8, 60), "W42", "base 60; test 219";
 is rebase("1C2F2", 16, 60), "W42", "base 60; test 220";
@@ -289,4 +289,4 @@ is rebase("4D64", 16, 61), "5Jm", "base 61; test 224";
 is rebase(8480244, 10, 62), "Za68", "base 62; test 225";
 is rebase("100000010110010111110100", 2, 62), "Za68", "base 62; test 226";
 is rebase("40262764", 8, 62), "Za68", "base 62; test 227";
-is rebase("8165F5", 16, 62), "Za68", "base 62; test 228";
+is rebase("8165F4", 16, 62), "Za68", "base 62; test 228";
