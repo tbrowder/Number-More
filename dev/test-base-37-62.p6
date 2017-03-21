@@ -9,7 +9,7 @@ my $nums    = 100; # nums to choose
 my $ndigits = 5;   # num digits per number
 
 my @b = 2..62; # set of allowable bases
-my @p = @b; # need an array to pick from since @b is used in a loop 
+my @p = @b; # need an array to pick from since @b is used in a loop
 for 1..$nums -> $i {
     # pick digits at random
     my @d = pick $ndigits, @dec2digit;
@@ -51,7 +51,7 @@ for 1..$nums -> $i {
            say "dec = $dec";
 	   $res = _from-dec-to-b37-b62($dec, $base-o);
        }
-       say "  output: $res" if $res;
+       say "  input: $num-i (base: $base-i); output: $res (base: $base-o)" if $res;
     }
 }
 
@@ -110,7 +110,7 @@ bunch more examples and they should get easier.
 	$dec += $val;
     }
     return $dec;
-}
+} # _to-dec-from-b37-b62
 
 sub _from-dec-to-b37-b62(UInt $x'dec ,
 			 #UInt $base-o where { 36 < $base-o < 63 }
@@ -137,7 +137,7 @@ sub _from-dec-to-b37-b62(UInt $x'dec ,
 	my $b'i  = $base-o ** $i;
 	@a[$i]   = floor (@r[$i] / $b'i);
 
-        say "  i = $i; a = '@a[$i]'; r = '@r[$i]'"; 
+        say "  i = $i; a = '@a[$i]'; r = '@r[$i]'";
 
         # calc r for next iteration
 	@r[$i-1] = @r[$i] - @a[$i] * $b'i if $i > 0;
@@ -157,7 +157,7 @@ sub _from-dec-to-b37-b62(UInt $x'dec ,
 
     return $x'b;
     #=end pod
-}
+} # _from-dec-to-b37-b62
 
 sub rebase-b37-b62($x, $bi, $bo) {
     # error checks (see sub rebase)
