@@ -437,7 +437,7 @@ to convert between logarithms in different bases, the formula:
 
 #------------------------------------------------------------------------------
 # Subroutine: rebase
-# Purpose : Convert any number (integer or string) and base (2..36) to a number in another base (2..36).
+# Purpose : Convert any number (integer or string) and base (2..62) to a number in another base (2..62).
 # Params  : Number (string), desired length (optional), prefix (optional), lower-case (optional).
 # Returns : Desired number (decimal or string) in the desired base.
 sub rebase($num-i,
@@ -478,20 +478,45 @@ sub rebase($num-i,
     # treatment varies if in or out base is decimal
     my $num-o;
     if $base-i == 10 {
-        $num-o = $num-i.base: $base-o;
+	if $base-o < 37 {
+            $num-o = $num-i.base: $base-o;
+	}
+	else {
+            $num-o = _from-dec-to-b37-b62 $num-i, $base-o;
+	}
     }
     elsif $base-o == 10 {
-        $num-o = parse-base $num-i, $base-i;
+	if $base-i < 37 {
+            $num-o = parse-base $num-i, $base-i;
+	}
+	else {
+	    $num-o = _to-dec-from-b37-b62 $num-i, $base-o;
+	}
     }
     elsif ($base-i < 37) && ($base-o < 37) {
         # need decimal as intermediary
         my $dec = parse-base $num-i, $base-i;
-        $num-o = $dec.base: $base-o;
+        $num-o  = $dec.base: $base-o;
     }
     else {
-	die "FATAL: Unable to handle base conditions: \$base-i = $base-i, \$base-o = $base-o";
+	#die "FATAL: Unable to handle base conditions: \$base-i = $base-i, \$base-o = $base-o";
+        # need decimal as intermediary
+	my $dec;
+	if $base-i < 37 {
+            $dec = parse-base $num-i, $base-i;
+	}
+	else {
+	    $dec = _to-dec-from-b37-b62 $num-i, $base-i;
+	}
+	if $base-o < 37 {
+            $num-o = $dec.base: $base-o;
+	}
+	else {
+            $num-o  = _from-dec-to-b37-b62 $dec, $base-o;
+	}
     }
 
+    # finally, pad the number, make upper-case and add prefix ass appropriate
     if $base-o == 2 || $base-o == 8 {
         pad-number $num-o, $base-o, $len, :$prefix;
     }
@@ -507,10 +532,115 @@ sub rebase($num-i,
         pad-number $num-o, $base-o, $len;
     }
     else {
-	die "FATAL: Unable to handle base conditions: \$base-i = $base-i, \$base-o = $base-o";
+	#die "FATAL: Unable to handle base conditions: \$base-i = $base-i, \$base-o = $base-o";
 	# case SENSITIVE bases
         pad-number $num-o, $base-o, $len;
     }
 
     return $num-o;
 } # rebase
+
+
+sub _to-dec-from-b37-b62($num,
+			 UInt $bi where { 36 < $bi < 63 }
+			 #UInt $bi
+			 --> Cool
+			) is export(:_to-dec-from-b37-b62) {
+
+    # see simple algorithm for base to dec:
+    #`{
+
+Let's say you have a number
+
+  10121 in base 3
+
+and you want to know what it is in base 10.  Well, in base three the
+place values [from the highest] are
+
+   4   3  2  1  0 <= digit place (position)
+  81, 27, 9, 3, 1 <= value: digit x base ** place
+
+so we have 1 x 81 + 0 x 27 + 1 x 9 + 2 x 3 + 1 x 1
+
+  81 + 0 + 9 + 6 + 1 = 97
+
+that is how it works.  You just take the number, figure out the place
+values, and then add them together to get the answer.  Now, let's do
+one the other way.
+
+45 in base ten (that is the normal one.) Let's convert it to base
+five.
+
+Well, in base five the place values will be 125, 25, 5, 1
+
+We won't have any 125's but we will have one 25. Then we will have 20
+left.  That is four 5's, so in base five our number will be 140.
+
+Hope that makes sense.  If you don't see a formula, try to work out a
+bunch more examples and they should get easier.
+
+-Doctor Ethan,  The Math Forum
+
+    }
+
+    # reverse the digits of the input number
+    my @num'r = $num.comb.reverse;
+    my $place = $num.chars;
+
+    my $dec = 0;
+    for @num'r -> $digit {
+	--$place; # first place is num chars - 1
+	# need to convert the digit to dec first
+	my $digit-val = %digit2dec{$digit};
+	my $val = $digit-val * $bi ** $place;
+	$dec += $val;
+    }
+    return $dec;
+} # _to-dec-from-b37-b62
+
+sub _from-dec-to-b37-b62(UInt $x'dec ,
+			 UInt $base-o where { 36 < $base-o < 63 }
+			 #UInt $base-o
+		         --> Str) is export(:_from-dec-to-b37-b62) {
+    # see Wolfram's solution (article Base)
+
+    # need ln_b x = ln x / ln b
+    my $log_b'x = log $x'dec / log $base-o; # note p6 routine 'log' is math function 'ln' if no optional base arg
+
+    # get place index of first digit
+    my $n = floor $log_b'x;
+
+    # now the algorithm
+    # we need @r below to be a fixed array of size $n + 2
+    my @r[$n + 2];
+    my @a[$n + 1];
+
+    @r[$n] = $x'dec;
+
+    # work through the $x'dec.chars places (????)
+    # for now just handle integers (later, real, i.e., digits after a fraction point)
+    for $n...0 -> $i { # <= Wolfram text is misleading here
+	my $b'i  = $base-o ** $i;
+	@a[$i]   = floor (@r[$i] / $b'i);
+
+        say "  i = $i; a = '@a[$i]'; r = '@r[$i]'";
+
+        # calc r for next iteration
+	@r[$i-1] = @r[$i] - @a[$i] * $b'i if $i > 0;
+    }
+
+    #=begin pod
+    # @a contains the index of the digits of the number in the new base
+    my $x'b = '';
+    # digits are in the reversed order
+    for @a.reverse -> $di {
+        my $digit = @dec2digit[$di];
+        $x'b ~= $digit;
+    }
+    # trim leading zeroes
+    $x'b ~~ s/^ 0+ /0/;
+    $x'b ~~ s:i/^ 0 (<[0..9a..z]>) /$0/;
+
+    return $x'b;
+    #=end pod
+} # _from-dec-to-b37-b62
