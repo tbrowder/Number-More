@@ -499,7 +499,6 @@ sub rebase($num-i,
         $num-o  = $dec.base: $base-o;
     }
     else {
-	#die "FATAL: Unable to handle base conditions: \$base-i = $base-i, \$base-o = $base-o";
         # need decimal as intermediary
 	my $dec;
 	if $base-i < 37 {
@@ -512,11 +511,12 @@ sub rebase($num-i,
             $num-o = $dec.base: $base-o;
 	}
 	else {
-            $num-o  = _from-dec-to-b37-b62 $dec, $base-o;
+            $num-o = _from-dec-to-b37-b62 $dec, $base-o;
 	}
     }
 
-    # finally, pad the number, make upper-case and add prefix ass appropriate
+    # finally, pad the number, make upper-case and add prefix as
+    # appropriate
     if $base-o == 2 || $base-o == 8 {
         pad-number $num-o, $base-o, $len, :$prefix;
     }
@@ -532,7 +532,6 @@ sub rebase($num-i,
         pad-number $num-o, $base-o, $len;
     }
     else {
-	#die "FATAL: Unable to handle base conditions: \$base-i = $base-i, \$base-o = $base-o";
 	# case SENSITIVE bases
         pad-number $num-o, $base-o, $len;
     }
@@ -605,7 +604,10 @@ sub _from-dec-to-b37-b62(UInt $x'dec ,
     # see Wolfram's solution (article Base)
 
     # need ln_b x = ln x / ln b
-    my $log_b'x = log $x'dec / log $base-o; # note p6 routine 'log' is math function 'ln' if no optional base arg
+
+    # note p6 routine 'log' is math function 'ln' if no optional base
+    # arg is entered
+    my $log_b'x = log $x'dec / log $base-o;
 
     # get place index of first digit
     my $n = floor $log_b'x;
@@ -623,13 +625,12 @@ sub _from-dec-to-b37-b62(UInt $x'dec ,
 	my $b'i  = $base-o ** $i;
 	@a[$i]   = floor (@r[$i] / $b'i);
 
-        say "  i = $i; a = '@a[$i]'; r = '@r[$i]'";
+        say "  i = $i; a = '@a[$i]'; r = '@r[$i]'" if $DEBUG;
 
         # calc r for next iteration
 	@r[$i-1] = @r[$i] - @a[$i] * $b'i if $i > 0;
     }
 
-    #=begin pod
     # @a contains the index of the digits of the number in the new base
     my $x'b = '';
     # digits are in the reversed order
@@ -637,10 +638,10 @@ sub _from-dec-to-b37-b62(UInt $x'dec ,
         my $digit = @dec2digit[$di];
         $x'b ~= $digit;
     }
+
     # trim leading zeroes
     $x'b ~~ s/^ 0+ /0/;
     $x'b ~~ s:i/^ 0 (<[0..9a..z]>) /$0/;
 
     return $x'b;
-    #=end pod
 } # _from-dec-to-b37-b62
