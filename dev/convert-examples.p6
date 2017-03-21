@@ -78,9 +78,11 @@ use Test;
 
 use Number::More :ALL;
 
-plan 228;
+plan 456;
 
 my $debug = 0;
+
+my $suffix = True;
 HERE
 
 # step through the data set
@@ -101,6 +103,12 @@ for @egs -> $e {
     is rebase("$num-bin", 2, $base), "$num-num", "base $base; test {++$tnum}";
     is rebase("$num-oct", 8, $base), "$num-num", "base $base; test {++$tnum}";
     is rebase("$num-hex", 16, $base), "$num-num", "base $base; test {++$tnum}";
+
+    # add the suffix
+    is rebase($num-dec, 10, $base, :\$suffix), "{$num-num}_base-$base", "base $base; test {++$tnum}";
+    is rebase("$num-bin", 2, $base, :\$suffix), "{$num-num}_base-$base", "base $base; test {++$tnum}";
+    is rebase("$num-oct", 8, $base, :\$suffix), "{$num-num}_base-$base", "base $base; test {++$tnum}";
+    is rebase("$num-hex", 16, $base, :\$suffix), "{$num-num}_base-$base", "base $base; test {++$tnum}";
     HERE
 }
 
