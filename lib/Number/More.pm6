@@ -27,9 +27,6 @@ my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   # m
 # for general base functions 2..62
 my token all-bases is export(:token-all-bases)      { ^ <[2..9]> | <[1..5]><[0..9]> | 6 <[0..2]> $ }
 
-# for limited, current base functions 2..36
-my token limited-bases is export(:token-limited-bases) { ^ <[2..9]> || <[12]><[0..9]> || 3 <[0..6]> $ }
-
 # base 2 is binary
 my token base2 is export(:token-base2)              { ^ <[01]>+ $ }
 my token base3 is export(:token-base3)              { ^ <[012]>+ $ }
@@ -101,7 +98,7 @@ my token base59 is export(:token-base59)            { ^ <[A..Za..w\d]>+ $ }  # c
 
 my token base60 is export(:token-base60)            { ^ <[A..Za..x\d]>+ $ }  # case-sensitive, multiple chars
 my token base61 is export(:token-base61)            { ^ <[A..Za..y\d]>+ $ }  # case-sensitive, multiple chars
-my token base62 is export(:token-base62)            { ^ <[A..Za..x\d]>+ $ }  # case-sensitive, multiple chars
+my token base62 is export(:token-base62)            { ^ <[A..Za..z\d]>+ $ }  # case-sensitive, multiple chars
 
 our @base is export(:base) = [
 '0',
@@ -142,10 +139,12 @@ my token base { ^ 2|8|10|16 $ }
 
 # this is an internal sub
 sub pad-number($num is rw,
-               UInt $base where &limited-bases, # change to "&all-bases" when ready
+               UInt $base where &all-bases,
                UInt $len = 0,
                Bool :$prefix = False,
-               Bool :$LC = False) {
+	       Bool :$suffix = False,
+               Bool :$LC = False,
+	      ) {
 
     # this also checks for length error, upper-lower casing, and handling
     if $base > 10 && $base < 37 {
@@ -156,7 +155,7 @@ sub pad-number($num is rw,
     }
 
     my $nc  = $num.chars;
-    my $nct = $prefix ?? $nc + 2 !! $nc;
+    my $nct = ($prefix && !$suffix) ?? $nc + 2 !! $nc;
     if $LENGTH-HANDLING ~~ &length-action && $nct > $len {
         my $msg = "Desired length ($len) of number '$num' is less than required by it";
         $msg ~= " and its prefix" if $prefix;
@@ -179,7 +178,11 @@ sub pad-number($num is rw,
         my $zpad = 0 x ($len - $nct);
         $num = $zpad ~ $num;
     }
-    if $prefix {
+
+    if $suffix {
+	$num ~= "_base-$base";
+    }
+    elsif $prefix {
         when $base eq '2'  { $num = '0b' ~ $num }
         when $base eq '8'  { $num = '0o' ~ $num }
         when $base eq '16' { $num = '0x' ~ $num }
@@ -441,10 +444,11 @@ to convert between logarithms in different bases, the formula:
 # Params  : Number (string), desired length (optional), prefix (optional), lower-case (optional).
 # Returns : Desired number (decimal or string) in the desired base.
 sub rebase($num-i,
-           $base-i where &limited-bases, # change to "&all-bases" when ready
-           $base-o where &limited-bases, # change to "&all-bases" when ready
+           $base-i where &all-bases,
+           $base-o where &all-bases,
            UInt $len = 0,
            Bool :$prefix = False,
+	   Bool :$suffix = False,
            Bool :$LC = False
            --> Cool) is export(:baseM2baseN) {
 
@@ -525,15 +529,15 @@ sub rebase($num-i,
     }
     elsif (10 < $base-o < 37) {
 	# case insensitive bases
-        pad-number $num-o, $base-o, $len, :$LC;
+        pad-number $num-o, $base-o, $len, :$LC, :$suffix;
     }
     elsif (1 < $base-o < 11) {
 	# case N/A bases
-        pad-number $num-o, $base-o, $len;
+        pad-number $num-o, $base-o, $len, :$suffix;
     }
     else {
 	# case SENSITIVE bases
-        pad-number $num-o, $base-o, $len;
+        pad-number $num-o, $base-o, $len, :$suffix;
     }
 
     return $num-o;
