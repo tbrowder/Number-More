@@ -1,7 +1,8 @@
-sudo: false
 language: perl6
+
 perl6:
     - latest
+
 install:
-    - rakudobrew build-zef
-    - zef --debug install .
+    - rakudobrew build zef
+    - zef install .
