@@ -1,9 +1,11 @@
 {
-    "perl"        : "6.c",
+    "perl"        : "6.*",
     "name"        : "Number::More",
-    "version"     : "0.1.2",
+    "version"     : "0.2.0",
     "description" : "Provides number base transform functions",
-    "authors"     : [ "github:tbrowder" ],
+    "auth"        : "github:tbrowder",
+    "author"      : "github:tbrowder",
+    "authors"     : [ "Tom Browder <tom.browder@gmail.com>" ],
     "license"     : "Artistic-2.0",
     "source-url"  : "https://github.com/tbrowder/Number-More-Perl6.git",
     "support"     : {
@@ -13,6 +15,7 @@
         "Number::More" : "lib/Number/More.pm6"
     },
     "test-depends"     : [
+	"Test::META"
     ],
     "depends" : [
     ],
