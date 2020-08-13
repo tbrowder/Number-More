@@ -1,4 +1,4 @@
-PERL6     := perl6
+RAKU      := raku
 LIBPATH   := lib
 
 # set below to 1 for no effect, 1 for debugging messages
@@ -18,15 +18,15 @@ GOODTESTS := good-tests/*.t
 # the original test suite (i.e., 'make test')
 test:
 	for f in $(TESTS) ; do \
-	    $(DEBUG) $(EARLYFAIL) PERL6LIB=$(LIBPATH) prove -v --exec=$(PERL6) $$f ; \
+	    $(DEBUG) $(EARLYFAIL) PERL6LIB=$(LIBPATH) prove -v --exec=$(RAKU) $$f ; \
 	done
 
 bad:
 	for f in $(BADTESTS) ; do \
-	    $(DEBUG) $(EARLYFAIL) PERL6LIB=$(LIBPATH) prove -v --exec=$(PERL6) $$f ; \
+	    $(DEBUG) $(EARLYFAIL) PERL6LIB=$(LIBPATH) prove -v --exec=$(RAKU) $$f ; \
 	done
 
 good:
 	for f in $(GOODTESTS) ; do \
-	    $(DEBUG) $(EARLYFAIL) PERL6LIB=$(LIBPATH) prove -v --exec=$(PERL6) $$f ; \
+	    $(DEBUG) $(EARLYFAIL) PERL6LIB=$(LIBPATH) prove -v --exec=$(RAKU) $$f ; \
 	done
