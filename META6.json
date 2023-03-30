@@ -1,27 +1,32 @@
 {
-    "perl"        : "6.*",
-    "name"        : "Number::More",
-    "version"     : "0.2.0",
-    "description" : "Provides number base transform functions",
-    "auth"        : "github:tbrowder",
-    "author"      : "github:tbrowder",
-    "authors"     : [ "Tom Browder <tom.browder@gmail.com>" ],
-    "license"     : "Artistic-2.0",
-    "source-url"  : "https://github.com/tbrowder/Number-More-Perl6.git",
-    "support"     : {
-        "bugtracker" : "https://github.com/tbrowder/Number-More-Perl6/issues"
-    },
-    "provides"    : {
-        "Number::More" : "lib/Number/More.pm6"
-    },
-    "test-depends"     : [
-	"Test::META"
-    ],
-    "depends" : [
-    ],
-    "resources" : [
-    ],
-    "tags" : [
-	"number", "base transform"
-    ]
+  "auth": "zef:tbrowder",
+  "author": "zef:tbrowder",
+  "authors": [
+    "Tom Browder <tbrowder@acm.org>"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "Provides number base transform functions",
+  "license": "Artistic-2.0",
+  "name": "Number::More",
+  "perl": "6.*",
+  "provides": {
+    "Number::More": "lib/Number/More.rakumod"
+  },
+  "resources": [
+  ],
+  "source-url": "https://github.com/tbrowder/Number-More.git",
+  "support": {
+    "bugtracker": "https://github.com/tbrowder/Number-More/issues"
+  },
+  "tags": [
+    "number",
+    "base transform"
+  ],
+  "test-depends": [
+    "Test::META"
+  ],
+  "version": "0.2.0"
 }

@@ -1,18 +1,6 @@
-unit module Number::More:auth<github:tbrowder>;
+unit module Number::More;
 
-# file:  ALL-SUBS.md
-# title: Subroutines Exported by the `:ALL` Tag
-
-# export a debug var for users
-our $DEBUG is export(:DEBUG) = False;
-BEGIN {
-    if %*ENV<NUMBER_MORE_DEBUG> {
-	$DEBUG = True;
-    }
-    else {
-	$DEBUG = False;
-    }
-}
+my $DEBUG = 0;
 
 # export a var for users to set length behavior
 our $LENGTH-HANDLING is export(:DEBUG) = 'ignore'; # other options: 'warn', 'fail'

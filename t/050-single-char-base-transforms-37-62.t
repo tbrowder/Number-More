@@ -8,7 +8,6 @@ plan 61;
 # error conditions
 #dies-ok { rebase('Z', 40, 3), 2; }, "incorrect base number for input";
 
-
 my $base      =  2;
 my $last-base = 62;
 

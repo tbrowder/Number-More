@@ -4,8 +4,6 @@ use Number::More :ALL;
 
 plan 456;
 
-my $debug = 0;
-
 my $suffix = True;
 
 is rebase(642, 10, 3), "212210", "base 3; test 1";
