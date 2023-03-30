@@ -6,7 +6,7 @@ Revision history for Number::More
     - Rakuize file names
     - Removed user debug tools
     - Add separate Github workflow tests for each OS
-    - Eliminate travis testing
+    - Eliminate Travis testing
 
 0.2.0  2017-10-05
     - Updated META6 keys and values
