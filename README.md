@@ -1,5 +1,6 @@
+[![Actions Status](https://github.com/tbrowder/Date-Utils/actions/workflows/linux.yml/badge.svg)](https://github.com/tbrowder/Date-Utils/actions) [![Actions Status](https://github.com/tbrowder/Date-Utils/actions/workflows/macos.yml/badge.svg)](https://github.com/tbrowder/Date-Utils/actions) [![Actions Status](https://github.com/tbrowder/Date-Utils/actions/workflows/windows.yml/badge.svg)](https://github.com/tbrowder/Date-Utils/actions)
+
 # Number::More
-[![Build Status](https://travis-ci.org/tbrowder/Number-More-Perl6.svg?branch=master)](https://travis-ci.org/tbrowder/Number-More-Perl6)
 
 ## Synopsis
 
