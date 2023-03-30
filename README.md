@@ -80,22 +80,6 @@ length: (1) ignore and provide the required length (the default), (2)
 warn of the increased length but provide it, and (3) throw an
 exception and report the offending data.
 
-## Debugging
-
-For debugging, use one of the following methods:
-
-- set the module's $DEBUG variable:
-
-```Perl6
-$Number::More::DEBUG = True;
-```
-
-- set the environment variable:
-
-```Perl6
-NUMBER_MORE_DEBUG=1
-```
-
 ## Contributing
 
 Interested users are encouraged to contribute improvements and
@@ -104,11 +88,11 @@ suggestions are always welcome.
 
 ## Credits
 
-Thanks to 'timotimo' on IRC **\#perl6** for the suggestion of the name
+Thanks to 'timotimo' on IRC **\#perl6** (now **\#raku**) for the suggestion of the name
 'rebase' for the general base transformation subroutine.
 
 ## LICENSE and COPYRIGHT
 
 Artistic 2.0. See [LICENSE](https://github.com/tbrowder/Number-More-Perl6/blob/master/LICENSE).
 
-Copyright (C) 2017 Thomas M. Browder, Jr. <<tom.browder@gmail.com>>
+Copyright (C) 2017-2023 Thomas M. Browder, Jr. <<tbrowder@acm.org>>
