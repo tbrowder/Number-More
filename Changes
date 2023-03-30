@@ -1,0 +1,15 @@
+Revision history for Number::More
+
+{{$NEXT}}
+    - Changed to enable management by App::Mi6
+    - Moved to Zef Raku module repository
+    - Rakuize file names
+    - Removed user debug tools
+    - Add separate Github workflow tests for each OS
+    - Eliminate travis testing
+
+0.2.0  2017-10-05
+    - Updated META6 keys and values
+
+0.1.0  2017-03-12
+    - Initial version
