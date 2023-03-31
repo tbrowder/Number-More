@@ -1,6 +1,8 @@
 Revision history for Number::More
 
 {{$NEXT}}
+
+0.2.1  2023-03-31T11:24:55-05:00
     - Add notice of future deprecation
     - Changed to enable management by App::Mi6
     - Moved to Zef Raku module repository
