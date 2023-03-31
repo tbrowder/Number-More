@@ -2,6 +2,9 @@
 
 # Number::More
 
+**Note: This module will be deprecated when new module 'Number::Rebase' is released
+as version 1.0.0.**
+
 ## Synopsis
 
     use Number::More :ALL;

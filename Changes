@@ -1,6 +1,7 @@
 Revision history for Number::More
 
 {{$NEXT}}
+    - Add notice of future deprecation
     - Changed to enable management by App::Mi6
     - Moved to Zef Raku module repository
     - Rakuize file names
