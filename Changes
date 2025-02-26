@@ -1,6 +1,8 @@
 Revision history for Number::More
 
 {{$NEXT}}
+    - Change name of the module to replace this one to 'Number'
+        instead  of 'Number::Rebase'
 
 0.2.1  2023-03-31T11:24:55-05:00
     - Add notice of future deprecation

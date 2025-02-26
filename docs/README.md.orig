@@ -2,10 +2,10 @@
 
 # Number::More
 
-**Note: This module will be deprecated when new module 'Number' is released
+**Note: This module will be deprecated when new module 'Number::Rebase' is released
 as version 1.0.0.**
 
-## Synopsis
+## SYNOPSIS
 
     use Number::More :ALL;
     my $bin = '11001011';   # do not enter any prefix
