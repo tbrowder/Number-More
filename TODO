@@ -1,6 +1,8 @@
 Possible future features
 ========================
 
+IMPORTANT use sets instead of (or in addition to) tokens
+
 handle real numbers (i.e., signed and fractional)
 
 allow addition and subtraction between two numbers with different bases (as

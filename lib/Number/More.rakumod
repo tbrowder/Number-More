@@ -6,6 +6,11 @@ my $DEBUG = 0;
 our $LENGTH-HANDLING is export(:DEBUG) = 'ignore'; # other options: 'warn', 'fail'
 my token length-action { ^ :i warn|fail $ }
 
+our $bset = "01".comb.Set;
+our $oset = (0..7).Set;
+our $dset = (0..9).Set;
+our $hset = "abcdef".comb.Set (|) $dset;
+
 # define tokens for common regexes (no prefixes are allowed)
 my token binary is export(:token-binary)            { ^ <[01]>+ $ }
 my token octal is export(:token-octal)              { ^ <[0..7]>+ $ }
