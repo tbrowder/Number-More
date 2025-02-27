@@ -197,6 +197,7 @@ sub pad-number(
         when $base eq '10' { $num = '0d' ~ $num }
         when $base eq '16' { $num = '0x' ~ $num }
     }
+
 } # pad-number
 
 #------------------------------------------------------------------------------
@@ -532,8 +533,8 @@ sub rebase(
     $LC     = 0 if not $LC.defined;
 
     # make sure incoming number is in the right base
-note "DEBUG: num-i = '$num-i'; base $base-i regex |{@base[$base-i].gist}|";
-note "  early exit"; exit;;
+#note "DEBUG: num-i = '$num-i'; base $base-i regex |{@base[$base-i].gist}|";
+#note "  early exit"; exit;;
 
     if $num-i !~~ @base[$base-i] {
         die "FATAL: Incoming number '$num-i' in sub 'rebase' is\
