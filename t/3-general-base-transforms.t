@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 use Number::More :ALL;
@@ -19,7 +18,7 @@ for @uints -> $dec {
             # skip some here
             next if $bi eq $bo;
 
-            # use Perl 6 routines directly
+            # use Raku routines directly
             my ($tnum-in, $tnum-out);
             if $bi eq '10' {
                 $tnum-in  = $dec;
@@ -35,6 +34,7 @@ for @uints -> $dec {
             }
 
             is rebase($tnum-in, $bi, $bo), $tnum-out, $tnum-out;
+
             if $bo eq '2' {
                 my $out = '0b' ~ $tnum-out;
                 is rebase($tnum-in, $bi, $bo, :$prefix), $out, $out;
@@ -43,11 +43,17 @@ for @uints -> $dec {
                 my $out = '0o' ~ $tnum-out;
                 is rebase($tnum-in, $bi, $bo, :$prefix), $out, $out;
             }
+            elsif $bo eq '10' {
+                my $out = '0d' ~ $tnum-out;
+                is rebase($tnum-in, $bi, $bo, :$prefix), $out, $out;
+            }
             elsif $bo eq '16' {
                 my $out = '0x' ~ $tnum-out;
                 is rebase($tnum-in, $bi, $bo, :$prefix), $out, $out;
+
                 $out = '0x' ~ lc $tnum-out;
                 is rebase($tnum-in, $bi, $bo, :$prefix, :$LC), $out, $out;
+
                 $out = lc $tnum-out;
                 is rebase($tnum-in, $bi, $bo, :$LC), $out, $out;
             }
