@@ -18,17 +18,35 @@ say $ahighset.gist if $debug;
 my $base62 = $dset (|) $alowset (|) $ahighset;
 say $base62.gist if $debug;
 
+my $xset = set <0 1 a b >;
+say $xset.gist if $debug;
+
 sub create-set {...}
 
-my $xset = create-set 2;
+$xset = create-set 2;
 say $xset.gist if $debug;
 
 $xset = create-set 22;
-say $xset.gist if $debug;
+say $xset.gist if 1 or $debug;
 
 $xset = create-set 40;
-say $xset.gist if $debug;
-say ("3").Set (<=) $xset;
+say $xset.gist if 1 or $debug;
+
+# false methods
+say "FALSE checking 3 with method 0: {<3>.Set (<=) $xset}";
+say "FALSE checking 3 with method 1: {(3).Set (<=) $xset}";
+# true methods
+say "TRUE checking 3 with method 2: {(3).Str.Set (<=) $xset}";
+say "TRUE checking 3 with method 3: {('3').Set (<=) $xset}";
+
+# true
+say "TRUE checking a with method 0: {<a>.Set (<=) $xset}";
+# fatal
+#say "checking a with method 1: {(a).Set (<=) $xset}";
+# fatal
+#say "checking a with method 2: {(a).Str.Set (<=) $xset}";
+# true
+say "TRUE checking a with method 3: {('a').Set (<=) $xset}";
 
 
 sub create-set(
@@ -58,15 +76,22 @@ sub create-set(
     say "DEBUG base $base, first char is char index $F, char '$FC'";
     say "                   last char is char index $L, char '$LC'";
 
-    my @chars = @dec2digit[$F..$L];
-    my $set;
-    if $CS {
-        $set = @chars.comb.Set;
+    my $chars = @dec2digit[$F..$L].join;
+    my Set $set;
+    my %h;
+    if not $CS {
+        for $chars.comb -> $c is copy {
+            $c .= Str;
+            $c .= lc;
+            %h{$c} = True;
+        }
     }
     else {
-        $set = @chars.comb.lc.Set;
+        for $chars.comb -> $c is copy {
+            $c .= Str;
+            %h{$c} = True;
+        }
     }
-
-    $set;
+    $set = %h.Set;
 }
 
