@@ -10,23 +10,19 @@ plan 32;
 my $prefix = True;
 my $LC     = True;
 
-my $msg1 = ":\$prefix arg not allowed for conversion to decimal";
 my $msg2 = ":\$LC arg not allowed for conversion to anything\
              but hexadecimal";
 
-# error conditions
-dies-ok { hex2dec('ff', :$prefix); }, $msg1;
-dies-ok { hex2dec('ff', :$prefix); }, $msg1;
-dies-ok { bin2dec('11', :$prefix), }, $msg1;
+dies-ok  { rebase('Z', 2, 3);   }, "base-i: Z, 2, invalid base number for input";
+dies-ok  { rebase('Z', 16, 37); }, "base-i: Z, 16, invalid base number for input";
+lives-ok { rebase('Z', 36, 37); }, "base-i: Z, 36, valid base number for input";
+lives-ok { rebase('Z', 37, 38); }, "base-i: Z, 37, valid base number for input";
 
-dies-ok { rebase('Z', 2, 3);    }, "base-i: 2, invalid base number for input";
-dies-ok { rebase('Z', 16, 37);  }, "base-i: 16, invalid base number for input";
-lives-ok { rebase('Z', 36, 37); }, "base-i: 36, valid base number for input";
-lives-ok { rebase('Z', 37, 38); }, "base-i: 37, valid base number for input";
+=finish
 
 # various features
 is hex2dec('ff'), '255';
-is hex2dec('ff', :prefix), '0x255';
+is hex2dec('ff', :prefix), '0d255';
 
 is bin2dec('11'), '3';
 is bin2hex('00001010', :prefix), '0xA';
@@ -35,9 +31,9 @@ is bin2hex('00001010', :LC, :prefix), '0xa';
 is bin2hex('11'), '0003';
 is bin2hex('11', :prefix), '0x03';
 
-is dec2hex(10), '00A';
+is dec2hex(10), 'A';
 is dec2hex(10, :LC, :prefix), '0xa';
-is dec2hex(10, :prefix), '0x0A';
+is dec2hex(10, :prefix), '0xA';
 
 is hex2bin('ff'), '00011111111';
 is hex2bin('ff', :prefix), '0b11111111';

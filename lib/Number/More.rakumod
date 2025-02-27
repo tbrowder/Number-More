@@ -13,7 +13,8 @@ my token decimal is export(:token-decimal)          { ^ \d+ $ }              # a
 my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   # multiple chars
 
 # for general base functions 2..62
-my token all-bases is export(:token-all-bases)      { ^ <[2..9]> | <[1..5]><[0..9]> | 6 <[0..2]> $ }
+my token all-bases is export(:token-all-bases)      { ^ <[2..9]> | <[1..5]><[0..9]> 
+                                                      | 6 <[0..2]> $ }
 
 # base 2 is binary
 my token base2 is export(:token-base2)              { ^ <[01]>+ $ }
@@ -151,9 +152,12 @@ sub pad-number(
     }
 
     my $nc  = $num.chars;
+    # num chars with prefix
     my $nct = ($prefix && !$suffix) ?? ($nc + 2) !! $nc;
-    if $LENGTH-HANDLING ~~ (&length-action && $nct) > $length {
-        my $msg = "Desired length ($length) of number '$num' is less than required by it";
+    #if $LENGTH-HANDLING ~~ (&length-action && $nct) > $length {
+    if ($LENGTH-HANDLING ~~ (&length-action)) and ($nct > $length) {
+        my $msg = "Desired length ($length) of number '$num' is\
+                     less than required by it";
         $msg ~= " and its prefix" if $prefix;
         $msg ~= " ($nct).";
 
@@ -523,8 +527,12 @@ sub rebase(
     $LC     = 0 if not $LC.defined;
 
     # make sure incoming number is in the right base
+note "DEBUG: num-i = '$num-i'; base $base-i regex |{@base[$base-i].gist}|";
+note "  early exit"; exit;;
+
     if $num-i !~~ @base[$base-i] {
-        die "FATAL: Incoming number in sub 'rebase' is not a member of base '$base-i'.";
+        die "FATAL: Incoming number '$num-i' in sub 'rebase' is\
+              not a member of base '$base-i'.";
     }
 
     # check for same bases
@@ -543,6 +551,10 @@ sub rebase(
 	    $bi = 'oct';
 	    $num-i ~~ s:i/^0o//;
 	}
+        when $base-i == 10  {
+	    $bi = 'dec';
+	    $num-i ~~ s:i/^0d//;
+	}
         when $base-i == 16 {
 	    $bi = 'hex';
 	    $num-i ~~ s:i/^0x//;
@@ -551,6 +563,7 @@ sub rebase(
     {
         when $base-o == 2  { $bo = 'bin' }
         when $base-o == 8  { $bo = 'oct' }
+        when $base-o == 10 { $bo = 'dec' }
         when $base-o == 16 { $bo = 'hex' }
     }
 
@@ -576,20 +589,21 @@ sub rebase(
 	    $num-o = _to-dec-from-b37-b62 $num-i, $base-o;
 	}
     }
-    elsif ($base-i < 37) && ($base-o < 37) {
+    elsif ($base-i < 37) and ($base-o < 37) {
         # need decimal as intermediary
-        my $dec = parse-base $num-i, $base-i;
+        my $dec = $num-i.parse-base: $base-i;
         $num-o  = $dec.base: $base-o;
     }
     else {
         # need decimal as intermediary
 	my $dec;
 	if $base-i < 37 {
-            $dec = parse-base $num-i, $base-i;
+            $dec = $num-i.parse-base: $base-i;
 	}
 	else {
 	    $dec = _to-dec-from-b37-b62 $num-i, $base-i;
 	}
+
 	if $base-o < 37 {
             $num-o = $dec.base: $base-o;
 	}
@@ -600,7 +614,7 @@ sub rebase(
 
     # Finally, pad the number, make upper-case, and add prefix or suffix as
     # appropriate
-    if $base-o == 2 || $base-o == 8 {
+    if $base-o == 2 || $base-o == 8 || $base-o == 10 {
         pad-number $num-o, $base-o, :$prefix, :$suffix;
     }
     elsif $base-o == 16 {

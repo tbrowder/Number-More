@@ -2,7 +2,7 @@ use Test;
 
 use Number::More :ALL;
 
-plan 2210;
+plan 2244;
 
 my $prefix = True;
 my $LC     = True;
