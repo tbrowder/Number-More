@@ -312,6 +312,7 @@ sub bin2dec(
     Str:D $bin where &binary,
     # optional args
     :$suffix is copy,
+    :$debug,
     --> Cool
 ) is export(:bin2dec) {
     $suffix = 0 if not $suffix.defined;
@@ -337,6 +338,7 @@ sub bin2hex(
     :$prefix is copy, 
     :$suffix is copy,
     :$LC is copy,
+    :$debug,
     --> Str
 ) is export(:bin2hex) {
     $prefix = 0 if not $prefix.defined;
@@ -444,6 +446,7 @@ sub bin2oct(
     # optional args
     :$prefix is copy,
     :$suffix is copy,
+    :$debug,
     --> Str
 ) is export(:bin2oct) {
     $prefix = 0 if not $prefix.defined;
@@ -526,6 +529,7 @@ sub rebase(
     :$prefix is copy,
     :$suffix is copy,
     :$LC is copy,
+    :$debug,
     --> Cool
 ) is export(:baseM2baseN) {
     $prefix = 0 if not $prefix.defined;
@@ -573,8 +577,8 @@ sub rebase(
         when $base-o == 16 { $bo = 'hex' }
     }
 
-    if $bi && $bo {
-        note "\nNOTE: Use function '{$bi}2{$bo}' instead for an easier interface.";
+    if $bi and $bo and (0 or $debug) {
+        note "\nDEBUG Use function '{$bi}2{$bo}' instead for an easier interface.";
     }
 
     # treatment varies if in or out base is decimal

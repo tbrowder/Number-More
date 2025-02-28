@@ -51,7 +51,7 @@ example above:
 
     my $bin = '11001011';
     my $dec = parse-base $bin, 2;
-    my $hex = $dec.base : 16;
+    my $hex = $dec.base: 16;
     say $hex; # OUTPUT 'CB'
 
 The default for each provided function is to take a string (valid
