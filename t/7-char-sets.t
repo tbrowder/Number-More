@@ -4,6 +4,8 @@ use Number::More :ALL;
 
 my $debug = 0;
 
+is 1, 1;
+
 my $bset = "01".comb.Set;
 my $oset = (0..7).Set;
 my $dset = (0..9).Set;
@@ -94,4 +96,7 @@ sub create-set(
     }
     $set = %h.Set;
 }
+
+done-testing;
+
 
