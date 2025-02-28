@@ -131,7 +131,7 @@ our %digit2dec is export(:digit2dec) = [
 
 my token base { ^ 2|8|10|16 $ }
 
-# This is an internal sub
+# This is a sub
 sub pad-number(
     $num is rw,
     UInt $base where &all-bases,
@@ -159,7 +159,6 @@ sub pad-number(
     my $nc  = $num.chars;
     # num chars with prefix
     my $nct = ($prefix && !$suffix) ?? ($nc + 2) !! $nc;
-    #if $LENGTH-HANDLING ~~ (&length-action && $nct) > $length {
     if ($length and ($LENGTH-HANDLING ~~ (&length-action)) and ($nct > $length)) {
         my $msg = "Desired length ($length) of number '$num' is\
                      less than required by it";
