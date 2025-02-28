@@ -5,7 +5,7 @@ use Number::More :ALL;
 
 $Number::More::LENGTH-HANDLING = 'waRn';
 
-plan 32;
+plan 27;
 
 my $prefix = True;
 my $LC     = True;
@@ -26,19 +26,17 @@ is bin2dec('11'), '3';
 is bin2hex('00001010', :prefix), '0xA';
 is bin2hex('00001010', :LC), 'a';
 is bin2hex('00001010', :LC, :prefix), '0xa';
-is bin2hex('11'), '0003';
-is bin2hex('11', :prefix), '0x03';
+is bin2hex('11'), '3';
+is bin2hex('11', :prefix), '0x3';
 
 is dec2hex(10), 'A';
 is dec2hex(10, :LC, :prefix), '0xa';
 is dec2hex(10, :prefix), '0xA';
 
-is hex2bin('ff'), '00011111111';
+is hex2bin('ff'), '11111111';
 is hex2bin('ff', :prefix), '0b11111111';
-is hex2bin('ff', :prefix), '0b011111111';
 
-is dec2bin(10), '01010';
-is dec2bin(10, :prefix), '0b1010';
+is dec2bin(10), '1010';
 is dec2bin(10, :prefix), '0b1010';
 
 is bin2oct('111111', :prefix), '0o77';
@@ -47,7 +45,7 @@ is dec2oct(63, :prefix), '0o77';
 
 is oct2bin('77', :prefix), '0b111111';
 is oct2hex('77', :prefix), '0x3F';
-is oct2hex('77', :prefix, $LC), '0x3f';
+is oct2hex('77', :prefix, :$LC), '0x3f';
 
 is rebase('Z', 36, 3, :suffix), '1022_base-3', "test suffix";
 is rebase('z', 62, 3, :suffix), '2021_base-3', "test suffix";
