@@ -1,7 +1,7 @@
 Revision history for Number::More
 
 {{$NEXT}}
-    - Correct incorrect handling of number length in internal sub 'pad-length'
+    - Correct incorrect handling of number length in internal sub 'pad-number'
     - Lots of other corrections...
     - Prepping for release of replacement module 'Number'
     - Added :$debug option for all subs

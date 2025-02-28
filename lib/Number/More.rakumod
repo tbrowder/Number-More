@@ -781,3 +781,73 @@ sub _from-dec-to-b37-b62(
 
     $x'b;
 } # _from-dec-to-b37-b62
+
+# subs moved here from t/7*t
+sub create-set(
+    $text,
+    :$debug,
+    --> Set
+    ) is export {
+    
+    my @chars = $text.comb.unique;
+    my %h;
+    for @chars {
+        %h{$_} = True;
+    }
+    %h.Set;
+}
+
+sub create-base-set(
+    UInt $base where { 1 < $base < 63 },
+    :$debug,
+    #--> Set
+    --> List
+    ) is export {
+    # if the base is < 37 (letter case insensitive)
+    my $CS = 0;
+
+    if $base > 36 {
+        ++$CS;
+        #die "Tom, fix this to handle base > 36";
+    }
+
+    my $first-char-idx = 0;
+    my $F = $first-char-idx;
+    my $first-char = @dec2digit[$first-char-idx];
+    my $FC = $first-char;
+
+    my $last-char-idx  = $base - 1;
+    my $L = $last-char-idx;
+
+    my $last-char = @dec2digit[$last-char-idx];
+    my $LC = $last-char;
+
+    say "DEBUG base $base, first char is char index $F, char '$FC'";
+    say "                   last char is char index $L, char '$LC'";
+
+    my $chars = @dec2digit[$F..$L].join;
+
+    # try two methods:
+    my %h;
+    my $s = '';
+    if not $CS {
+        for $chars.comb -> $c is copy {
+            $c .= Str;
+            $c .= lc;
+            %h{$c} = True;
+            $s ~= " $c";
+        }
+    }
+    else {
+        for $chars.comb -> $c is copy {
+            $c .= Str;
+            %h{$c} = True;
+            $s ~= " $c";
+        }
+    }
+    my $bset1 = %h.Set;
+    my $bset2 = $s.Str.Set;
+
+    $bset1, $bset1;
+}
+
