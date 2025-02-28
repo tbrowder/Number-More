@@ -160,7 +160,7 @@ sub pad-number(
     # num chars with prefix
     my $nct = ($prefix && !$suffix) ?? ($nc + 2) !! $nc;
     #if $LENGTH-HANDLING ~~ (&length-action && $nct) > $length {
-    if ($LENGTH-HANDLING ~~ (&length-action)) and ($nct > $length) {
+    if ($length and ($LENGTH-HANDLING ~~ (&length-action)) and ($nct > $length)) {
         my $msg = "Desired length ($length) of number '$num' is\
                      less than required by it";
         $msg ~= " and its prefix" if $prefix;
