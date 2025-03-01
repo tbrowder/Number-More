@@ -14,21 +14,26 @@ our $hset = "abcdef".comb.Set (|) $dset;
 # define tokens for common regexes (no prefixes are allowed)
 my token binary is export(:token-binary)            { ^ <[01]>+ $ }
 my token octal is export(:token-octal)              { ^ <[0..7]>+ $ }
-my token decimal is export(:token-decimal)          { ^ \d+ $ }              # actually an int
-my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   # multiple chars
+my token decimal is export(:token-decimal)          { ^ \d+ $ } # actually an int
+my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   
 
 # for general base functions 2..62
-my token all-bases is export(:token-all-bases)      { ^ <[2..9]> | <[1..5]><[0..9]> 
-                                                      | 6 <[0..2]> $ }
-# standard digit set for bases 2 through 62 (char 0 through 61)
-# the array of digits is indexed by their decimal value
+my token all-bases is export(:token-all-bases)      { ^ 
+                                                        <[2..9]>         | 
+                                                        <[1..5]><[0..9]> |
+                                                        6 <[0..2]> 
+                                                    $ }
+# Standard digit set for bases 2 through 62 (char 0 through 61)
+# the array of digits is indexed by their decimal value (note
+# the %dec2digit hash can be created programmatically from this
+# array):
 our @dec2digit is export(:dec2digit) = <
     0 1 2 3 4 5 6 7 8 9
     A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
     a b c d e f g h i j k l m n o p q r s t u v w x y z
     >;
 
-# standard digit set for bases 2 through 62 (char 0 through 61)
+# Standard digit set for bases 2 through 62 (char 0 through 61)
 # the hash is comprised of digit keys and their decimal value
 our %digit2dec is export(:digit2dec) = [
     0 =>  0, 1 =>  1, 2 =>  2, 3 =>  3, 4 =>  4, 5 =>  5, 6 =>  6, 7 =>  7, 8 =>  8, 9 =>  9,
@@ -626,7 +631,7 @@ bunch more examples and they should get easier.
 
 =begin comment
 
-General method of converting a whole number (decimal) to an base b
+General method of converting a whole number (decimal) to base b
 (from Wolfram, see [Base] in README.md references):
 
 the index of the leading digit needed to represent the number x in
@@ -660,7 +665,7 @@ sub _from-dec-to-b37-b62(
 
     # need ln_b x = ln x / ln b
 
-    # note p6 routine 'log' is math function 'ln' if no optional base
+    # note Raku routine 'log' is math function 'ln' if no optional base
     # arg is entered
     my $log_b'x = log $x'dec / log $base-o;
 
