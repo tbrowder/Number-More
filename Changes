@@ -1,6 +1,8 @@
 Revision history for Number::More
 
 {{$NEXT}}
+
+0.2.3  2025-02-28T18:35:13-06:00
     - Correct incorrect handling of number length in internal sub 'pad-number'
     - Lots of other corrections...
     - Prepping for release of replacement module 'Number'
