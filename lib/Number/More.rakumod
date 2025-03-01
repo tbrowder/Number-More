@@ -21,6 +21,8 @@ my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   # m
 my token all-bases is export(:token-all-bases)      { ^ <[2..9]> | <[1..5]><[0..9]> 
                                                       | 6 <[0..2]> $ }
 
+=begin comment
+# try to replace with on-demand sets:
 # base 2 is binary
 my token base2 is export(:token-base2)              { ^ <[01]>+ $ }
 my token base3 is export(:token-base3)              { ^ <[012]>+ $ }
@@ -108,6 +110,7 @@ our @base is export(:base) = [
 &base54, &base55, &base56, &base57, &base58, &base59, &base60,
 &base61, &base62
 ];
+=end comment
 
 # standard digit set for bases 2 through 62 (char 0 through 61)
 # the array of digits is indexed by their decimal value
@@ -537,12 +540,21 @@ sub rebase(
 
     # make sure incoming number is in the right base
 #note "DEBUG: num-i = '$num-i'; base $base-i regex |{@base[$base-i].gist}|";
-#note "  early exit"; exit;;
+#note "  early exit"; exit;
 
+    my $bset = create-base-set $base-i;
+    my $nset = create-set $num-i;
+
+    unless $nset (<=) $bset {
+        die "FATAL: Incoming number '$num-i' in sub 'rebase' is\
+              not a member of base '$base-i'.";
+    }
+    =begin comment
     if $num-i !~~ @base[$base-i] {
         die "FATAL: Incoming number '$num-i' in sub 'rebase' is\
               not a member of base '$base-i'.";
     }
+    =end comment
 
     # check for same bases
     if $base-i eq $base-o {
@@ -799,8 +811,7 @@ sub create-set(
 sub create-base-set(
     UInt $base where { 1 < $base < 63 },
     :$debug,
-    #--> Set
-    --> List
+    --> Set
     ) is export {
     # if the base is < 37 (letter case insensitive)
     my $CS = 0;
@@ -826,27 +837,20 @@ sub create-base-set(
 
     my $chars = @dec2digit[$F..$L].join;
 
-    # try two methods:
     my %h;
-    my $s = '';
     if not $CS {
         for $chars.comb -> $c is copy {
             $c .= Str;
-            $c .= lc;
+            $c .= uc;
             %h{$c} = True;
-            $s ~= " $c";
         }
     }
     else {
         for $chars.comb -> $c is copy {
             $c .= Str;
             %h{$c} = True;
-            $s ~= " $c";
         }
     }
-    my $bset1 = %h.Set;
-    my $bset2 = $s.Str.Set;
-
-    $bset1, $bset1;
+    %h.Set;
 }
 
