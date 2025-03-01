@@ -12,7 +12,6 @@ as version 1.0.0.**
     my $hex = bin2hex $bin;
     say $hex; # OUTPUT: 'CB'
 
-
 ## The Number::More module
 
 This module provides some convenience functions to convert unsigned
@@ -24,13 +23,13 @@ Note that bases greater than 36 will use a set of digits consisting of
 a case-sensitive set of ASCII characters in an array indexed from
 0..base-1, and the reverse mapping is in a hash.  Both exported
 variables are shown in
-[NUMBERS](https://github.com/tbrowder/Number-More-Perl6/blob/master/docs/NUMBERS.md).
+[NUMBERS](https://github.com/tbrowder/Number-More/blob/master/docs/NUMBERS.md).
 Also included in that document is more information on other exported
 variables, number systems (and references), and their use in this
 module.
 
 The current subroutines are described in detail in
-[ALL-SUBS](https://github.com/tbrowder/Number-More-Perl6/blob/master/docs/ALL-SUBS.md)
+[SUBS](https://github.com/tbrowder/Number-More/blob/master/docs/SUBS.md)
 which shows a short description of each exported routine along along
 with its complete signature.
 
@@ -46,7 +45,7 @@ convert the decimal number to the final desired base.  In addition,
 adding prefixes, changing to lower-case where appropriate, and
 increasing lengths will involve more processing.
 
-The following illustrates the process using Perl 6 routines for the
+The following illustrates the process using Raku routines for the
 example above:
 
     my $bin = '11001011';
@@ -96,6 +95,6 @@ Thanks to 'timotimo' on IRC **\#perl6** (now **\#raku**) for the suggestion of t
 
 ## LICENSE and COPYRIGHT
 
-Artistic 2.0. See [LICENSE](https://github.com/tbrowder/Number-More-Perl6/blob/master/LICENSE).
+Artistic 2.0. See [LICENSE](https://github.com/tbrowder/Number-More/blob/master/LICENSE).
 
 Copyright (C) 2017-2023 Thomas M. Browder, Jr. <<tbrowder@acm.org>>
