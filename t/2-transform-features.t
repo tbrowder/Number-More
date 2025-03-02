@@ -5,13 +5,6 @@ use Number::More :ALL;
 
 $Number::More::LENGTH-HANDLING = 'waRn';
 
-# my %h = %digit2dec;
-#my @keys = %h.keys.sort;
-for @dec2digit -> $c {
-    my $dec = digit2dec $c;
-    say "key '$c', dec '$dec'";
-}
-
 plan 27;
 
 my $prefix = True;

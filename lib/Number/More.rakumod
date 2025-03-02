@@ -1,8 +1,5 @@
 unit module Number::More;
 
-use experimental :cached;
-
-
 my $DEBUG = 0;
 
 # export a var for users to set length behavior
@@ -38,22 +35,7 @@ our @dec2digit is export(:dec2digit) = <
 
 # Standard digit set for bases 2 through 62 (char 0 through 61)
 # the hash is comprised of digit keys and their decimal value
-sub digit2dec(
-    $char,
-    --> Int
-    ) is cached is export(:digit2dec) {
-
-    my %h;
-    unless %h{$char}:exists {
-        for @dec2digit.kv -> $i, $c is copy {
-            #$c = "'$c'";
-            %h{$c} = $i; 
-            last if $c eq $char;
-        }
-    } 
-    my $dec = %h{$char}.Int;
-    $dec;
-}
+our %digit2dec is export(:digit2dec) = @dec2digit.pairs.invert.hash;
 
 my token base { ^ 2|8|10|16 $ }
 
@@ -641,8 +623,8 @@ bunch more examples and they should get easier.
             note "DEBUG: input char is '$char', place = $place" if $DEBUG;
         }
 	# need to convert the digit to dec first
-	#my $digit-val = %digit2dec{$char};
-	my $digit-val = digit2dec $char;
+	my $digit-val = %digit2dec{$char};
+	#my $digit-val = digit2dec $char;
         if $char ~~ /:i z/ {
             note "DEBUG: input char is '$char', digit val is $digit-val" if $DEBUG;
         }
