@@ -1,5 +1,8 @@
 unit module Number::More;
 
+use experimental :cached;
+
+
 my $DEBUG = 0;
 
 # export a var for users to set length behavior
@@ -35,15 +38,40 @@ our @dec2digit is export(:dec2digit) = <
 
 # Standard digit set for bases 2 through 62 (char 0 through 61)
 # the hash is comprised of digit keys and their decimal value
+sub digit2dec(
+    $char,
+    --> Int
+    ) is cached is export(:digit2dec) {
+
+    my %h;
+    unless %h{$char}:exists {
+        for @dec2digit.kv -> $i, $c is copy {
+            #$c = "'$c'";
+            %h{$c} = $i; 
+            last if $c eq $char;
+        }
+    } 
+    my $dec = %h{$char}.Int;
+    $dec;
+}
+
+=begin comment
 our %digit2dec is export(:digit2dec) = [
-    0 =>  0, 1 =>  1, 2 =>  2, 3 =>  3, 4 =>  4, 5 =>  5, 6 =>  6, 7 =>  7, 8 =>  8, 9 =>  9,
-    A => 10, B => 11, C => 12, D => 13, E => 14, F => 15, G => 16, H => 17, I => 18, J => 19,
-    K => 20, L => 21, M => 22, N => 23, O => 24, P => 25, Q => 26, R => 27, S => 28, T => 29,
-    U => 30, V => 31, W => 32, X => 33, Y => 34, Z => 35, a => 36, b => 37, c => 38, d => 39,
-    e => 40, f => 41, g => 42, h => 43, i => 44, j => 45, k => 46, l => 47, m => 48, n => 49,
-    o => 50, p => 51, q => 52, r => 53, s => 54, t => 55, u => 56, v => 57, w => 58, x => 59,
+    0 =>  0, 1 =>  1, 2 =>  2, 3 =>  3, 4 =>  4, 
+             5 =>  5, 6 =>  6, 7 =>  7, 8 =>  8, 9 =>  9,
+    A => 10, B => 11, C => 12, D => 13, E => 14, 
+             F => 15, G => 16, H => 17, I => 18, J => 19,
+    K => 20, L => 21, M => 22, N => 23, O => 24, 
+             P => 25, Q => 26, R => 27, S => 28, T => 29,
+    U => 30, V => 31, W => 32, X => 33, Y => 34, 
+             Z => 35, a => 36, b => 37, c => 38, d => 39,
+    e => 40, f => 41, g => 42, h => 43, i => 44, 
+             j => 45, k => 46, l => 47, m => 48, n => 49,
+    o => 50, p => 51, q => 52, r => 53, s => 54, 
+             t => 55, u => 56, v => 57, w => 58, x => 59,
     y => 60, z => 61
 ];
+=end comment
 
 my token base { ^ 2|8|10|16 $ }
 
@@ -104,6 +132,7 @@ sub pad-number(
     }
 
     if $suffix {
+        $num .= Str;
 	$num ~= "_base-$base";
     }
     elsif $prefix {
@@ -305,7 +334,8 @@ sub oct2bin(
 # Params  : Octal number (string), desired length (optional), prefix (optional), suffix (optional), lower-case (optional).
 # Returns : Hexadecimal number (string).
 sub oct2hex(
-    $oct where &octal, UInt $len = 0,
+    $oct where &octal, 
+    UInt $len = 0,
     # optional args
     :$prefix is copy,
     :$suffix is copy,
@@ -334,7 +364,8 @@ sub oct2hex(
 # Params  : Octal number (string), desired length (optional), suffix (optional).
 # Returns : Decimal number (or string).
 sub oct2dec(
-    $oct where &octal, UInt $len = 0,
+    $oct where &octal, 
+    UInt $len = 0,
     # optional args
     :$suffix is copy,
     --> Cool
@@ -410,7 +441,8 @@ sub dec2oct(
 # Params  : Hexadecimal number (string), desired length (optional), prefix (optional), suffix (optional).
 # Returns : Octal number (string).
 sub hex2oct(
-    $hex where &hexadecimal, UInt $len = 0,
+    $hex where &hexadecimal, 
+    UInt $len = 0,
     # optional args
     :$prefix is copy,
     :$suffix is copy,
@@ -520,7 +552,7 @@ sub rebase(
             $num-o = parse-base $num-i, $base-i;
 	}
 	else {
-	    $num-o = _to-dec-from-b37-b62 $num-i, $base-o;
+	    $num-o = _to-dec-from-b37-b62 $num-i, $base-i;
 	}
     }
     elsif ($base-i < 37) and ($base-o < 37) {
@@ -538,6 +570,7 @@ sub rebase(
 	    $dec = _to-dec-from-b37-b62 $num-i, $base-i;
 	}
 
+        # then convert to desired base
 	if $base-o < 37 {
             $num-o = $dec.base: $base-o;
 	}
@@ -573,7 +606,8 @@ sub rebase(
 
 sub _to-dec-from-b37-b62(
     $num,
-    UInt $bi where { 36 < $bi < 63 }
+    #$base-i where { 36 < $base-i < 63 },
+    UInt $base-i where ( 36 < $base-i < 63 ),
     --> Cool
 ) is export(:_to-dec-from-b37-b62) {
 
@@ -613,16 +647,24 @@ bunch more examples and they should get easier.
 
 =end comment
 
-    # reverse the digits of the input number
+    # reverse the digits (chars) of the input number
     my @num'r = $num.comb.reverse;
     my $place = $num.chars;
 
     my $dec = 0;
-    for @num'r -> $digit {
+    
+    for @num'r -> $char  {
 	--$place; # first place is num chars - 1
+        if $char ~~ /:i z/ {
+            note "DEBUG: input char is '$char', place = $place" if $DEBUG;
+        }
 	# need to convert the digit to dec first
-	my $digit-val = %digit2dec{$digit};
-	my $val = $digit-val * $bi ** $place;
+	#my $digit-val = %digit2dec{$char};
+	my $digit-val = digit2dec $char;
+        if $char ~~ /:i z/ {
+            note "DEBUG: input char is '$char', digit val is $digit-val" if $DEBUG;
+        }
+	my $val = $digit-val * $base-i ** $place;
 	$dec += $val;
     }
 
@@ -657,9 +699,9 @@ to convert between logarithms in different bases, the formula:
 
 sub _from-dec-to-b37-b62(
       UInt $x'dec,
-      UInt $base-o where { 36 < $base-o < 63 }
+      UInt $base-o where ( 36 < $base-o < 63 ),
       --> Str
-  ) is export(:_from-dec-to-b37-b62) {
+) is export(:_from-dec-to-b37-b62) {
 
     # see Wolfram's solution (article Base, see notes above)
 
@@ -679,13 +721,16 @@ sub _from-dec-to-b37-b62(
 
     @r[$n] = $x'dec;
 
-    # work through the $x'dec.chars places (????)
+    # TODO FIX THIS
+    # work through the $x'dec.chars places (positions, indices?)
     # for now just handle integers (later, real, i.e., digits after a fraction point)
-    for $n...0 -> $i { # <= Wolfram text is misleading here
+    my @rev = (0..$n).reverse;
+    #for $n...0 -> $i { # <= Wolfram text is misleading here
+    for @rev -> $i { # <= Wolfram text is misleading here
 	my $b'i  = $base-o ** $i;
 	@a[$i]   = floor (@r[$i] / $b'i);
 
-        say "  i = $i; a = '@a[$i]'; r = '@r[$i]'" if $DEBUG;
+        say "  i = $i; a = '@a[$i]'; r = '@r[$i]'" if 1 or $DEBUG;
 
         # calc r for next iteration
 	@r[$i-1] = @r[$i] - @a[$i] * $b'i if $i > 0;
@@ -722,7 +767,7 @@ sub create-set(
 }
 
 sub create-base-set(
-    UInt $base where { 1 < $base < 63 },
+    UInt $base where ( 1 < $base < 63 ),
     :$debug,
     --> Set
     ) is export {
@@ -745,8 +790,10 @@ sub create-base-set(
     my $last-char = @dec2digit[$last-char-idx];
     my $LC = $last-char;
 
-    say "DEBUG base $base, first char is char index $F, char '$FC'";
-    say "                   last char is char index $L, char '$LC'";
+    if $debug {
+        say "DEBUG base $base, first char is char index $F, char '$FC'";
+        say "                   last char is char index $L, char '$LC'";
+    }
 
     my $chars = @dec2digit[$F..$L].join;
 

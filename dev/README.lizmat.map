@@ -1,0 +1,11 @@
+2024-10-17 #raku
+
+lizmat on map howto:
+
+my @b = @a.map({...})
+# same as:
+my @b = do for @a {...}
+
+
+
+
