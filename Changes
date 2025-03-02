@@ -1,6 +1,8 @@
 Revision history for Number::More
 
 {{$NEXT}}
+
+0.2.4  2025-03-01T18:18:26-06:00
     - Convert hash of digit chars to decimal value to a cached sub
 
 0.2.3  2025-02-28T18:35:13-06:00
