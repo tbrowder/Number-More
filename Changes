@@ -1,6 +1,7 @@
 Revision history for Number::More
 
 {{$NEXT}}
+    - Remove 'use v6;' from test files
 
 0.2.6  2025-03-02T06:42:27-06:00
     - Use method .antipairs to invert the list
