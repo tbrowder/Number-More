@@ -1,6 +1,8 @@
 Revision history for Number::More
 
 {{$NEXT}}
+
+0.2.8  2025-03-02T12:55:30-06:00
     - More tidying, improved README
     - Removed spurious comments and commented out code
     - Removed leading underscore from two sub names
