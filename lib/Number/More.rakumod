@@ -23,6 +23,7 @@ my token all-bases is export(:token-all-bases)      { ^
                                                         <[1..5]><[0..9]> |
                                                         6 <[0..2]> 
                                                     $ }
+
 # Standard digit set for bases 2 through 62 (char 0 through 61)
 # the array of digits is indexed by their decimal value (note
 # the %dec2digit hash can be created programmatically from this
@@ -33,9 +34,9 @@ our @dec2digit is export(:dec2digit) = <
     a b c d e f g h i j k l m n o p q r s t u v w x y z
     >;
 
-# Standard digit set for bases 2 through 62 (char 0 through 61)
-# the hash is comprised of digit keys and their decimal value
-our %digit2dec is export(:digit2dec) = @dec2digit.pairs.invert.hash;
+# Standard digit set for bases 2 through 62 (char 0 through 61).
+# The hash is comprised of digit keys and their decimal value.
+our %digit2dec is export(:digit2dec) = @dec2digit.antipairs;
 
 my token base { ^ 2|8|10|16 $ }
 
