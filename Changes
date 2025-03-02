@@ -1,6 +1,10 @@
 Revision history for Number::More
 
 {{$NEXT}}
+    - More tidying, improved README
+    - Removed spurious comments and commented out code
+    - Removed leading underscore from two sub names
+    - Added test from new example in README
 
 0.2.7  2025-03-02T07:35:22-06:00
     - Remove 'use v6;' from test files

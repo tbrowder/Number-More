@@ -49,7 +49,11 @@ The following illustrates the process using Raku routines for the
 example above:
 
     my $bin = '11001011';
+    # use a sub:
     my $dec = parse-base $bin, 2;
+    # or use a method on $bin: 
+    $dec = $bin.parse-base: 2;
+    # finally, get the hex value:
     my $hex = $dec.base: 16;
     say $hex; # OUTPUT 'CB'
 

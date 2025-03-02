@@ -2,7 +2,7 @@ unit module Number::More;
 
 my $DEBUG = 0;
 
-# export a var for users to set length behavior
+# Export a var for users to set length behavior
 our $LENGTH-HANDLING is export(:DEBUG) = 'ignore'; # other options: 'warn', 'fail'
 my token length-action { ^ :i warn|fail $ }
 
@@ -11,13 +11,13 @@ our $oset = (0..7).Set;
 our $dset = (0..9).Set;
 our $hset = "abcdef".comb.Set (|) $dset;
 
-# define tokens for common regexes (no prefixes are allowed)
+# Define tokens for common regexes (no prefixes are allowed)
 my token binary is export(:token-binary)            { ^ <[01]>+ $ }
 my token octal is export(:token-octal)              { ^ <[0..7]>+ $ }
 my token decimal is export(:token-decimal)          { ^ \d+ $ } # actually an int
 my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   
 
-# for general base functions 2..62
+# For general base functions 2..62
 my token all-bases is export(:token-all-bases)      { ^ 
                                                         <[2..9]>         | 
                                                         <[1..5]><[0..9]> |
@@ -40,7 +40,7 @@ our %digit2dec is export(:digit2dec) = @dec2digit.antipairs;
 
 my token base { ^ 2|8|10|16 $ }
 
-# This is a sub
+# This is a non-exported sub
 sub pad-number(
     $num is rw,
     UInt $base where &all-bases,
@@ -89,7 +89,7 @@ sub pad-number(
         my $zpad = 0 x ($length - $nct);
         $num = $zpad ~ $num;
 
-        # the following test should always be true!!
+        # now the following test should always be true!!
         if $len {
             die "debug FATAL: unexpected \$length ($length)\
                 NOT greater than \$nc ($nc)";
@@ -449,9 +449,6 @@ sub rebase(
     $LC     = 0 if not $LC.defined;
 
     # make sure incoming number is in the right base
-#note "DEBUG: num-i = '$num-i'; base $base-i regex |{@base[$base-i].gist}|";
-#note "  early exit"; exit;
-
     my $bset = create-base-set $base-i;
     my $nset = create-set $num-i;
 
@@ -459,12 +456,6 @@ sub rebase(
         die "FATAL: Incoming number '$num-i' in sub 'rebase' is\
               not a member of base '$base-i'.";
     }
-    =begin comment
-    if $num-i !~~ @base[$base-i] {
-        die "FATAL: Incoming number '$num-i' in sub 'rebase' is\
-              not a member of base '$base-i'.";
-    }
-    =end comment
 
     # check for same bases
     if $base-i eq $base-o {
@@ -509,7 +500,7 @@ sub rebase(
             $num-o = $num-i.base: $base-o;
 	}
 	else {
-            $num-o = _from-dec-to-b37-b62 $num-i, $base-o;
+            $num-o = from-dec-to-b37-b62 $num-i, $base-o;
 	}
     }
     elsif $base-o == 10 {
@@ -517,7 +508,7 @@ sub rebase(
             $num-o = parse-base $num-i, $base-i;
 	}
 	else {
-	    $num-o = _to-dec-from-b37-b62 $num-i, $base-i;
+	    $num-o = to-dec-from-b37-b62 $num-i, $base-i;
 	}
     }
     elsif ($base-i < 37) and ($base-o < 37) {
@@ -532,7 +523,7 @@ sub rebase(
             $dec = $num-i.parse-base: $base-i;
 	}
 	else {
-	    $dec = _to-dec-from-b37-b62 $num-i, $base-i;
+	    $dec = to-dec-from-b37-b62 $num-i, $base-i;
 	}
 
         # then convert to desired base
@@ -540,7 +531,7 @@ sub rebase(
             $num-o = $dec.base: $base-o;
 	}
 	else {
-            $num-o = _from-dec-to-b37-b62 $dec, $base-o;
+            $num-o = from-dec-to-b37-b62 $dec, $base-o;
 	}
     }
 
@@ -568,13 +559,11 @@ sub rebase(
     $num-o;
 } # rebase
 
-
-sub _to-dec-from-b37-b62(
+sub to-dec-from-b37-b62(
     $num,
-    #$base-i where { 36 < $base-i < 63 },
     UInt $base-i where ( 36 < $base-i < 63 ),
     --> Cool
-) is export(:_to-dec-from-b37-b62) {
+) is export(:to-dec-from-b37-b62) {
 
 =begin comment
 # see simple algorithm for base to dec:
@@ -625,7 +614,6 @@ bunch more examples and they should get easier.
         }
 	# need to convert the digit to dec first
 	my $digit-val = %digit2dec{$char};
-	#my $digit-val = digit2dec $char;
         if $char ~~ /:i z/ {
             note "DEBUG: input char is '$char', digit val is $digit-val" if $DEBUG;
         }
@@ -634,7 +622,7 @@ bunch more examples and they should get easier.
     }
 
     $dec;
-} # _to-dec-from-b37-b62
+} # to-dec-from-b37-b62
 
 =begin comment
 
@@ -662,11 +650,11 @@ to convert between logarithms in different bases, the formula:
 
 =end comment
 
-sub _from-dec-to-b37-b62(
+sub from-dec-to-b37-b62(
       UInt $x'dec,
       UInt $base-o where ( 36 < $base-o < 63 ),
       --> Str
-) is export(:_from-dec-to-b37-b62) {
+) is export(:from-dec-to-b37-b62) {
 
     # see Wolfram's solution (article Base, see notes above)
 
@@ -686,11 +674,9 @@ sub _from-dec-to-b37-b62(
 
     @r[$n] = $x'dec;
 
-    # TODO FIX THIS
     # work through the $x'dec.chars places (positions, indices?)
     # for now just handle integers (later, real, i.e., digits after a fraction point)
     my @rev = (0..$n).reverse;
-    #for $n...0 -> $i { # <= Wolfram text is misleading here
     for @rev -> $i { # <= Wolfram text is misleading here
 	my $b'i  = $base-o ** $i;
 	@a[$i]   = floor (@r[$i] / $b'i);
@@ -714,9 +700,8 @@ sub _from-dec-to-b37-b62(
     $x'b ~~ s:i/^ 0 (<[0..9a..z]>) /$0/;
 
     $x'b;
-} # _from-dec-to-b37-b62
+} # from-dec-to-b37-b62
 
-# subs moved here from t/7*t
 sub create-set(
     $text,
     :$debug,
