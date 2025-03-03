@@ -49,9 +49,10 @@ sub pad-number(
     :$prefix is copy,
     :$suffix is copy,
     :$LC is copy,
-) {
-    my UInt $len = $num.chars;
+    :$debug,
+    ) {
 
+    my UInt $len = $num.chars;
     $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
@@ -117,12 +118,19 @@ sub pad-number(
 sub hex2dec(
     Str:D $hex where &hexadecimal,
     # optional args
+    :$length is copy, # for padding
     :$prefix is copy,
     :$suffix is copy,
+    :$LC is copy,
+    :$debug,
     --> Cool
-) is export(:hex2dec) {
+    ) is export(:hex2dec) {
+
+    my UInt $len = $hex.chars;
+    $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
 
     # need bases of incoming and outgoing number
     constant $base-i = 16;
@@ -142,12 +150,19 @@ sub hex2dec(
 sub hex2bin(
     Str:D $hex where &hexadecimal,
     # optional args
+    :$length is copy, # for padding
     :$prefix is copy,
     :$suffix is copy,
+    :$LC is copy,
+    :$debug,
     --> Str
-) is export(:hex2bin) {
+    ) is export(:hex2bin) {
+
+    my UInt $len = $hex.chars;
+    $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
 
     # need bases of incoming and outgoing number
     constant $base-i = 16;
@@ -170,11 +185,16 @@ sub hex2bin(
 sub dec2hex(
     $dec where &decimal,
     # optional args
+    :$length is copy, # for padding
     :$prefix is copy,
     :$suffix is copy,
     :$LC is copy,
+    :$debug,
     --> Str
-) is export(:dec2hex) {
+    ) is export(:dec2hex) {
+
+    my UInt $len = $dec.chars;
+    $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
     $LC     = 0 if not $LC.defined;
@@ -196,12 +216,19 @@ sub dec2hex(
 sub dec2bin(
     $dec where &decimal,
     # optional args
+    :$length is copy, # for padding
     :$prefix is copy,
     :$suffix is copy,
+    :$LC is copy,
+    :$debug,
     --> Str
-) is export(:dec2bin) {
+    ) is export(:dec2bin) {
+
+    my UInt $len = $dec.chars;
+    $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
 
     # need base of outgoing number
     constant $base-o = 2;
@@ -220,11 +247,19 @@ sub dec2bin(
 sub bin2dec(
     Str:D $bin where &binary,
     # optional args
+    :$length is copy, # for padding
+    :$prefix is copy,
     :$suffix is copy,
+    :$LC is copy,
     :$debug,
     --> Cool
-) is export(:bin2dec) {
+    ) is export(:bin2dec) {
+
+    my UInt $len = $bin.chars;
+    $length = 0 if not $length.defined;
+    $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
 
     # need bases of incoming and outgoing numbers
     constant $base-i =  2;
@@ -244,12 +279,16 @@ sub bin2dec(
 sub bin2hex(
     Str:D $bin where &binary,
     # optional args
-    :$prefix is copy, 
+    :$length is copy, # for padding
+    :$prefix is copy,
     :$suffix is copy,
     :$LC is copy,
     :$debug,
     --> Str
-) is export(:bin2hex) {
+    ) is export(:bin2hex) {
+
+    my UInt $len = $bin.chars;
+    $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
     $LC     = 0 if not $LC.defined;
@@ -274,12 +313,19 @@ sub bin2hex(
 sub oct2bin(
     $oct where &octal,
     # optional args
+    :$length is copy, # for padding
     :$prefix is copy,
     :$suffix is copy,
+    :$LC is copy,
+    :$debug,
     --> Str
-) is export(:oct2bin) {
+    ) is export(:oct2bin) {
+
+    my UInt $len = $oct.chars;
+    $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
 
     # need bases of incoming and outgoing number
     constant $base-i = 8;
@@ -300,13 +346,17 @@ sub oct2bin(
 # Returns : Hexadecimal number (string).
 sub oct2hex(
     $oct where &octal, 
-    UInt $len = 0,
     # optional args
+    :$length is copy, # for padding
     :$prefix is copy,
     :$suffix is copy,
     :$LC is copy,
+    :$debug,
     --> Str
-) is export(:oct2hex) {
+    ) is export(:oct2hex) {
+
+    my UInt $len = $oct.chars;
+    $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
     $LC     = 0 if not $LC.defined;
@@ -330,12 +380,20 @@ sub oct2hex(
 # Returns : Decimal number (or string).
 sub oct2dec(
     $oct where &octal, 
-    UInt $len = 0,
     # optional args
+    :$length is copy, # for padding
+    :$prefix is copy,
     :$suffix is copy,
+    :$LC is copy,
+    :$debug,
     --> Cool
-) is export(:oct2dec) {
+    ) is export(:oct2dec) {
+
+    my UInt $len = $oct.chars;
+    $length = 0 if not $length.defined;
+    $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
 
     # need bases of incoming and outgoing number
     constant $base-i =  8;
@@ -355,13 +413,19 @@ sub oct2dec(
 sub bin2oct(
     $bin where &binary,
     # optional args
+    :$length is copy, # for padding
     :$prefix is copy,
     :$suffix is copy,
+    :$LC is copy,
     :$debug,
     --> Str
-) is export(:bin2oct) {
+    ) is export(:bin2oct) {
+
+    my UInt $len = $bin.chars;
+    $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
 
     # need bases of incoming and outgoing number
     constant $base-i = 2;
@@ -384,12 +448,19 @@ sub bin2oct(
 sub dec2oct(
     $dec where &decimal,
     # optional args
+    :$length is copy, # for padding
     :$prefix is copy,
     :$suffix is copy,
+    :$LC is copy,
+    :$debug,
     --> Cool
-) is export(:dec2oct) {
+    ) is export(:dec2oct) {
+
+    my UInt $len = $dec.chars;
+    $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
 
     # need base of outgoing number
     constant $base-o =  8;
@@ -407,14 +478,20 @@ sub dec2oct(
 # Returns : Octal number (string).
 sub hex2oct(
     $hex where &hexadecimal, 
-    UInt $len = 0,
     # optional args
+    :$length is copy, # for padding
     :$prefix is copy,
     :$suffix is copy,
+    :$LC is copy,
+    :$debug,
     --> Str
-) is export(:hex2oct) {
+    ) is export(:hex2oct) {
+
+    my UInt $len = $hex.chars;
+    $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
 
     # need bases of incoming and outgoing number
     constant $base-i = 16;
@@ -438,12 +515,16 @@ sub rebase(
     $base-i where &all-bases,
     $base-o where &all-bases,
     # optional args
+    :$length is copy,
     :$prefix is copy,
     :$suffix is copy,
     :$LC is copy,
     :$debug,
     --> Cool
-) is export(:baseM2baseN) {
+    ) is export(:baseM2baseN) {
+
+    my UInt $len = $num-i.chars;
+    $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
     $LC     = 0 if not $LC.defined;
@@ -562,8 +643,20 @@ sub rebase(
 sub to-dec-from-b37-b62(
     $num,
     UInt $base-i where ( 36 < $base-i < 63 ),
+    # optional args
+    :$length is copy, # for padding
+    :$prefix is copy,
+    :$suffix is copy,
+    :$LC is copy,
+    :$debug,
     --> Cool
-) is export(:to-dec-from-b37-b62) {
+    ) is export(:to-dec-from-b37-b62) {
+
+    my UInt $len = $num.chars;
+    $length = 0 if not $length.defined;
+    $prefix = 0 if not $prefix.defined;
+    $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
 
 =begin comment
 # see simple algorithm for base to dec:
@@ -651,10 +744,22 @@ to convert between logarithms in different bases, the formula:
 =end comment
 
 sub from-dec-to-b37-b62(
-      UInt $x'dec,
-      UInt $base-o where ( 36 < $base-o < 63 ),
-      --> Str
-) is export(:from-dec-to-b37-b62) {
+    UInt $x'dec,
+    UInt $base-o where ( 36 < $base-o < 63 ),
+    # optional args
+    :$length is copy, # for padding
+    :$prefix is copy,
+    :$suffix is copy,
+    :$LC is copy,
+    :$debug,
+    --> Str
+    ) is export(:from-dec-to-b37-b62) {
+
+    my UInt $len = $x'dec.chars;
+    $length = 0 if not $length.defined;
+    $prefix = 0 if not $prefix.defined;
+    $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
 
     # see Wolfram's solution (article Base, see notes above)
 
@@ -721,6 +826,7 @@ sub create-base-set(
     :$debug,
     --> Set
     ) is export {
+
     # if the base is < 37 (letter case insensitive)
     my $CS = 0;
 
