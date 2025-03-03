@@ -1,6 +1,8 @@
 Revision history for Number::More
 
 {{$NEXT}}
+    - Ensured all conversion subs have the same optional args and handling
+    - Added more tests for optional args
 
 0.2.8  2025-03-02T12:55:30-06:00
     - More tidying, improved README
