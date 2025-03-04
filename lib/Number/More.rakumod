@@ -24,8 +24,8 @@ my token all-bases is export(:token-all-bases)      { ^
                                                         6 <[0..2]> 
                                                     $ }
 
-# Standard digit set for bases 2 through 62 (char 0 through 61)
-# the array of digits is indexed by their decimal value (note
+# Standard digit set for bases 2 through 62 (char 0 through 61).
+# The array of digits is indexed by their decimal postion in the array (note
 # the %dec2digit hash can be created programmatically from this
 # array):
 our @dec2digit is export(:dec2digit) = <
@@ -35,7 +35,8 @@ our @dec2digit is export(:dec2digit) = <
     >;
 
 # Standard digit set for bases 2 through 62 (char 0 through 61).
-# The hash is comprised of digit keys and their decimal value.
+# The hash is comprised of digit (char) keys and their decimal index value
+# in the parent @dec2digit array.
 our %digit2dec is export(:digit2dec) = @dec2digit.antipairs;
 
 my token base { ^ 2|8|10|16 $ }
@@ -786,7 +787,7 @@ sub from-dec-to-b37-b62(
 	my $b'i  = $base-o ** $i;
 	@a[$i]   = floor (@r[$i] / $b'i);
 
-        say "  i = $i; a = '@a[$i]'; r = '@r[$i]'" if 1 or $DEBUG;
+        say "  i = $i; a = '@a[$i]'; r = '@r[$i]'" if 0 or $DEBUG;
 
         # calc r for next iteration
 	@r[$i-1] = @r[$i] - @a[$i] * $b'i if $i > 0;

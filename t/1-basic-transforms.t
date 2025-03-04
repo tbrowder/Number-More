@@ -18,26 +18,26 @@ for @uints -> $dec {
     my $hex2 = lc $hex;       # a lower-case version
 
     # the tests 18
-    is bin2oct($bin), $oct, $oct;
-    is bin2dec($bin), $dec, $dec;
-    is bin2hex($bin), $hex, $hex;
-    is bin2hex($bin, :$LC), $hex2, $hex2;
+    is bin2oct($bin), $oct;
+    is bin2dec($bin), $dec;
+    is bin2hex($bin), $hex;
+    is bin2hex($bin, :$LC), $hex2;
 
-    is oct2bin($oct), $bin, $oct;
-    is oct2dec($oct), $dec, $dec;
-    is oct2hex($oct), $hex, $hex;
+    is oct2bin($oct), $bin;
+    is oct2dec($oct), $dec;
+    is oct2hex($oct), $hex;
     is oct2hex($oct, :$LC), $hex2;
 
-    is dec2bin($dec), $bin, $bin;
-    is dec2oct($dec), $oct, $oct;
-    is dec2hex($dec), $hex, $hex;
-    is dec2hex($dec, :$LC), $hex2, $hex2;
+    is dec2bin($dec), $bin;
+    is dec2oct($dec), $oct;
+    is dec2hex($dec), $hex;
+    is dec2hex($dec, :$LC), $hex2;
 
-    is hex2bin($hex), $bin, $bin;
-    is hex2oct($hex), $oct, $oct;
-    is hex2dec($hex), $dec, $dec;
+    is hex2bin($hex), $bin;
+    is hex2oct($hex), $oct;
+    is hex2dec($hex), $dec;
 
-    is hex2bin($hex2), $bin, $bin;
-    is hex2oct($hex2), $oct, $oct;
-    is hex2dec($hex2), $dec, $dec;
+    is hex2bin($hex2), $bin;
+    is hex2oct($hex2), $oct;
+    is hex2dec($hex2), $dec;
 }

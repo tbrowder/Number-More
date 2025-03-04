@@ -9,9 +9,6 @@ plan 27;
 my $prefix = True;
 my $LC     = True;
 
-my $msg2 = ":\$LC arg not allowed for conversion to anything\
-             but hexadecimal";
-
 dies-ok  { rebase('Z', 2, 3);   }, "base-i: Z, 2, invalid base number for input";
 dies-ok  { rebase('Z', 16, 37); }, "base-i: Z, 16, invalid base number for input";
 lives-ok { rebase('Z', 36, 37); }, "base-i: Z, 36, valid base number for input";
