@@ -33,33 +33,33 @@ for @uints -> $dec {
                 $tnum-out = $dec.base: $bo;
             }
 
-            is rebase($tnum-in, $bi, $bo), $tnum-out, $tnum-out;
+            is rebase($tnum-in, $bi, $bo), $tnum-out;
 
             if $bo eq '2' {
                 my $out = '0b' ~ $tnum-out;
-                is rebase($tnum-in, $bi, $bo, :$prefix), $out, $out;
+                is rebase($tnum-in, $bi, $bo, :$prefix), $out;
             }
             elsif $bo eq '8' {
                 my $out = '0o' ~ $tnum-out;
-                is rebase($tnum-in, $bi, $bo, :$prefix), $out, $out;
+                is rebase($tnum-in, $bi, $bo, :$prefix), $out;
             }
             elsif $bo eq '10' {
                 my $out = '0d' ~ $tnum-out;
-                is rebase($tnum-in, $bi, $bo, :$prefix), $out, $out;
+                is rebase($tnum-in, $bi, $bo, :$prefix), $out;
             }
             elsif $bo eq '16' {
                 my $out = '0x' ~ $tnum-out;
-                is rebase($tnum-in, $bi, $bo, :$prefix), $out, $out;
+                is rebase($tnum-in, $bi, $bo, :$prefix), $out;
 
                 $out = '0x' ~ lc $tnum-out;
-                is rebase($tnum-in, $bi, $bo, :$prefix, :$LC), $out, $out;
+                is rebase($tnum-in, $bi, $bo, :$prefix, :$LC), $out;
 
                 $out = lc $tnum-out;
-                is rebase($tnum-in, $bi, $bo, :$LC), $out, $out;
+                is rebase($tnum-in, $bi, $bo, :$LC), $out;
             }
 	    elsif $bo > 10 {
 		my $out = lc $tnum-out;
-		is rebase($tnum-in, $bi, $bo, :$LC), $out, $out;
+		is rebase($tnum-in, $bi, $bo, :$LC), $out;
 	    }
         }
     }

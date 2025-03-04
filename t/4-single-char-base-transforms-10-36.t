@@ -32,24 +32,24 @@ for 10..36 -> $dec {
     # special cases
     if $bo eq '2' {
         my $out = '0b' ~ $tnum-out;
-        is rebase($tnum-in, $bi, $bo, :$prefix), $out, $out;
+        is rebase($tnum-in, $bi, $bo, :$prefix), $out;
     }
     elsif $bo eq '8' {
         my $out = '0o' ~ $tnum-out;
-        is rebase($tnum-in, $bi, $bo, :$prefix), $out, $out;
+        is rebase($tnum-in, $bi, $bo, :$prefix), $out;
     }
     elsif $bo eq '16' {
         my $out = '0x' ~ $tnum-out;
-        is rebase($tnum-in, $bi, $bo, :$prefix), $out, $out;
+        is rebase($tnum-in, $bi, $bo, :$prefix), $out;
         $out = '0x' ~ lc $tnum-out;
-        is rebase($tnum-in, $bi, $bo, :$prefix, :$LC), $out, $out;
+        is rebase($tnum-in, $bi, $bo, :$prefix, :$LC), $out;
         $out = lc $tnum-out;
-        is rebase($tnum-in, $bi, $bo, :$LC), $out, $out;
+        is rebase($tnum-in, $bi, $bo, :$LC), $out;
     }
     elsif $bo > 10 && $bo < 37 {
         # bases 11 through 36 are NOT case sensitive
         my $out = lc $tnum-out;
-        is rebase($tnum-in, $bi, $bo, :$LC), $out, $out;
+        is rebase($tnum-in, $bi, $bo, :$LC), $out;
     }
 }
 
@@ -72,5 +72,5 @@ for 10..36 -> $dec {
     die "FATAL: Output number is NOT a single char." if $tnum-out.chars != 1;
 
     # default case
-    is rebase($tnum-in, $bi, $bo), $tnum-out, $tnum-out;
+    is rebase($tnum-in, $bi, $bo), $tnum-out;
 }

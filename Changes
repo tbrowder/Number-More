@@ -1,6 +1,8 @@
 Revision history for Number::More
 
 {{$NEXT}}
+    - Ensure all calls to pad-number have all the optional args
+    - Remove spurious code
 
 0.2.9  2025-03-03T21:18:26-06:00
     - Ensured all conversion subs have the same optional args and handling

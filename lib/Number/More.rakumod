@@ -41,7 +41,7 @@ our %digit2dec is export(:digit2dec) = @dec2digit.antipairs;
 
 my token base { ^ 2|8|10|16 $ }
 
-# This is a non-exported sub
+# This is a non-exported sub # and it modifies the input in place
 sub pad-number(
     $num is rw,
     UInt $base where &all-bases,
@@ -54,6 +54,7 @@ sub pad-number(
     ) {
 
     my UInt $len = $num.chars;
+
     $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
@@ -117,7 +118,7 @@ sub pad-number(
 # Params  : Hexadecimal number (string), desired length (optional), suffix (optional).
 # Returns : Decimal number (or string).
 sub hex2dec(
-    Str:D $hex where &hexadecimal,
+    $hex where &hexadecimal,
     # optional args
     :$length is copy, # for padding
     :$prefix is copy,
@@ -128,6 +129,7 @@ sub hex2dec(
     ) is export(:hex2dec) {
 
     my UInt $len = $hex.chars;
+
     $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
@@ -137,7 +139,7 @@ sub hex2dec(
     constant $base-i = 16;
     constant $base-o = 10;
 
-    my $dec = parse-base $hex, $base-i;
+    my $dec = $hex.parse-base: $base-i;
     pad-number $dec, $base-o, :$prefix, :$suffix;
 
     $dec;
@@ -149,7 +151,7 @@ sub hex2dec(
 # Params  : Hexadecimal number (string), desired length (optional), prefix (optional), suffix (optional).
 # Returns : Binary number (string).
 sub hex2bin(
-    Str:D $hex where &hexadecimal,
+    $hex where &hexadecimal,
     # optional args
     :$length is copy, # for padding
     :$prefix is copy,
@@ -160,6 +162,7 @@ sub hex2bin(
     ) is export(:hex2bin) {
 
     my UInt $len = $hex.chars;
+
     $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
@@ -170,7 +173,7 @@ sub hex2bin(
     constant $base-o =  2;
 
     # have to get decimal first
-    my $dec = parse-base $hex, $base-i;
+    my $dec = $hex.parse-base: $base-i;
     my $bin = $dec.base: $base-o;
 
     pad-number $bin, $base-o, :$prefix, :$suffix;
@@ -195,6 +198,7 @@ sub dec2hex(
     ) is export(:dec2hex) {
 
     my UInt $len = $dec.chars;
+
     $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
@@ -226,6 +230,7 @@ sub dec2bin(
     ) is export(:dec2bin) {
 
     my UInt $len = $dec.chars;
+
     $length = 0 if not $length.defined;
     $prefix = 0 if not $prefix.defined;
     $suffix = 0 if not $suffix.defined;
@@ -246,7 +251,7 @@ sub dec2bin(
 # Params  : Binary number (string), desired length (optional), suffix (optional).
 # Returns : Decimal number (or string).
 sub bin2dec(
-    Str:D $bin where &binary,
+    $bin where &binary,
     # optional args
     :$length is copy, # for padding
     :$prefix is copy,
@@ -278,7 +283,7 @@ sub bin2dec(
 # Params  : Binary number (string), desired length (optional), prefix (optional), suffix (optional), lower-case (optional).
 # Returns : Hexadecimal number (string).
 sub bin2hex(
-    Str:D $bin where &binary,
+    $bin where &binary,
     # optional args
     :$length is copy, # for padding
     :$prefix is copy,
@@ -745,8 +750,8 @@ to convert between logarithms in different bases, the formula:
 =end comment
 
 sub from-dec-to-b37-b62(
-    UInt $x'dec,
-    UInt $base-o where ( 36 < $base-o < 63 ),
+    $x'dec,
+    $base-o where ( 36 < $base-o < 63 ),
     # optional args
     :$length is copy, # for padding
     :$prefix is copy,
