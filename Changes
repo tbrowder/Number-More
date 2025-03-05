@@ -1,6 +1,8 @@
 Revision history for Number::More
 
 {{$NEXT}}
+
+0.2.11  2025-03-05T09:29:36-06:00
     - Fix another incorrect handling of non-case-sensitive bases
       (ensure both upper- and lower-case letters)
 

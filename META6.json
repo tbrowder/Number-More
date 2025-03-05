@@ -7,7 +7,7 @@
   "build-depends": [
   ],
   "depends": [
-      "UUID::V4"
+    "UUID::V4"
   ],
   "description": "Provides number base transform functions",
   "license": "Artistic-2.0",
@@ -28,5 +28,5 @@
   ],
   "test-depends": [
   ],
-  "version": "0.2.10"
+  "version": "0.2.11"
 }
