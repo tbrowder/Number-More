@@ -1,6 +1,8 @@
 Revision history for Number::More
 
 {{$NEXT}}
+    - Fix another incorrect handling of non-case-sensitive bases
+      (ensure both upper- and lower-case letters)
 
 0.2.10  2025-03-04T18:57:25-06:00
     - Ensure all calls to pad-number have all the optional args

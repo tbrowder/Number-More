@@ -833,13 +833,6 @@ sub create-base-set(
     --> Set
     ) is export {
 
-    # if the base is < 37 (letter case insensitive)
-    my $CS = 0;
-
-    if $base > 36 {
-        ++$CS;
-        #die "Tom, fix this to handle base > 36";
-    }
 
     my $first-char-idx = 0;
     my $F = $first-char-idx;
@@ -858,20 +851,16 @@ sub create-base-set(
     }
 
     my $chars = @dec2digit[$F..$L].join;
+    # if the base is < 37 (letter case insensitive)
+    if $base < 37 {
+        # add lower-case versions of the letters
+        $chars ~= $chars.lc
+    }
 
     my %h;
-    if not $CS {
-        for $chars.comb -> $c is copy {
-            $c .= Str;
-            $c .= uc;
-            %h{$c} = True;
-        }
-    }
-    else {
-        for $chars.comb -> $c is copy {
-            $c .= Str;
-            %h{$c} = True;
-        }
+    for $chars.comb -> $c is copy {
+        $c .= Str;
+        %h{$c} = True;
     }
     %h.Set;
 }
