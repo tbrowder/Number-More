@@ -9,13 +9,13 @@ my token length-action { ^ :i warn|fail $ }
 our $bset = "01".comb.Set;
 our $oset = (0..7).Set;
 our $dset = (0..9).Set;
-our $hset = "abcdef".comb.Set (|) $dset;
+our $hset = "ABCDEFabcdef".comb.Set (|) $dset;
 
 # Define tokens for common regexes (no prefixes are allowed)
 my token binary is export(:token-binary)            { ^ <[01]>+ $ }
 my token octal is export(:token-octal)              { ^ <[0..7]>+ $ }
 my token decimal is export(:token-decimal)          { ^ \d+ $ } # actually an int
-my token hexadecimal is export(:token-hecadecimal)  { :i ^ <[a..f\d]>+ $ }   
+my token hexadecimal is export(:token-hexadecimal)  { :i ^ <[a..f\d]>+ $ }   
 
 # For general base functions 2..62
 my token all-bases is export(:token-all-bases)      { ^ 

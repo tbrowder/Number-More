@@ -1,7 +1,53 @@
 #!/usr/bin/env raku
 
-use Text::Utils :strip-comment;
+use lib "../lib";
 
+use Number::More;
+my $ofil = "some-test.t";
+
+if not @*ARGS {
+    print qq:to/HERE/;
+    Usage: {$*PROGRAM.basename} go
+
+    Output: file '$ofil'
+
+    Using module 'Number::More', this program creates
+    a test file for testing the optional args for subs:
+
+      X2Y where X and Y are: bin, oct, dec, and hex
+      pad-number
+
+    The optional arguments are:
+
+      :length
+      :prefix
+      :suffix
+      :LC 
+
+    Note: Future replacement module 'Number' will offer
+          ':LC' aliases ':lc' and ':lower-case'.
+
+    HERE
+    exit;
+}
+
+my $debug = 0;
+my @bases = 2..62;
+for @bases -> $base {
+   my $bset = create-base-set $base;
+   say $bset if $debug;
+   my $sset = create-set 
+   if $base ~~ &binary {
+       say "binary";
+   }
+
+}
+
+=finish
+
+my $num = 1;
+
+my
 class eg {
     has @!w;   # used for construction
     has $.dec;

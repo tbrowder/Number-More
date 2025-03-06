@@ -1,6 +1,9 @@
 Revision history for Number::More
 
 {{$NEXT}}
+    - Fix typo
+    - Add more test coverage
+    - Add another test creator Raku program in /dev directory
 
 0.2.11  2025-03-05T09:29:36-06:00
     - Fix another incorrect handling of non-case-sensitive bases
