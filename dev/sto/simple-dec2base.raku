@@ -1,4 +1,4 @@
-#!/usr/bin/env perl6
+#!/usr/bin/env raku
 
 use lib <../lib>;
 
@@ -91,9 +91,11 @@ bunch more examples and they should get easier.
 }
 
 #sub _from-dec-to-b37-b62(UInt $x'dec ,
-sub _from-dec-to-b37-b62($x'dec ,
-			 UInt $base-o
-		         --> Str) is export(:_from-dec-to-b37-b62) {
+sub from-dec-to-b37-b62(
+    $x'dec,
+    UInt $base-o,
+    --> Str) is export(:_from-dec-to-b37-b62) {
+
     # see Wolfram's solution (article Base)
 
     # need ln_b x = ln x / ln b

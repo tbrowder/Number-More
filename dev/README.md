@@ -1,6 +1,9 @@
 This directory contains files used to develop tests for base
 conversions from 37 through 62.
 
+For a discussion of fractional numbers of non-decimal numbers see "Real Numbers"
+at Wiipedia.
+
 Explicit results from website <http://www.numbertobase.com> were put
 into file `base-conversions.dat` which was then transformed by file
 `convert-examples.p6` into test file `060-auto-transform-checks.t`

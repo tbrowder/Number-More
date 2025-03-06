@@ -1,8 +1,9 @@
 
 # explicit results from website "numbertobase.com"
 
-# Note that the website uses the alphabet "0..9 a..z A..Z" as opposed to Perl 6's (and this
-# module's) "0..9 A..Z a..z" so the results below will have to be translated.
+# Note that the website uses the alphabet "0..9 a..z A..Z" as opposed to Raku's 
+# (and this module's) "0..9 A..Z a..z" so the results below will have to be 
+# translated.  
 #
 #   $a.trans( 'a'..'z' => 'A'..'Z', 'A'..'Z' => 'a'..'z' )
 

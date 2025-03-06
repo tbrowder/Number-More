@@ -1,4 +1,4 @@
-#!/usr/bin/env perl6
+#!/usr/bin/env raku
 
 use lib <../lib>;
 
@@ -26,7 +26,7 @@ for 1..$nums -> $i {
        say "  base-i: $base-i; base-o: $base-o";
 
        my $res;
-       $res = _from-dec-to-b37-b62($num-i, $base-o);
+       $res = from-dec-to-b37-b62($num-i, $base-o);
 
        say "  output: $res";
     }
