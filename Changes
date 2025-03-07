@@ -1,12 +1,15 @@
 Revision history for Number::More
 
 {{$NEXT}}
+    - Allow base X to base X conversions in order to provide
+        optional argument formatting--trust the user,
+        but provide a warning.
     - Fix typo
     - Add more test coverage for the optional args for subs:
         X2Y base for binary, octal, dedimal, and hexadecimal
         from-base...
         to-base
-    - Updated Perl 6 terminology to use Raku
+    - Updated Perl 6 terminology to use Raku.
 
 0.2.11  2025-03-05T09:29:36-06:00
     - Fix another incorrect handling of non-case-sensitive bases

@@ -246,9 +246,72 @@ sub dec2bin(
 } # dec2bin
 
 #------------------------------------------------------------------------------
+# Subroutine: bin2bin
+# Purpose : Convert a binary number (string) to a binary number with possible 
+#           augmented features
+# Params  : Binary number (string)
+# Options : Desired length (padding with zeroes), prefix, suffix
+# Returns : Binary number (or string).
+sub bin2bin(
+    $bin where &binary,
+    --> Cool
+    ) is export(:bin2bin) {
+
+    $bin;
+} # bin2bin
+
+#------------------------------------------------------------------------------
+# Subroutine: oct2oct
+# Purpose : Convert an octal number (string) to an octal number with 
+#           possible augmented features
+# Params  : Octal number (string)
+# Options : Desired length (padding with zeroes), prefix, suffix
+# Returns : Octal number (or string).
+sub oct2oct(
+    $oct where &octal,
+    --> Cool
+    ) is export(:oct2oct) {
+
+    $oct;
+} # oct2oct
+
+#------------------------------------------------------------------------------
+# Subroutine: dec2dec
+# Purpose : Convert an decimal number (string) to an decimal number with 
+#           possible augmented features
+# Params  : Decimal number (string)
+# Options : Desired length (padding with zeroes), prefix, suffix
+# Returns : Digital number (or string).
+sub dec2dec(
+    $dec where &decimal,
+    --> Cool
+    ) is export(:dec2dec) {
+
+    $dec;
+} # dec2dec
+
+#------------------------------------------------------------------------------
+# Subroutine: hex2hex
+# Purpose : Convert a hexadecimal number (string) to a hexadecimal number with 
+#           possible augmented features
+# Params  : Hexadecimal number (string)
+# Options : Desired length (padding with zeroes), prefix, suffix
+# Returns : Hexadecimal number (or string).
+sub hex2hex(
+    $hex where &hexadecimal,
+    --> Cool
+    ) is export(:hex2hex) {
+
+    $hex;
+} # hex2hex
+
+#------------------------------------------------------------------------------
 # Subroutine: bin2dec
+# Purpose : Convert a binary number (string) to a decimal number with 
+#           possible augmented features
 # Purpose : Convert a binary number (string) to a decimal number.
-# Params  : Binary number (string), desired length (optional), suffix (optional).
+# Params  : Binary number (string)
+# Options : Desired length (padding with zeroes), prefix, suffix
 # Returns : Decimal number (or string).
 sub bin2dec(
     $bin where &binary,
@@ -304,7 +367,8 @@ sub bin2hex(
     constant $base-o = 16;
 
     # need decimal intermediary
-    my $dec = $bin.parse-base: $base-i;
+    #my $dec = $bin.parse-base: $base-i;
+    my $dec = parse-base $bin, $base-i;
     my $hex = $dec.base: $base-o;
     pad-number $hex, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
@@ -438,7 +502,7 @@ sub bin2oct(
     constant $base-o = 8;
 
     # need decimal intermediary
-    my $dec = parse-base $bin, $base-i;
+    my $dec = $bin.parse-base: $base-i;
     my $oct = $dec.base: $base-o;
 
     pad-number $oct, $base-o, :$prefix, :$suffix, :$length, :$LC;
@@ -546,7 +610,7 @@ sub rebase(
 
     # check for same bases
     if $base-i eq $base-o {
-        die "FATAL: Both bases are the same ($base-i), no conversion necessary."
+        say "WARNING: Both bases are the same ($base-i), no conversion necessary."
     }
 
     # check for known bases, eliminate any prefixes

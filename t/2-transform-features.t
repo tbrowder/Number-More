@@ -45,3 +45,80 @@ is oct2hex('77', :prefix, :$LC), '0x3f';
 
 is rebase('Z', 36, 3, :suffix), '1022_base-3', "test suffix";
 is rebase('z', 62, 3, :suffix), '2021_base-3', "test suffix";
+
+my @bases-i = 2..62;
+my @bases-o = @bases-i.reverse;
+
+my \BIN = 2;
+my \OCT = 8;
+my \DEC = 10;
+my \HEX = 16;
+
+for @bases-i -> $bi {
+    BASE-OUT: for @bases-o -> $bo {
+        my $num = 1;
+        my $res;
+        if $bi == BIN {
+            if $bo == BIN {
+                $res = bin2bin $num;
+            }
+            elsif $bo == OCT {
+                $res = bin2oct $num;
+            }
+            elsif $bo == DEC {
+                $res = bin2dec $num;
+            }
+            elsif $bo == HEX {
+                $res = bin2hex $num;
+            }
+        }
+        elsif $bi == OCT {
+            if $bo == BIN {
+                $res = oct2bin $num;
+            }
+            elsif $bo == OCT {
+                $res = oct2oct $num;
+            }
+            elsif $bo == DEC {
+                $res = oct2dec $num;
+            }
+            elsif $bo == HEX {
+                $res = oct2hex $num;
+            }
+        }
+        elsif $bi == DEC {
+            if $bo == BIN {
+                $res = dec2bin $num;
+            }
+            elsif $bo == OCT {
+                $res = dec2oct $num;
+            }
+            elsif $bo == DEC {
+                $res = dec2dec $num;
+            }
+            elsif $bo == HEX {
+                $res = dec2hex $num;
+            }
+        }
+        elsif $bi == HEX {
+            if $bo == BIN {
+                $res = hex2bin $num;
+            }
+            elsif $bo == OCT {
+                $res = hex2oct $num;
+            }
+            elsif $bo == DEC {
+                $res = hex2dec $num;
+            }
+            elsif $bo == HEX {
+                $res = hex2hex $num;
+            }
+        }
+
+        # now use sub rebase
+        
+      
+    } # end of @bases-o loop
+
+} # end of @bases-i loop
+
