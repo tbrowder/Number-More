@@ -253,11 +253,30 @@ sub dec2bin(
 # Options : Desired length (padding with zeroes), prefix, suffix
 # Returns : Binary number (or string).
 sub bin2bin(
-    $bin where &binary,
+    $bin-i where &binary,
+    # optional args
+    :$length is copy, # for padding
+    :$prefix is copy,
+    :$suffix is copy,
+    :$LC is copy,
+    :$debug,
     --> Cool
     ) is export(:bin2bin) {
 
-    $bin;
+    my UInt $len = $bin-i.chars;
+
+    $length = 0 if not $length.defined;
+    $prefix = 0 if not $prefix.defined;
+    $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
+
+    # no change of base needed
+    constant $base-o = 2;
+
+    my $bin-o = $bin-i;   
+    pad-number $bin-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+
+    $bin-o;
 } # bin2bin
 
 #------------------------------------------------------------------------------
@@ -268,11 +287,30 @@ sub bin2bin(
 # Options : Desired length (padding with zeroes), prefix, suffix
 # Returns : Octal number (or string).
 sub oct2oct(
-    $oct where &octal,
+    $oct-i where &octal,
+    # optional args
+    :$length is copy, # for padding
+    :$prefix is copy,
+    :$suffix is copy,
+    :$LC is copy,
+    :$debug,
     --> Cool
     ) is export(:oct2oct) {
 
-    $oct;
+    my UInt $len = $oct-i.chars;
+
+    $length = 0 if not $length.defined;
+    $prefix = 0 if not $prefix.defined;
+    $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
+
+    # no change of base needed
+    constant $base-o = 2;
+
+    my $oct-o = $oct-i;   
+    pad-number $oct-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+
+    $oct-o;
 } # oct2oct
 
 #------------------------------------------------------------------------------
@@ -317,11 +355,30 @@ sub dec2dec(
 # Options : Desired length (padding with zeroes), prefix, suffix
 # Returns : Hexadecimal number (or string).
 sub hex2hex(
-    $hex where &hexadecimal,
+    $hex-i where &hexadecimal,
+    # optional args
+    :$length is copy, # for padding
+    :$prefix is copy,
+    :$suffix is copy,
+    :$LC is copy,
+    :$debug,
     --> Cool
     ) is export(:hex2hex) {
 
-    $hex;
+    my UInt $len = $hex-i.chars;
+
+    $length = 0 if not $length.defined;
+    $prefix = 0 if not $prefix.defined;
+    $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
+
+    # no change of base needed
+    constant $base-o = 16;
+
+    my $hex-o = $hex-i;   
+    pad-number $hex-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+
+    $hex-o;
 } # hex2hex
 
 #------------------------------------------------------------------------------
