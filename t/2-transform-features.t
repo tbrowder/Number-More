@@ -4,7 +4,7 @@ use Number::More :ALL;
 
 $Number::More::LENGTH-HANDLING = 'waRn';
 
-plan 27;
+#plan 27;
 
 my $prefix = True;
 my $LC     = True;
@@ -57,61 +57,85 @@ my \HEX = 16;
 for @bases-i -> $bi {
     BASE-OUT: for @bases-o -> $bo {
         my $num = "1";
-        my $res;
+        my ($res, $r1, $r2, $r3, $r4, $r5);;
         if $bi == BIN {
             if $bo == BIN {
                 $res = bin2bin $num;
+                is $res, $num;
+                $r1 = bin2bin $num, :prefix;
+                is $r1.comb[0..1].join, "0b";
             }
             elsif $bo == OCT {
                 $res = bin2oct $num;
+                is $res, $num;
+                $r1 = bin2oct $num, :prefix;
+                is $r1.comb[0..1].join, "0o";
             }
             elsif $bo == DEC {
                 $res = bin2dec $num;
+                is $res, $num;
+                $r1 = bin2dec $num, :prefix;
+                is $r1.comb[0..1].join, "0d";
             }
             elsif $bo == HEX {
                 $res = bin2hex $num;
+                is $res, $num;
+                $r1 = bin2hex $num, :prefix;
+                is $r1.comb[0..1].join, "0x";
             }
         }
         elsif $bi == OCT {
             if $bo == BIN {
                 $res = oct2bin $num;
+                is $res, $num;
             }
             elsif $bo == OCT {
                 $res = oct2oct $num;
+                is $res, $num;
             }
             elsif $bo == DEC {
                 $res = oct2dec $num;
+                is $res, $num;
             }
             elsif $bo == HEX {
                 $res = oct2hex $num;
+                is $res, $num;
             }
         }
         elsif $bi == DEC {
             if $bo == BIN {
                 $res = dec2bin $num;
+                is $res, $num;
             }
             elsif $bo == OCT {
                 $res = dec2oct $num;
+                is $res, $num;
             }
             elsif $bo == DEC {
                 $res = dec2dec $num;
+                is $res, $num;
             }
             elsif $bo == HEX {
                 $res = dec2hex $num;
+                is $res, $num;
             }
         }
         elsif $bi == HEX {
             if $bo == BIN {
                 $res = hex2bin $num;
+                is $res, $num;
             }
             elsif $bo == OCT {
                 $res = hex2oct $num;
+                is $res, $num;
             }
             elsif $bo == DEC {
                 $res = hex2dec $num;
+                is $res, $num;
             }
             elsif $bo == HEX {
                 $res = hex2hex $num;
+                is $res, $num;
             }
         }
 
@@ -121,4 +145,6 @@ for @bases-i -> $bi {
     } # end of @bases-o loop
 
 } # end of @bases-i loop
+
+done-testing;
 

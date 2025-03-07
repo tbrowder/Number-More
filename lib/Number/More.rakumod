@@ -41,7 +41,7 @@ our %digit2dec is export(:digit2dec) = @dec2digit.antipairs;
 
 my token base { ^ 2|8|10|16 $ }
 
-# This is a non-exported sub # and it modifies the input in place
+# This is a non-exported sub
 sub pad-number(
     $num is rw,
     UInt $base where &all-bases,
@@ -51,6 +51,7 @@ sub pad-number(
     :$suffix is copy,
     :$LC is copy,
     :$debug,
+    --> Cool
     ) {
 
     my UInt $len = $num.chars;
@@ -100,16 +101,16 @@ sub pad-number(
     }
 
     if $suffix {
-        $num .= Str;
 	$num ~= "_base-$base";
     }
     elsif $prefix {
-        when $base eq '2'  { $num = '0b' ~ $num }
-        when $base eq '8'  { $num = '0o' ~ $num }
-        when $base eq '10' { $num = '0d' ~ $num }
-        when $base eq '16' { $num = '0x' ~ $num }
+        when $base == 2  { $num = '0b' ~ $num }
+        when $base == 8  { $num = '0o' ~ $num }
+        when $base == 10 { $num = '0d' ~ $num }
+        when $base == 16 { $num = '0x' ~ $num }
     }
 
+    $num
 } # pad-number
 
 #------------------------------------------------------------------------------
@@ -140,7 +141,7 @@ sub hex2dec(
     constant $base-o = 10;
 
     my $dec = $hex.parse-base: $base-i;
-    pad-number $dec, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $dec = pad-number $dec, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $dec;
 } # hex2dec
@@ -176,7 +177,7 @@ sub hex2bin(
     my $dec = $hex.parse-base: $base-i;
     my $bin = $dec.base: $base-o;
 
-    pad-number $bin, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $bin = pad-number $bin, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $bin;
 } # hex2bin
@@ -208,7 +209,7 @@ sub dec2hex(
     constant $base-o = 16;
 
     my $hex = $dec.Numeric.base: $base-o;
-    pad-number $hex, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $hex = pad-number $hex, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $hex;
 } # dec2hex
@@ -240,7 +241,7 @@ sub dec2bin(
     constant $base-o = 2;
 
     my $bin = $dec.Numeric.base: $base-o;
-    pad-number $bin, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $bin = pad-number $bin, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $bin;
 } # dec2bin
@@ -260,7 +261,7 @@ sub bin2bin(
     :$suffix is copy,
     :$LC is copy,
     :$debug,
-    --> Cool
+    --> Str
     ) is export(:bin2bin) {
 
     my UInt $len = $bin-i.chars;
@@ -274,7 +275,7 @@ sub bin2bin(
     constant $base-o = 2;
 
     my $bin-o = $bin-i;   
-    pad-number $bin-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $bin-o = pad-number $bin-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $bin-o;
 } # bin2bin
@@ -308,7 +309,7 @@ sub oct2oct(
     constant $base-o = 2;
 
     my $oct-o = $oct-i;   
-    pad-number $oct-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $oct-o = pad-number $oct-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $oct-o;
 } # oct2oct
@@ -342,7 +343,7 @@ sub dec2dec(
     constant $base-o = 10;
 
     my $dec-o = $dec-i.Numeric;
-    pad-number $dec-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $dec-o = pad-number $dec-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $dec-o;
 } # dec2dec
@@ -376,7 +377,7 @@ sub hex2hex(
     constant $base-o = 16;
 
     my $hex-o = $hex-i;   
-    pad-number $hex-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $hex-o = pad-number $hex-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $hex-o;
 } # hex2hex
@@ -411,7 +412,7 @@ sub bin2dec(
     constant $base-o = 10;
 
     my $dec = $bin.parse-base: $base-i;
-    pad-number $dec, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $dec = pad-number $dec, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $dec;
 } # bin2dec
@@ -446,7 +447,7 @@ sub bin2hex(
     #my $dec = $bin.parse-base: $base-i;
     my $dec = parse-base $bin, $base-i;
     my $hex = $dec.base: $base-o;
-    pad-number $hex, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $hex = pad-number $hex, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $hex;
 } # bin2hex
@@ -480,7 +481,7 @@ sub oct2bin(
     # need decimal intermediary
     my $dec = $oct.parse-base: $base-i;
     my $bin = $dec.base: $base-o;
-    pad-number $bin, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $bin = pad-number $bin, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $bin;
 } # oct2bin
@@ -514,7 +515,7 @@ sub oct2hex(
     # need decimal intermediary
     my $dec = $oct.parse-base: $base-i;
     my $hex = $dec.base: $base-o;
-    pad-number $hex, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $hex = pad-number $hex, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $hex;
 } # oct2hex
@@ -546,7 +547,7 @@ sub oct2dec(
     constant $base-o = 10;
 
     my $dec = $oct.parse-base: $base-i;
-    pad-number $dec, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $dec = pad-number $dec, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $dec;
 } # oct2dec
@@ -581,7 +582,7 @@ sub bin2oct(
     my $dec = $bin.parse-base: $base-i;
     my $oct = $dec.base: $base-o;
 
-    pad-number $oct, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $oct = pad-number $oct, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $oct;
 } # bin2oct
@@ -612,7 +613,7 @@ sub dec2oct(
     constant $base-o =  8;
 
     my $oct = $dec.Numeric.base: $base-o;
-    pad-number $oct, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $oct = pad-number $oct, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $oct;
 } # dec2oct
@@ -646,7 +647,7 @@ sub hex2oct(
     # need decimal intermediary
     my $dec = $hex.parse-base: $base-i;
     my $oct = $dec.base: $base-o;
-    pad-number $oct, $base-o, :$prefix, :$suffix, :$length, :$LC;
+    $oct = pad-number $oct, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $oct;
 } # hex2oct
@@ -765,22 +766,22 @@ sub rebase(
     # Finally, pad the number, make upper-case, and add prefix or suffix as
     # appropriate
     if $base-o == 2 || $base-o == 8 || $base-o == 10 {
-        pad-number $num-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+        $num-o = pad-number $num-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
     }
     elsif $base-o == 16 {
-        pad-number $num-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+        $num-o = pad-number $num-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
     }
     elsif (10 < $base-o < 37) {
 	# case insensitive bases
-        pad-number $num-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+        $num-o = pad-number $num-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
     }
     elsif (1 < $base-o < 11) {
 	# case N/A bases
-        pad-number $num-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+        $num-o = pad-number $num-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
     }
     else {
 	# case SENSITIVE bases
-        pad-number $num-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+        $num-o = pad-number $num-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
     }
 
     $num-o;

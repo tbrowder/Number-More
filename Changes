@@ -1,6 +1,8 @@
 Revision history for Number::More
 
 {{$NEXT}}
+    - sub pad-number now returns a Cool object instead of 
+        modifying the input in place.
     - Allow base X to base X conversions in order to provide
         optional argument formatting--trust the user,
         but provide a warning.
