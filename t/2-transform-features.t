@@ -56,7 +56,7 @@ my \HEX = 16;
 
 for @bases-i -> $bi {
     BASE-OUT: for @bases-o -> $bo {
-        my $num = 1;
+        my $num = "1";
         my $res;
         if $bi == BIN {
             if $bo == BIN {

@@ -207,7 +207,7 @@ sub dec2hex(
     # need base of outgoing number
     constant $base-o = 16;
 
-    my $hex = $dec.base: $base-o;
+    my $hex = $dec.Numeric.base: $base-o;
     pad-number $hex, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $hex;
@@ -239,7 +239,7 @@ sub dec2bin(
     # need base of outgoing number
     constant $base-o = 2;
 
-    my $bin = $dec.base: $base-o;
+    my $bin = $dec.Numeric.base: $base-o;
     pad-number $bin, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $bin;
@@ -283,11 +283,30 @@ sub oct2oct(
 # Options : Desired length (padding with zeroes), prefix, suffix
 # Returns : Digital number (or string).
 sub dec2dec(
-    $dec where &decimal,
+    $dec-i where &decimal,
+    # optional args
+    :$length is copy, # for padding
+    :$prefix is copy,
+    :$suffix is copy,
+    :$LC is copy,
+    :$debug,
     --> Cool
     ) is export(:dec2dec) {
 
-    $dec;
+    my UInt $len = $dec-i.chars;
+
+    $length = 0 if not $length.defined;
+    $prefix = 0 if not $prefix.defined;
+    $suffix = 0 if not $suffix.defined;
+    $LC     = 0 if not $LC.defined;
+
+    # no change in base needed
+    constant $base-o = 10;
+
+    my $dec-o = $dec-i.Numeric;
+    pad-number $dec-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
+
+    $dec-o;
 } # dec2dec
 
 #------------------------------------------------------------------------------
@@ -535,7 +554,7 @@ sub dec2oct(
     # need base of outgoing number
     constant $base-o =  8;
 
-    my $oct = $dec.base: $base-o;
+    my $oct = $dec.Numeric.base: $base-o;
     pad-number $oct, $base-o, :$prefix, :$suffix, :$length, :$LC;
 
     $oct;
