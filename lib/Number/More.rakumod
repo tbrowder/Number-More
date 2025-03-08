@@ -104,15 +104,15 @@ sub pad-number(
         my @c = $base.comb;
         my $s;
         for @c {
-            when /0/ { $s ~= "\0x2080" }
-            when /1/ { $s ~= "\0x2081" }
-            when /2/ { $s ~= "\0x2082" }
-            when /3/ { $s ~= "\0x2083" }
-            when /4/ { $s ~= "\0x2084" }
-            when /5/ { $s ~= "\0x2085" }
-            when /6/ { $s ~= "\0x2086" }
-            when /7/ { $s ~= "\0x2087" }
-            when /8/ { $s ~= "\0x2088" }
+            when /0/ { $s ~= "\x2080" }
+            when /1/ { $s ~= "\x2081" }
+            when /2/ { $s ~= "\x2082" }
+            when /3/ { $s ~= "\x2083" }
+            when /4/ { $s ~= "\x2084" }
+            when /5/ { $s ~= "\x2085" }
+            when /6/ { $s ~= "\x2086" }
+            when /7/ { $s ~= "\x2087" }
+            when /8/ { $s ~= "\x2088" }
             when /9/ { $s ~= "\0x2089" }
             default {
                 die "FATAL: Unknown base digit '$_'";
