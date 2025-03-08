@@ -14,7 +14,7 @@ dies-ok  { rebase('Z', 16, 37); }, "base-i: Z, 16, invalid base number for input
 lives-ok { rebase('Z', 36, 37); }, "base-i: Z, 36, valid base number for input";
 lives-ok { rebase('Z', 37, 38); }, "base-i: Z, 37, valid base number for input";
 
-# various features
+# various featur
 is hex2dec('ff'), '255';
 is hex2dec('ff', :prefix), '0d255';
 
@@ -58,113 +58,112 @@ for @bases-i -> $bi {
     BASE-OUT: for @bases-o -> $bo {
         my $num = "1";
         my $length = 4;
-        my ($res, $r1, $r);
+        my $r;
         if $bi == BIN {
             if $bo == BIN {
-                $res = bin2bin $num;
-                is $res, $num;
+                $r = bin2bin $num;
+                is $r, $num;
                 $r = bin2bin $num, :prefix;
                 is $r, "0b1";
-
                 $r = bin2bin $num, :prefix, :$length;
                 is $r, "0b01";
 
             }
             elsif $bo == OCT {
-                $res = bin2oct $num;
-                is $res, $num;
-                $r1 = bin2oct $num, :prefix;
-                is $r1.comb[0..1].join, "0o";
+                $r = bin2oct $num;
+                is $r, $num;
+                $r = bin2oct $num, :prefix;
+                is $r, "0o1";
             }
             elsif $bo == DEC {
-                $res = bin2dec $num;
-                is $res, $num;
-                $r1 = bin2dec $num, :prefix;
-                is $r1.comb[0..1].join, "0d";
+                $r = bin2dec $num;
+                is $r, $num;
+                $r = bin2dec $num, :prefix;
+                is $r, "0d1";
             }
             elsif $bo == HEX {
-                $res = bin2hex $num;
-                is $res, $num;
-                $r1 = bin2hex $num, :prefix;
-                is $r1.comb[0..1].join, "0x";
+                $r = bin2hex $num;
+                is $r, $num;
+                $r = bin2hex $num, :prefix;
+                is $r, "0x1";
             }
         }
         elsif $bi == OCT {
             if $bo == BIN {
-                $res = oct2bin $num;
-                is $res, $num;
-                $r1 = oct2bin $num, :prefix;
-                is $r1.comb[0..1].join, "0b";
+                $r = oct2bin $num;
+                is $r, $num;
+                $r = oct2bin $num, :prefix;
+                is $r, "0b1";
             }
             elsif $bo == OCT {
-                $res = oct2oct $num;
-                is $res, $num;
-                $r1 = oct2oct $num, :prefix;
-                is $r1.comb[0..1].join, "0o";
+                $r = oct2oct $num;
+                is $r, $num;
+                $r = oct2oct $num, :prefix;
+                is $r, "0o1";
             }
             elsif $bo == DEC {
-                $res = oct2dec $num;
-                is $res, $num;
-                $r1 = oct2dec $num, :prefix;
-                is $r1.comb[0..1].join, "0d";
+                $r = oct2dec $num;
+                is $r, $num;
+                $r = oct2dec $num, :prefix;
+                is $r, "0d1";
             }
             elsif $bo == HEX {
-                $res = oct2hex $num;
-                is $res, $num;
-                $r1 = oct2hex $num, :prefix;
-                is $r1.comb[0..1].join, "0x";
+                $r = oct2hex $num;
+                is $r, $num;
+                $r = oct2hex $num, :prefix;
+                is $r, "0x1";
             }
         }
         elsif $bi == DEC {
             if $bo == BIN {
-                $res = dec2bin $num;
-                is $res, $num;
-                $r1 = dec2bin $num, :prefix;
-                is $r1.comb[0..1].join, "0b";
+                $r = dec2bin $num;
+                is $r, $num;
+                $r = dec2bin $num, :prefix;
+                is $r, "0b1";
             }
             elsif $bo == OCT {
-                $res = dec2oct $num;
-                is $res, $num;
-                $r1 = dec2oct $num, :prefix;
-                is $r1.comb[0..1].join, "0o";
+                $r = dec2oct $num;
+                is $r, $num;
+                $r = dec2oct $num, :prefix;
+                is $r, "0o1";
             }
             elsif $bo == DEC {
-                $res = dec2dec $num;
-                is $res, $num;
-                $r1 = dec2dec $num, :prefix;
-                is $r1.comb[0..1].join, "0d";
+                $r = dec2dec $num;
+                is $r, $num;
+                $r = dec2dec $num, :prefix;
+                is $r, "0d1";
             }
             elsif $bo == HEX {
-                $res = dec2hex $num;
-                is $res, $num;
-                $r1 = dec2hex $num, :prefix;
-                is $r1.comb[0..1].join, "0x";
+                $r = dec2hex $num;
+                is $r, $num;
+                $r = dec2hex $num, :prefix;
+                is $r, "0x1";
             }
         }
         elsif $bi == HEX {
             if $bo == BIN {
-                $res = hex2bin $num;
-                is $res, $num;
-                $r1 = hex2bin $num, :prefix;
-                is $r1.comb[0..1].join, "0b";
+                $r = hex2bin $num;
+                is $r, $num;
+                $r = hex2bin $num, :prefix;
+                is $r, "0b1";
             }
             elsif $bo == OCT {
-                $res = hex2oct $num;
-                is $res, $num;
-                $r1 = hex2oct $num, :prefix;
-                is $r1.comb[0..1].join, "0o";
+                $r = hex2oct $num;
+                is $r, $num;
+                $r = hex2oct $num, :prefix;
+                is $r, "0o1";
             }
             elsif $bo == DEC {
-                $res = hex2dec $num;
-                is $res, $num;
-                $r1 = hex2dec $num, :prefix;
-                is $r1.comb[0..1].join, "0d";
+                $r = hex2dec $num;
+                is $r, $num;
+                $r = hex2dec $num, :prefix;
+                is $r, "0d1";
             }
             elsif $bo == HEX {
-                $res = hex2hex $num;
-                is $res, $num;
-                $r1 = hex2hex $num, :prefix;
-                is $r1.comb[0..1].join, "0x";
+                $r = hex2hex $num;
+                is $r, $num;
+                $r = hex2hex $num, :prefix;
+                is $r, "0x1";
             }
         }
 
