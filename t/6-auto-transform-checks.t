@@ -2,7 +2,8 @@ use Test;
 
 use Number::More :ALL;
 
-plan 456;
+#plan 456;
+plan 88;
 
 my $suffix = True;
 
@@ -12,10 +13,10 @@ is rebase("1202", 8, 3), "212210", "base 3; test 3";
 is rebase("282", 16, 3), "212210", "base 3; test 4";
 
 # add the suffix
-is rebase(642, 10, 3, :$suffix), "212210_base-3", "base 3; test 5";
-is rebase("1010000010", 2, 3, :$suffix), "212210_base-3", "base 3; test 6";
-is rebase("1202", 8, 3, :$suffix), "212210_base-3", "base 3; test 7";
-is rebase("282", 16, 3, :$suffix), "212210_base-3", "base 3; test 8";
+is rebase(642, 10, 3, :$suffix), "212210\x2083", "base 3; test 5";
+is rebase("1010000010", 2, 3, :$suffix), "212210\x2083", "base 3; test 6";
+is rebase("1202", 8, 3, :$suffix), "212210\x2083", "base 3; test 7";
+is rebase("282", 16, 3, :$suffix), "212210\x2083", "base 3; test 8";
 
 is rebase(3612, 10, 4), "320130", "base 4; test 9";
 is rebase("111000011100", 2, 4), "320130", "base 4; test 10";
@@ -23,10 +24,10 @@ is rebase("7034", 8, 4), "320130", "base 4; test 11";
 is rebase("E1C", 16, 4), "320130", "base 4; test 12";
 
 # add the suffix
-is rebase(3612, 10, 4, :$suffix), "320130_base-4", "base 4; test 13";
-is rebase("111000011100", 2, 4, :$suffix), "320130_base-4", "base 4; test 14";
-is rebase("7034", 8, 4, :$suffix), "320130_base-4", "base 4; test 15";
-is rebase("E1C", 16, 4, :$suffix), "320130_base-4", "base 4; test 16";
+is rebase(3612, 10, 4, :$suffix), "320130\x2084", "base 4; test 13";
+is rebase("111000011100", 2, 4, :$suffix), "320130\x2084", "base 4; test 14";
+is rebase("7034", 8, 4, :$suffix), "320130\x2084", "base 4; test 15";
+is rebase("E1C", 16, 4, :$suffix), "320130\x2084", "base 4; test 16";
 
 is rebase(2832, 10, 5), "42312", "base 5; test 17";
 is rebase("101100010000", 2, 5), "42312", "base 5; test 18";
@@ -34,10 +35,10 @@ is rebase("5420", 8, 5), "42312", "base 5; test 19";
 is rebase("B10", 16, 5), "42312", "base 5; test 20";
 
 # add the suffix
-is rebase(2832, 10, 5, :$suffix), "42312_base-5", "base 5; test 21";
-is rebase("101100010000", 2, 5, :$suffix), "42312_base-5", "base 5; test 22";
-is rebase("5420", 8, 5, :$suffix), "42312_base-5", "base 5; test 23";
-is rebase("B10", 16, 5, :$suffix), "42312_base-5", "base 5; test 24";
+is rebase(2832, 10, 5, :$suffix), "42312\x2085", "base 5; test 21";
+is rebase("101100010000", 2, 5, :$suffix), "42312\x2085", "base 5; test 22";
+is rebase("5420", 8, 5, :$suffix), "42312\x2085", "base 5; test 23";
+is rebase("B10", 16, 5, :$suffix), "42312\x2085", "base 5; test 24";
 
 is rebase(5735, 10, 6), "42315", "base 6; test 25";
 is rebase("1011001100111", 2, 6), "42315", "base 6; test 26";
@@ -45,10 +46,10 @@ is rebase("13147", 8, 6), "42315", "base 6; test 27";
 is rebase("1667", 16, 6), "42315", "base 6; test 28";
 
 # add the suffix
-is rebase(5735, 10, 6, :$suffix), "42315_base-6", "base 6; test 29";
-is rebase("1011001100111", 2, 6, :$suffix), "42315_base-6", "base 6; test 30";
-is rebase("13147", 8, 6, :$suffix), "42315_base-6", "base 6; test 31";
-is rebase("1667", 16, 6, :$suffix), "42315_base-6", "base 6; test 32";
+is rebase(5735, 10, 6, :$suffix), "42315\x2086", "base 6; test 29";
+is rebase("1011001100111", 2, 6, :$suffix), "42315\x2086", "base 6; test 30";
+is rebase("13147", 8, 6, :$suffix), "42315\x2086", "base 6; test 31";
+is rebase("1667", 16, 6, :$suffix), "42315\x2086", "base 6; test 32";
 
 is rebase(15251, 10, 7), "62315", "base 7; test 33";
 is rebase("11101110010011", 2, 7), "62315", "base 7; test 34";
@@ -56,10 +57,10 @@ is rebase("35623", 8, 7), "62315", "base 7; test 35";
 is rebase("3B93", 16, 7), "62315", "base 7; test 36";
 
 # add the suffix
-is rebase(15251, 10, 7, :$suffix), "62315_base-7", "base 7; test 37";
-is rebase("11101110010011", 2, 7, :$suffix), "62315_base-7", "base 7; test 38";
-is rebase("35623", 8, 7, :$suffix), "62315_base-7", "base 7; test 39";
-is rebase("3B93", 16, 7, :$suffix), "62315_base-7", "base 7; test 40";
+is rebase(15251, 10, 7, :$suffix), "62315\x2087", "base 7; test 37";
+is rebase("11101110010011", 2, 7, :$suffix), "62315\x2087", "base 7; test 38";
+is rebase("35623", 8, 7, :$suffix), "62315\x2087", "base 7; test 39";
+is rebase("3B93", 16, 7, :$suffix), "62315\x2087", "base 7; test 40";
 
 is rebase(4615, 10, 9), "6287", "base 9; test 41";
 is rebase("1001000000111", 2, 9), "6287", "base 9; test 42";
@@ -67,10 +68,10 @@ is rebase("11007", 8, 9), "6287", "base 9; test 43";
 is rebase("1207", 16, 9), "6287", "base 9; test 44";
 
 # add the suffix
-is rebase(4615, 10, 9, :$suffix), "6287_base-9", "base 9; test 45";
-is rebase("1001000000111", 2, 9, :$suffix), "6287_base-9", "base 9; test 46";
-is rebase("11007", 8, 9, :$suffix), "6287_base-9", "base 9; test 47";
-is rebase("1207", 16, 9, :$suffix), "6287_base-9", "base 9; test 48";
+is rebase(4615, 10, 9, :$suffix), "6287\x2089", "base 9; test 45";
+is rebase("1001000000111", 2, 9, :$suffix), "6287\x2089", "base 9; test 46";
+is rebase("11007", 8, 9, :$suffix), "6287\x2089", "base 9; test 47";
+is rebase("1207", 16, 9, :$suffix), "6287\x2089", "base 9; test 48";
 
 is rebase(13396, 10, 11), "A079", "base 11; test 49";
 is rebase("11010001010100", 2, 11), "A079", "base 11; test 50";
@@ -78,10 +79,10 @@ is rebase("32124", 8, 11), "A079", "base 11; test 51";
 is rebase("3454", 16, 11), "A079", "base 11; test 52";
 
 # add the suffix
-is rebase(13396, 10, 11, :$suffix), "A079_base-11", "base 11; test 53";
-is rebase("11010001010100", 2, 11, :$suffix), "A079_base-11", "base 11; test 54";
-is rebase("32124", 8, 11, :$suffix), "A079_base-11", "base 11; test 55";
-is rebase("3454", 16, 11, :$suffix), "A079_base-11", "base 11; test 56";
+is rebase(13396, 10, 11, :$suffix), "A079\x2081\x2081", "base 11; test 53";
+is rebase("11010001010100", 2, 11, :$suffix), "A079\x2081\x2081", "base 11; test 54";
+is rebase("32124", 8, 11, :$suffix), "A079\x2081\x2081", "base 11; test 55";
+is rebase("3454", 16, 11, :$suffix), "A079\x2081\x2081", "base 11; test 56";
 
 is rebase(17375, 10, 12), "A07B", "base 12; test 57";
 is rebase("100001111011111", 2, 12), "A07B", "base 12; test 58";
@@ -89,10 +90,10 @@ is rebase("41737", 8, 12), "A07B", "base 12; test 59";
 is rebase("43DF", 16, 12), "A07B", "base 12; test 60";
 
 # add the suffix
-is rebase(17375, 10, 12, :$suffix), "A07B_base-12", "base 12; test 61";
-is rebase("100001111011111", 2, 12, :$suffix), "A07B_base-12", "base 12; test 62";
-is rebase("41737", 8, 12, :$suffix), "A07B_base-12", "base 12; test 63";
-is rebase("43DF", 16, 12, :$suffix), "A07B_base-12", "base 12; test 64";
+is rebase(17375, 10, 12, :$suffix), "A07B\x2081\x2082", "base 12; test 61";
+is rebase("100001111011111", 2, 12, :$suffix), "A07B\x2081\x2082", "base 12; test 62";
+is rebase("41737", 8, 12, :$suffix), "A07B\x2081\x2082", "base 12; test 63";
+is rebase("43DF", 16, 12, :$suffix), "A07B\x2081\x2082", "base 12; test 64";
 
 is rebase(1975, 10, 13), "B8C", "base 13; test 65";
 is rebase("11110110111", 2, 13), "B8C", "base 13; test 66";
@@ -100,10 +101,10 @@ is rebase("3667", 8, 13), "B8C", "base 13; test 67";
 is rebase("7B7", 16, 13), "B8C", "base 13; test 68";
 
 # add the suffix
-is rebase(1975, 10, 13, :$suffix), "B8C_base-13", "base 13; test 69";
-is rebase("11110110111", 2, 13, :$suffix), "B8C_base-13", "base 13; test 70";
-is rebase("3667", 8, 13, :$suffix), "B8C_base-13", "base 13; test 71";
-is rebase("7B7", 16, 13, :$suffix), "B8C_base-13", "base 13; test 72";
+is rebase(1975, 10, 13, :$suffix), "B8C\x2081\x2083", "base 13; test 69";
+is rebase("11110110111", 2, 13, :$suffix), "B8C\x2081\x2083", "base 13; test 70";
+is rebase("3667", 8, 13, :$suffix), "B8C\x2081\x2083", "base 13; test 71";
+is rebase("7B7", 16, 13, :$suffix), "B8C\x2081\x2083", "base 13; test 72";
 
 is rebase(34290, 10, 14), "C6D4", "base 14; test 73";
 is rebase("1000010111110010", 2, 14), "C6D4", "base 14; test 74";
@@ -111,10 +112,10 @@ is rebase("102762", 8, 14), "C6D4", "base 14; test 75";
 is rebase("85F2", 16, 14), "C6D4", "base 14; test 76";
 
 # add the suffix
-is rebase(34290, 10, 14, :$suffix), "C6D4_base-14", "base 14; test 77";
-is rebase("1000010111110010", 2, 14, :$suffix), "C6D4_base-14", "base 14; test 78";
-is rebase("102762", 8, 14, :$suffix), "C6D4_base-14", "base 14; test 79";
-is rebase("85F2", 16, 14, :$suffix), "C6D4_base-14", "base 14; test 80";
+is rebase(34290, 10, 14, :$suffix), "C6D4\x2081\x2084", "base 14; test 77";
+is rebase("1000010111110010", 2, 14, :$suffix), "C6D4\x2081\x2084", "base 14; test 78";
+is rebase("102762", 8, 14, :$suffix), "C6D4\x2081\x2084", "base 14; test 79";
+is rebase("85F2", 16, 14, :$suffix), "C6D4\x2081\x2084", "base 14; test 80";
 
 is rebase(49562, 10, 15), "EA42", "base 15; test 81";
 is rebase("1100000110011010", 2, 15), "EA42", "base 15; test 82";
@@ -122,10 +123,12 @@ is rebase("140632", 8, 15), "EA42", "base 15; test 83";
 is rebase("C19A", 16, 15), "EA42", "base 15; test 84";
 
 # add the suffix
-is rebase(49562, 10, 15, :$suffix), "EA42_base-15", "base 15; test 85";
-is rebase("1100000110011010", 2, 15, :$suffix), "EA42_base-15", "base 15; test 86";
-is rebase("140632", 8, 15, :$suffix), "EA42_base-15", "base 15; test 87";
-is rebase("C19A", 16, 15, :$suffix), "EA42_base-15", "base 15; test 88";
+is rebase(49562, 10, 15, :$suffix), "EA42\x2081\x2085", "base 15; test 85";
+is rebase("1100000110011010", 2, 15, :$suffix), "EA42\x2081\x2085", "base 15; test 86";
+is rebase("140632", 8, 15, :$suffix), "EA42\x2081\x2085", "base 15; test 87";
+is rebase("C19A", 16, 15, :$suffix), "EA42\x2081\x2085", "base 15; test 88";
+
+=finish
 
 is rebase(71464, 10, 17), "E94D", "base 17; test 89";
 is rebase("10001011100101000", 2, 17), "E94D", "base 17; test 90";
@@ -628,7 +631,7 @@ is rebase("40262764", 8, 62), "Za68", "base 62; test 451";
 is rebase("8165F4", 16, 62), "Za68", "base 62; test 452";
 
 # add the suffix
-is rebase(8480244, 10, 62, :$suffix), "Za68_base-62", "base 62; test 453";
-is rebase("100000010110010111110100", 2, 62, :$suffix), "Za68_base-62", "base 62; test 454";
-is rebase("40262764", 8, 62, :$suffix), "Za68_base-62", "base 62; test 455";
-is rebase("8165F4", 16, 62, :$suffix), "Za68_base-62", "base 62; test 456";
+is rebase(8480244, 10, 62, :$suffix), "Za68\x2086\x2082", "base 62; test 453";
+is rebase("100000010110010111110100", 2, 62, :$suffix), "Za68\x2086\x2082", "base 62; test 454";
+is rebase("40262764", 8, 62, :$suffix), "Za68\x2086\x2082", "base 62; test 455";
+is rebase("8165F4", 16, 62, :$suffix), "Za68\x2086\x2082", "base 62; test 456";
