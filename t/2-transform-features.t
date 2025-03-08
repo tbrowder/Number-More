@@ -65,27 +65,36 @@ for @bases-i -> $bi {
                 is $r, $num;
                 $r = bin2bin $num, :prefix;
                 is $r, "0b1";
+
                 $r = bin2bin $num, :prefix, :$length;
                 is $r, "0b01";
-
             }
             elsif $bo == OCT {
                 $r = bin2oct $num;
                 is $r, $num;
                 $r = bin2oct $num, :prefix;
                 is $r, "0o1";
+
+                $r = bin2oct $num, :prefix, :$length;
+                is $r, "0o01";
             }
             elsif $bo == DEC {
                 $r = bin2dec $num;
                 is $r, $num;
                 $r = bin2dec $num, :prefix;
                 is $r, "0d1";
+
+                $r = bin2dec $num, :prefix, :$length;
+                is $r, "0d01";
             }
             elsif $bo == HEX {
                 $r = bin2hex $num;
                 is $r, $num;
                 $r = bin2hex $num, :prefix;
                 is $r, "0x1";
+
+                $r = bin2hex $num, :prefix, :$length;
+                is $r, "0x01";
             }
         }
         elsif $bi == OCT {
@@ -94,24 +103,36 @@ for @bases-i -> $bi {
                 is $r, $num;
                 $r = oct2bin $num, :prefix;
                 is $r, "0b1";
+
+                $r = oct2bin $num, :prefix, :$length;
+                is $r, "0b01";
             }
             elsif $bo == OCT {
                 $r = oct2oct $num;
                 is $r, $num;
                 $r = oct2oct $num, :prefix;
                 is $r, "0o1";
+
+                $r = oct2oct $num, :prefix, :$length;
+                is $r, "0o01";
             }
             elsif $bo == DEC {
                 $r = oct2dec $num;
                 is $r, $num;
                 $r = oct2dec $num, :prefix;
                 is $r, "0d1";
+
+                $r = oct2dec $num, :prefix, :$length;
+                is $r, "0d01";
             }
             elsif $bo == HEX {
                 $r = oct2hex $num;
                 is $r, $num;
                 $r = oct2hex $num, :prefix;
                 is $r, "0x1";
+
+                $r = oct2hex $num, :prefix, :$length;
+                is $r, "0x01";
             }
         }
         elsif $bi == DEC {
@@ -120,12 +141,18 @@ for @bases-i -> $bi {
                 is $r, $num;
                 $r = dec2bin $num, :prefix;
                 is $r, "0b1";
+
+                $r = dec2bin $num, :prefix, :$length;
+                is $r, "0b01";
             }
             elsif $bo == OCT {
                 $r = dec2oct $num;
                 is $r, $num;
                 $r = dec2oct $num, :prefix;
                 is $r, "0o1";
+
+                $r = dec2bin $num, :prefix, :$length;
+                is $r, "0b01";
             }
             elsif $bo == DEC {
                 $r = dec2dec $num;
