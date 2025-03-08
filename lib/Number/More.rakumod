@@ -94,14 +94,32 @@ sub pad-number(
         $num = $zpad ~ $num;
 
         # now the following test should always be true!!
-        if $len {
+        unless $num.chars > $nct {
             die "debug FATAL: unexpected \$length ($length)\
                 NOT greater than \$nc ($nc)";
         }
     }
 
     if $suffix {
-	$num ~= "_base-$base";
+        my @c = $base.comb;
+        my $s;
+        for @c {
+            when /0/ { $s ~= "\0x2080" }
+            when /1/ { $s ~= "\0x2081" }
+            when /2/ { $s ~= "\0x2082" }
+            when /3/ { $s ~= "\0x2083" }
+            when /4/ { $s ~= "\0x2084" }
+            when /5/ { $s ~= "\0x2085" }
+            when /6/ { $s ~= "\0x2086" }
+            when /7/ { $s ~= "\0x2087" }
+            when /8/ { $s ~= "\0x2088" }
+            when /9/ { $s ~= "\0x2089" }
+            default {
+                die "FATAL: Unknown base digit '$_'";
+            }
+        }
+	#$num ~= "_base-$base";
+	$num ~= $s;
     }
     elsif $prefix {
         when $base == 2  { $num = '0b' ~ $num }
@@ -306,7 +324,7 @@ sub oct2oct(
     $LC     = 0 if not $LC.defined;
 
     # no change of base needed
-    constant $base-o = 2;
+    constant $base-o = 8;
 
     my $oct-o = $oct-i;   
     $oct-o = pad-number $oct-o, $base-o, :$prefix, :$suffix, :$length, :$LC;
