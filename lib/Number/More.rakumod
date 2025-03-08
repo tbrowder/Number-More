@@ -69,34 +69,40 @@ sub pad-number(
         }
     }
 
-    my $nc  = $num.chars;
-    # num chars with prefix
-    my $nct = ($prefix && !$suffix) ?? ($nc + 2) !! $nc;
-    if ($length and ($LENGTH-HANDLING ~~ (&length-action)) and ($nct > $length)) {
+    # cannot have both prefix and suffix
+    my $nc  = $num.chars; # with no extra characters (no leading zeroes)
+    # num chars with prefix, if any
+    my $nctotal = ($prefix and !$suffix) ?? ($nc + 2) !! $nc;
+    if ($length and ($LENGTH-HANDLING ~~ (&length-action)) and ($nctotal > $length)) {
         my $msg = "Desired length ($length) of number '$num' is\
                      less than required by it";
         $msg ~= " and its prefix" if $prefix;
-        $msg ~= " ($nct).";
+        $msg ~= " ($nctotal).";
 
         if $LENGTH-HANDLING ~~ /$ :i warn $/ {
             note "WARNING: $msg";
+        }
+        elsif $LENGTH-HANDLING ~~ /$ :i ignore $/ {
+            ; # okay
         }
         else {
             die "FATAL: $msg";
         }
     }
 
-    if $length > $nct {
+    if $length > $nctotal {
         # padding required
         # first pad with zeroes
         # create the zero padding
-        my $zpad = 0 x ($length - $nct);
+        my $zpad = '0' x ($length - $nctotal);
         $num = $zpad ~ $num;
+        $nc  = $num.chars;
 
         # now the following test should always be true!!
-        unless $num.chars > $nct {
+        unless $length > $nctotal {
             die "debug FATAL: unexpected \$length ($length)\
-                NOT greater than \$nc ($nc)";
+                NOT greater than \$nctotal ($nctotal)";
+
         }
     }
 
@@ -113,12 +119,11 @@ sub pad-number(
             when /6/ { $s ~= "\x2086" }
             when /7/ { $s ~= "\x2087" }
             when /8/ { $s ~= "\x2088" }
-            when /9/ { $s ~= "\0x2089" }
+            when /9/ { $s ~= "\x2089" }
             default {
                 die "FATAL: Unknown base digit '$_'";
             }
         }
-	#$num ~= "_base-$base";
 	$num ~= $s;
     }
     elsif $prefix {

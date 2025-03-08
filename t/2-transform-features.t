@@ -43,8 +43,8 @@ is oct2bin('77', :prefix), '0b111111';
 is oct2hex('77', :prefix), '0x3F';
 is oct2hex('77', :prefix, :$LC), '0x3f';
 
-is rebase('Z', 36, 3, :suffix), '1022_base-3', "test suffix";
-is rebase('z', 62, 3, :suffix), '2021_base-3', "test suffix";
+is rebase('Z', 36, 3, :suffix), "1022\x2083", "test suffix";
+is rebase('z', 62, 3, :suffix), "2021\x2083", "test suffix";
 
 my @bases-i = 2..62;
 my @bases-o = @bases-i.reverse;
