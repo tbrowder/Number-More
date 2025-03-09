@@ -20,6 +20,7 @@ lives-ok { rebase('Z', 36, 37); }, "base-i: Z, 36, valid base number for input";
 lives-ok { rebase('Z', 37, 38); }, "base-i: Z, 37, valid base number for input";
 
 # various features
+dies-ok { hex2bin('ff', :prefix, :suffix) }, "cannot have ':prefix' and ':suffix'";
 is hex2dec('ff'), '255';
 is hex2dec('ff', :prefix), '0d255';
 

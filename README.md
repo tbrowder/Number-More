@@ -62,9 +62,10 @@ decimals may be entered as numbers) representing a valid number in one
 base and transform it into the desired base with no leading zeroes or
 descriptive prefix (such as '0x', '0o', and '0b') to indicate the type
 of number.  The default is also to use upper-case characters for the
-hexadecimal results and all bases greater than 10 and less than 37.
+non-decimal characters for all bases greater than 10 and less than 37.
 Bases greater than 36 use a mixture of upper-case and lower-case
-characters.
+characters, so those non-decimal characters are case-sensitive and
+retain their results..
 
 There is an optional parameter to define desired lengths of results
 (which will result in adding leading zeroes if needed).  There are
@@ -79,15 +80,17 @@ smaller characters):
 
     '2Zz3' ~ '62'
 
-Attempting to use both a length and a prefix and suffix provides any
-padding to the left side of the number as leading zeroes.
+Attempting to use both a length and a prefix or suffix provides any
+padding to the left side of the number as leading zeroes. Note use
+of both :prefix and :suffix will throw an exception. The use
+of :prefix only affects numbers of bases 2, 8, 10, and 16.
 
 Any length requested that is too short for the number of characters plus any
 prefix will be silently handled properly by default.
-However, the user can set an environment variable to the desired reponse to
+However, the user can set an environment variable ('LENGTH_HANDLING') to the desired reponse to
 situations where the transformed length is greater than the requested
-length: (1) ignore and provide the required length (the default), (2)
-warn of the increased length but provide it, and (3) throw an
+length: (1) 'ignore' and provide the required length (the default), (2)
+'warn' of the increased length but provide it, or (3) 'fail' to throw an
 exception and report the offending data.
 
 ## Contributing

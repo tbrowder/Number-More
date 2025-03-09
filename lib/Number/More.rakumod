@@ -2,8 +2,8 @@ unit module Number::More;
 
 my $DEBUG = 0;
 
-# Export a var for users to set length behavior
-our $LENGTH-HANDLING is export(:DEBUG) = 'ignore'; # other options: 'warn', 'fail'
+my $LH = %*ENV<LENGTH_HANDLING>:exists ??
+         %*ENV<LENGTH_HANDLING> !! 'ignore'; # other options: 'warn', 'fail'
 my token length-action { ^ :i warn|fail $ }
 
 our $bset = "01".comb.Set;
@@ -43,7 +43,7 @@ my token base { ^ 2|8|10|16 $ }
 
 # This is a non-exported sub
 sub pad-number(
-    $num is rw,
+    $num is copy, 
     UInt $base where &all-bases,
     # optional args
     :$length is copy, # for padding
@@ -61,6 +61,10 @@ sub pad-number(
     $suffix = 0 if not $suffix.defined;
     $LC     = 0 if not $LC.defined;
 
+    if $prefix and $suffix {
+        die "FATAL: You cannot select both :prefix and :suffix";
+    }
+
     # This also checks for length error, upper-lower casing, and handling
     if 10 < $base < 37 {
         if $LC {
@@ -69,20 +73,36 @@ sub pad-number(
         }
     }
 
-    # cannot have both prefix and suffix
+    # strip any leading type indicator
+    if $base ~~ /2|8|10|16/ {
+        $num ~~ s/^0 [b|o|d|x]//;   
+    }
+    # strip any leading zeroes
+    if $num.chars > 1 {
+        $num ~~ s/^0*//;
+    }
+
+    # now $num should be "clean"
     my $nc  = $num.chars; # with no extra characters (no leading zeroes)
-    # num chars with prefix, if any
-    my $nctotal = ($prefix and !$suffix) ?? ($nc + 2) !! $nc;
-    if ($length and ($LENGTH-HANDLING ~~ (&length-action)) and ($nctotal > $length)) {
+
+    # num pad zeroes with no prefix
+    my $npad0 = $length > $nc ?? ($length - $nc) !! 0;
+    if $prefix {
+        $npad0 -= 2;
+        $npad0 = 0 if $npad0 < 0;     
+    }
+
+    my $ncmin = $prefix ?? ($nc + 2) !! $nc;
+    if ($length and ($LH ~~ (&length-action)) and ($ncmin > $length)) {
         my $msg = "Desired length ($length) of number '$num' is\
                      less than required by it";
         $msg ~= " and its prefix" if $prefix;
-        $msg ~= " ($nctotal).";
+        $msg ~= " ($ncmin).";
 
-        if $LENGTH-HANDLING ~~ /$ :i warn $/ {
+        if $LH ~~ /$ :i warn $/ {
             note "WARNING: $msg";
         }
-        elsif $LENGTH-HANDLING ~~ /$ :i ignore $/ {
+        elsif $LH ~~ /$ :i ignore $/ {
             ; # okay
         }
         else {
@@ -90,20 +110,52 @@ sub pad-number(
         }
     }
 
-    if $length > $nctotal {
-        # padding required
-        # first pad with zeroes
-        # create the zero padding
-        my $zpad = '0' x ($length - $nctotal);
+    =begin comment
+    padding, num raw length, and prefixes
+    num  length prefix result
+    x    0      none   x
+    x    1      none   x
+    x    2      none   0x
+    x    3      none   00x
+    x    4      none   000x
+
+    x    1      0b     0bx
+    x    2      0b     0bx
+    x    3      0b     0bx
+    x    4      0b     0b0x
+
+    xxx  0      none   xxx
+    xxx  2      none   xxx
+    xxx  3      none   xxx
+    xxx  4      none   0xxx
+
+    xxx  0      0b     0bxxx
+    xxx  2      0b     0bxxx
+    xxx  3      0b     0bxxx
+    xxx  4      0b     0bxxx
+    xxx  5      0b     0bxxx
+    xxx  6      0b     0b0xxx
+    =end comment
+
+    if $npad0 {
+        # padding with zeross is required
+        # first pad with zeroes, less any desired prefix
+        my $zpad = '0' x $npad0;
         $num = $zpad ~ $num;
         $nc  = $num.chars;
 
         # now the following test should always be true!!
-        unless $length > $nctotal {
+        unless $length > $ncmin {
             die "debug FATAL: unexpected \$length ($length)\
-                NOT greater than \$nctotal ($nctotal)";
-
+                NOT greater than \$ncmin ($ncmin)";
         }
+    }
+
+    if $prefix {
+        when $base == 2  { $num = '0b' ~ $num }
+        when $base == 8  { $num = '0o' ~ $num }
+        when $base == 10 { $num = '0d' ~ $num }
+        when $base == 16 { $num = '0x' ~ $num }
     }
 
     if $suffix {
@@ -125,12 +177,6 @@ sub pad-number(
             }
         }
 	$num ~= $s;
-    }
-    elsif $prefix {
-        when $base == 2  { $num = '0b' ~ $num }
-        when $base == 8  { $num = '0o' ~ $num }
-        when $base == 10 { $num = '0d' ~ $num }
-        when $base == 16 { $num = '0x' ~ $num }
     }
 
     $num
