@@ -71,16 +71,20 @@ There is an optional parameter to define desired lengths of results
 named parameters to have results in lower-case (`:$LC`) for bases
 between 11 and 36 and add appropriate prefixes to transformed numbers
 (`:$prefix`) in bases 2 (binary), 8 (octal), and 16 (hecadecimal).
-Note that requested prefixes will take up two characters in a
+Note that requested prefixes will take two characters in a
 requested length.  There is also an option (`:$suffix`) to add the
 appropriate base suffix to any number, the result of which will look
-like this:
+like this (the number itself with the base shown as a trailing subscript in
+smaller characters): 
 
-    '2Zz3_base-62'
+    '2Zz3' ~ '62'
 
-The suffix overrides any requested prefix.
+Attempting to use both a length and a prefix and suffix provides any
+padding to the left side of the number as leading zeroes.
 
-The user can also set an environment variable to set the reponse to
+Any length requested that is too short for the number of characters plus any
+prefix will be silently handled properly by default.
+However, the user can set an environment variable to the desired reponse to
 situations where the transformed length is greater than the requested
 length: (1) ignore and provide the required length (the default), (2)
 warn of the increased length but provide it, and (3) throw an
