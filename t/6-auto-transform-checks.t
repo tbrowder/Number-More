@@ -3,7 +3,7 @@ use Test;
 use Number::More :ALL;
 
 #plan 456;
-plan 88;
+plan 92;
 
 my $suffix = True;
 
@@ -128,12 +128,12 @@ is rebase("1100000110011010", 2, 15, :$suffix), "EA42\x2081\x2085", "base 15; te
 is rebase("140632", 8, 15, :$suffix), "EA42\x2081\x2085", "base 15; test 87";
 is rebase("C19A", 16, 15, :$suffix), "EA42\x2081\x2085", "base 15; test 88";
 
-=finish
-
 is rebase(71464, 10, 17), "E94D", "base 17; test 89";
 is rebase("10001011100101000", 2, 17), "E94D", "base 17; test 90";
 is rebase("213450", 8, 17), "E94D", "base 17; test 91";
 is rebase("11728", 16, 17), "E94D", "base 17; test 92";
+
+=finish
 
 # add the suffix
 is rebase(71464, 10, 17, :$suffix), "E94D_base-17", "base 17; test 93";

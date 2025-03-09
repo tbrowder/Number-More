@@ -1,5 +1,10 @@
 use Test;
 
+my \BIN = 2;
+my \OCT = 8;
+my \DEC = 10;
+my \HEX = 16;
+
 use Number::More :ALL;
 
 $Number::More::LENGTH-HANDLING = 'waRn';
@@ -14,7 +19,7 @@ dies-ok  { rebase('Z', 16, 37); }, "base-i: Z, 16, invalid base number for input
 lives-ok { rebase('Z', 36, 37); }, "base-i: Z, 36, valid base number for input";
 lives-ok { rebase('Z', 37, 38); }, "base-i: Z, 37, valid base number for input";
 
-# various featur
+# various features
 is hex2dec('ff'), '255';
 is hex2dec('ff', :prefix), '0d255';
 
@@ -49,13 +54,9 @@ is rebase('z', 62, 3, :suffix), "2021\x2083", "test suffix";
 my @bases-i = 2..62;
 my @bases-o = @bases-i.reverse;
 
-my \BIN = 2;
-my \OCT = 8;
-my \DEC = 10;
-my \HEX = 16;
-
 for @bases-i -> $bi {
     BASE-OUT: for @bases-o -> $bo {
+
         my $num = "1";
         my $length = 4;
         my $r;
