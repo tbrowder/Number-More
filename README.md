@@ -108,4 +108,4 @@ Thanks to 'timotimo' on IRC **\#perl6** (now **\#raku**) for the suggestion of t
 
 Artistic 2.0. See [LICENSE](https://github.com/tbrowder/Number-More/blob/master/LICENSE).
 
-Copyright (C) 2017-2023 Thomas M. Browder, Jr. <<tbrowder@acm.org>>
+Copyright (C) 2017-2025 Thomas M. Browder, Jr. <<tbrowder@acm.org>>
